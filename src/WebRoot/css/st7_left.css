@@ -1,0 +1,88 @@
+body{
+    margin:0px;
+    padding:0px;
+	font-size:12px;
+	color:#555;
+    background: url(../../images/StyleBlue/left_bg_blue.jpg) #346B9B repeat-x left top;
+}
+
+td{
+    color:#1060A4;
+}
+.left_bg{
+	width:100%;
+    background:url(../../images/StyleBlue/left_bg.gif) #346B9B no-repeat right bottom;
+    padding-left:9px;
+}
+.title{
+    height:10px;
+	text-align:center;
+	font-weight:bold;
+	color:#fff;
+}
+
+.sec_menu {
+    color:#1060A4;
+}
+.menu_title{
+    cursor:hand;
+	text-align:left;
+	padding:0px;
+	padding-left:20px;	
+	width:154px;
+	FONT-WEIGHT: bold;
+	COLOR: #fff;
+	POSITION: relative; 
+	
+	}
+.menu_title2{
+    cursor:hand;
+	text-align:left;
+	padding:0px;
+	padding-left:20px;	
+	width:154px;
+	FONT-WEIGHT: bold;
+	COLOR: #fff;
+	POSITION: relative;
+}
+
+
+.menu_link{
+    heihgt:26px;
+	line-height:26px;
+	text-align:center;
+	background:url(../../images/StyleBlue/manage_45.gif) no-repeat left bottom;
+}
+.back_southidc{BACKGROUND-IMAGE:url('../../images/StyleBlue/titlebg.gif');COLOR:000000;}
+.table_southidc{BACKGROUND-COLOR: A4B6D7;}
+.td_southidc{BACKGROUND-COLOR: F2F8FF;}
+.tr_southidc{BACKGROUND-COLOR: ECF5FF;}
+
+.t1 {font:12px 宋体;color:#000000} 
+.t2 {font:12px 宋体;color:#ffffff} 
+.t3 {font:12px 宋体;color:#ffff00} 
+.t4 {font:12px 宋体;color:#800000} 
+.t5 {font:12px 宋体;color:#191970} 
+
+.weiqun:hover{
+	Font-unline:yes;
+	font-family: "宋体";
+	color: #FFFFFF;
+	text-decoration: underline;
+	background-color: #CCCCCC;
+}
+td {
+	font-size: 12px;
+}
+a:link {
+	color: #1060A4;
+	text-decoration: none;
+}
+a:visited {
+	color: #1060A4;
+	text-decoration: none;
+}
+a:hover {
+	color: #428eff;
+	text-decoration: underline;
+}

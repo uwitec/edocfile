@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+	 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/config/datasource.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 标注驱动配置 -->
+	<context:component-scan base-package="com.edoc"></context:component-scan>
+	
+
+	<!-- 事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory"/>
+		</property>	
+	</bean>
+	
+	<!-- 事务注解驱动 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- 配置数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${datasource.driverClass}" />
+		<property name="jdbcUrl" value="${datasource.jdbcUrl}" />
+		<property name="user" value="${datasource.user}" />
+		<property name="password" value="${datasource.password}" />
+		<property name="minPoolSize" value="${datasource.minPoolSize}" /><!-- 指定连接数据库连接池的最大连接数 -->
+		<property name="maxPoolSize" value="${datasource.maxPoolSize}" /><!--连接池中保留的最大连接数。Default: 15 -->
+		<property name="initialPoolSize" value="${datasource.initialPoolSize}" /><!-- 指定连接数据库连接池的初始化连接数 -->
+		<property name="maxIdleTime" value="${datasource.maxIdleTime}" /><!--最大空闲时间,60秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->
+		<property name="acquireIncrement" value="${datasource.acquireIncrement}" /><!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
+		<property name="idleConnectionTestPeriod" value="${datasource.idleConnectionTestPeriod}" /><!--每60秒检查所有连接池中的空闲连接。Default: 0 -->
+		<property name="acquireRetryAttempts" value="${datasource.acquireRetryAttempts}" /><!--定义在从数据库获取新连接失败后重复尝试的次数。Default: 30 -->
+		<!--获取连接失败将会引起所有等待连接池来获取连接的线程抛出异常。但是数据源仍有效保留，并在下次调用getConnection()的时候继续尝试获取连接。如果设为true，那么在尝试获取连接失败后该数据源将申明已断开并永久关闭。Default: false-->
+		<property name="breakAfterAcquireFailure" value="${datasource.breakAfterAcquireFailure}">
+		</property>
+	</bean>
+
+	<!-- sessionFactory配置 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>com.edoc.entity.permission.Menu</value>
+				<value>com.edoc.entity.baseinfo.User</value>
+				<value>com.edoc.entity.baseinfo.Department</value>
+				<value>com.edoc.entity.files.EdocFile</value>
+				<value>com.edoc.entity.files.FileVersion</value>
+				<value>com.edoc.entity.files.ShoreFile</value>
+				<value>com.edoc.entity.files.VisitUserInfo</value>
+				<value>com.edoc.entity.permission.Role</value>
+				<value>com.edoc.entity.files.RecycleInfo</value>
+				<value>com.edoc.scheduler.Task</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="genericDAO"
+		class="com.edoc.orm.hibernate.dao.impl.GenericDAOImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="menuDao" parent="genericDAO">
+		<property name="clazz">
+			<value>com.edoc.entity.permission.Menu</value>
+		</property>
+	</bean>
+	<bean id="roleDao" parent="genericDAO">
+		<property name="clazz">
+			<value>com.edoc.entity.permission.Role</value>
+		</property>
+	</bean>
+		
+	<bean id="deptDao" parent="genericDAO">
+		<property name="clazz">
+			<value>com.edoc.entity.baseinfo.Department</value>
+		</property>
+	</bean>
+	
+	<bean id="userDao" parent="genericDAO">
+		<property name="clazz">
+			<value>com.edoc.entity.baseinfo.User</value>
+		</property>
+	</bean>
+	
+	<bean id="edocFileDao" class="com.edoc.orm.hibernate.dao.impl.FileDAOImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+		<property name="clazz">
+			<value>com.edoc.entity.files.EdocFile</value>
+		</property>
+	</bean>
+	
+	<bean id="fileVersionDao" parent="genericDAO">
+		<property name="clazz">
+			<value>com.edoc.entity.files.FileVersion</value>
+		</property>
+	</bean>
+	
+	<bean id="shoreFileDao" parent="genericDAO">
+		<property name="clazz">
+			<value>com.edoc.entity.files.ShoreFile</value>
+		</property>
+	</bean>
+	
+	<bean id="visitUserInfoDao" parent="genericDAO">
+		<property name="clazz">
+			<value>com.edoc.entity.files.VisitUserInfo</value>
+		</property>
+	</bean>
+	
+	<bean id="recycleDao" parent="genericDAO">
+		<property name="clazz">
+			<value>com.edoc.entity.files.RecycleInfo</value>
+		</property>
+	</bean>
+	
+	<bean id="taskDao" parent="genericDAO">
+		<property name="clazz">
+			<value>com.edoc.scheduler.Task</value>
+		</property>
+	</bean>
+	
+	
+</beans>

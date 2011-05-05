@@ -1,0 +1,54 @@
+<html>
+<head>
+	<title>Destroydrop &raquo; Javascripts &raquo; Tree</title>
+	<link rel="StyleSheet" href="dtree.css" type="text/css" />
+	<script type="text/javascript" src="dtree.js"></script>
+</head>
+
+<body>
+<div class="dtree" style="border: 0px solid #cccccc; background-color: #f3f3f3; padding: 5px; width: 100%;">
+	
+	<p><a href="javascript: d.openAll();">open all</a> | <a href="javascript: d.closeAll();">close all</a></p>
+	<script language="javascript">
+		d = new dTree('d','.','testForm');
+		d.add('0','-1','中国');
+		d.add('1','0','江苏');
+		d.add('1.1','1','苏州');
+		d.add('1.2','1','南京');
+
+		d.add('2','0','广东');
+		d.add('2.1','2','广州');
+		d.add('2.1.1','2.1','越秀');
+		d.add('2.2','2','深圳');
+
+		d.add('3','0','湖北');
+		d.add('3.1','3','武汉');
+		d.add('3.1.1','3.1','汉南');
+		d.add('3.1.1.1','3.1.1','纱帽');
+
+		document.write(d);
+	</script>
+          	     
+	<script type="text/javascript">
+		function submitForm(){
+			var ids = "";
+			var form = document.getElementById("testForm");
+			for (var i=0; i<form.elements.length; i++) {
+				var element = form.elements[i];
+				if (element.name == "id" && element.type=='checkbox'){
+					if( element.checked == true ){
+						ids = ids + element.value + ",";
+					}
+				}
+			}		
+			alert("ids = " + ids);
+		}
+		
+	</script>
+	<input type="button" value="提 交" onClick="submitForm()"/>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+    
+<struts>
+<constant name="struts.multipart.saveDir" value="/uploadtemp" />
+	<package name="filemanager" extends="struts-default">
+		<action name="fileAction" class="fileAction">
+			<result name="showMyFileListPage">jsp/files/my_folder.jsp</result>
+			<result name="showMyFileListPage_h">jsp/files/my_folder_h.jsp</result>
+			<result name="showShoreFileListPage">jsp/files/public_folder.jsp</result>
+			<!-- <result name="showFileVersions">jsp/files/showVersions.jsp</result> -->
+			<result name="showFileVersions">jsp/files/showFileInfo.jsp</result>
+			<result name="showFileInfo">jsp/files/showFileInfo.jsp</result>
+			<result name="showShorePage">jsp/files/shore_file_win.jsp</result>
+			<result name="previewFile">jsp/files/previewFile.jsp</result>
+			<result name="previewPic">jsp/files/previewPic.jsp</result>
+			<result name="previewMedia">jsp/files/previewMedia.jsp</result>
+		</action>
+		
+		<action name="recycleAction" class="recycleAction">
+			<result name="showRecycleList">jsp/files/recycleList.jsp</result>
+		</action>
+		
+		<action name="visitUserAction" class="visitUserAction">
+		</action>
+	</package>
+</struts>

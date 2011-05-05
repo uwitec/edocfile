@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="edoc"
+  id="myeclipse.1268030878484"
+  context-root="/OfficsBussiness"
+  j2ee-spec="5.0"
+  archive="edoc.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

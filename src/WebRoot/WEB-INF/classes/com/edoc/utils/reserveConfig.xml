@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<options>
+
+	<blacklist comment="黑名单参数">
+		<maxcount comment="黑名单参数-允许未履约的最大次数">1</maxcount>
+	</blacklist>
+	
+	<reserve comment="预约挂号">
+		<reservedays comment="预约挂号-提前预约天数">10</reservedays>
+	</reserve>
+	
+	<deptattr comment="科室属性">
+		<validdeptattr comment="科室属性-有效的科室属性">临床</validdeptattr>
+	</deptattr>
+	
+	<job comment="工作类别">
+		<validjob comment="工作类别-有效的工作类别属性">医生</validjob>
+	</job>
+	
+</options>
