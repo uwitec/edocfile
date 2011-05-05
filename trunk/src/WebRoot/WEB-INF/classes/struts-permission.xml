@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+    
+<struts>
+	<package name="sys" extends="struts-default">
+		<action name="menuAction" class="menuAction">
+			<result name="showMenuListPage">./jsp/security/menu_list.jsp</result>
+			<result name="toShowTreeMenu">perspective_menu.jsp</result>
+		</action>
+		<action name="roleAction" class="roleAction">
+			<result name="showRoleListPage">./jsp/security/roleList.jsp</result>
+			<result name="toUpdatePage">./jsp/security/updateRole.jsp</result>
+			<result name="toSetPermissionsPage">./jsp/security/setPermissions.jsp</result>
+		</action>
+	</package>
+</struts>

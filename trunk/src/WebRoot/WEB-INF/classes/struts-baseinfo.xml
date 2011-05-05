@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+    
+<struts>
+	<package name="baseinfo" extends="struts-default">
+		<action name="orgAction" class="orgAction">
+			<result name="showOrgListPage">jsp/baseinfo/org_manager.jsp</result>
+			<result name="showUpdatePage">jsp/baseinfo/save_org_win.jsp</result>
+			<result name="showOrgsPage">jsp/baseinfo/org_manager.jsp</result>
+		</action>
+		
+		<action name="userAction" class="userAction">
+			<result name="showUserListPage">jsp/baseinfo/user_list.jsp</result>
+			<result name="toSelectUsers">jsp/baseinfo/select_user_list.jsp</result>
+			<result name="getUserList" type="redirect">userAction!getUsersByOrgId.action</result>
+			<result name="toEditUser">jsp/baseinfo/save_user_win.jsp</result>
+			<result name="showIndex">./index.html</result>
+			<result name="showLoginPage">./login.jsp</result>
+		    <result name="showRoleUserPage">jsp/security/showRoleUser.jsp</result>
+		</action>
+		
+		<action name="schedulerAction" class="schedulerAction">
+			<result name="showTasksPage">jsp/scheduler/tasks.jsp</result>
+			<result name="showUpdateTaskPage">jsp/scheduler/addTask.jsp</result>
+		</action>
+	</package>
+</struts>

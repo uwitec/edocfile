@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/applicationContext.xml
+		</param-value>
+	</context-param>	
+	
+	<!-- Struts2过滤器 -->
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>
+			org.apache.struts2.dispatcher.FilterDispatcher
+		</filter-class>
+	</filter>
+	
+	<filter>
+		<filter-name>positionFilter</filter-name>
+		<filter-class>
+			com.edoc.filter.PositionFilter
+		</filter-class>
+	</filter>
+	
+	<filter>
+		<filter-name>sessionFilter</filter-name>
+		<filter-class>
+			com.edoc.filter.SessionFilter
+		</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>positionFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>sessionFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+	
+	<listener>	<!-- SchedulerContextListener 必须要在 ContextLoaderListener 之后配置,以保证先启动spring -->
+		<listener-class>
+			com.edoc.scheduler.SchedulerContextListener
+		</listener-class>
+	</listener>
+	
+  <welcome-file-list>
+    <welcome-file>redirect.jsp</welcome-file>
+  </welcome-file-list>
+  <icon>
+  	<small-icon>./icon/docs-32.gif</small-icon>
+  	<large-icon>./icon/docs-32.gif</large-icon>
+  </icon>
+</web-app>

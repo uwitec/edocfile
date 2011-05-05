@@ -1,0 +1,30 @@
+body {
+	height: 100%;
+	background: url(../icon/login_bg.bmp);
+}
+
+.login_div {
+	position: absolute;
+	width: 500px;
+	height: 200px;
+	left: 50%;
+	top: 50%;
+	margin-left: -250px;
+	margin-top: -100px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.btn {
+	BORDER-RIGHT: #7b9ebd 1px solid;
+	PADDING-RIGHT: 2px;
+	BORDER-TOP: #7b9ebd 1px solid;
+	PADDING-LEFT: 2px;
+	FONT-SIZE: 12px;
+	FILTER: progid : DXImageTransform.Microsoft.Gradient(GradientType = 0, StartColorStr = #D7E7FA, EndColorStr = #cecfde);
+	BORDER-LEFT: #7b9ebd 1px solid;
+	CURSOR: hand;
+	COLOR: black;
+	PADDING-TOP: 2px;
+	BORDER-BOTTOM: #7b9ebd 1px solid
+}
