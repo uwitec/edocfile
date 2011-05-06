@@ -284,9 +284,11 @@
 						<li>
 							<a href="javascript:void(0);" onclick="addFileVersion()"><img src="icon/add.png"/>新增版本</a>
 						</li>
+						<!-- 
 						<li>
 							<a href="javascript:void(0);" onclick="deleteMore()"><img src="icon/delete.png"/>&nbsp;删除</a>
 						</li>
+						 -->
 					</ul>
 				</div>
 				<div class="content">
@@ -323,7 +325,7 @@
 								<td align="center">
 									&nbsp;&nbsp;<a href="javascript:void(0);" onclick="previewFile('${v.edocFileId }','${v.version }')" >预览</a>
 									<!-- &nbsp;&nbsp;<a href="javascript:void(0);" >共享</a> -->
-									&nbsp;&nbsp;<a href="javascript:void(0);">删除</a>
+									<!-- &nbsp;&nbsp;<a href="javascript:void(0);">删除</a> -->
 								</td>
 							</tr>
 						</c:forEach>
