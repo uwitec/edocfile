@@ -1,10 +1,7 @@
 package com.edoc.scheduler.action;
 
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Scope;
@@ -38,10 +35,7 @@ public class SchedulerAction extends AbstractAction{
 	
 	public String startTask(){
 		String id = this.getParameter("id");
-		String tempFileDir = this.getSession().getServletContext().getRealPath("\\temp");
-		Map<String,Object> taskParam = new HashMap<String,Object>();
-		taskParam.put("tempFileDir", tempFileDir);
-		boolean flag = schedulerService.startTask(id,taskParam);
+		boolean flag = schedulerService.startTask(id);
 		if(!flag){
 			this.showMessage2(this.getResponse(), "任务启动操作失败:任务信息可能已经丢失或者启动过程中出现异常!", true);
 			return null;
