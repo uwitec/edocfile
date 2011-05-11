@@ -54,13 +54,14 @@
 			org.springframework.web.context.ContextLoaderListener
 		</listener-class>
 	</listener>
-	
-	<listener>	<!-- SchedulerContextListener 必须要在 ContextLoaderListener 之后配置,以保证先启动spring -->
+	<!-- SchedulerContextListener 必须要在 ContextLoaderListener 之后配置,以保证先启动spring -->
+	<!-- 
+	<listener>	
 		<listener-class>
 			com.edoc.scheduler.SchedulerContextListener
 		</listener-class>
 	</listener>
-	
+	 -->
   <welcome-file-list>
     <welcome-file>redirect.jsp</welcome-file>
   </welcome-file-list>
