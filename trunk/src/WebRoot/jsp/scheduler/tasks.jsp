@@ -118,7 +118,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<input name="checkItem" value="${task.id }" type="checkbox"></input>
 								</td>
 								<td id="fileName${task.id }" align="left">
-									${task.name }
+									${task.displayName }
 								</td>
 								<td>
 									<c:if test="${task.state==1}">

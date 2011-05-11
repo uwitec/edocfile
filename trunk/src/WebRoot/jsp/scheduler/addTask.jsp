@@ -79,6 +79,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body class="body1">
     <form id="form1" action="" method="POST">
     <input id="taskId" name="id" type="hidden" value="${task.id }">
+     <input id="taskState" name="task.state" type="hidden" value="${task.state }">
+     <input id="taskState" name="task.name" type="hidden" value="${task.name }">
    <div style="width: 100%; height: 100%; position: relative; float: left; top: 0px;">
 		<div style="width: 100%; height:35px;position: relative; float: left; top: 0px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -97,7 +99,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<table width="100%" align="center" id="table2">
 				<tr>
 					<td width="120px" align="right">任务名称：</td>
-					<td ><input id="name" type="text" name="task.name" size="40" value="${task.name }"></td>
+					<td ><input id="name" type="text" name="task.displayName" size="40" value="${task.displayName }"></td>
 				</tr>
 				<tr>
 					<td align="right">全类名：</td>
