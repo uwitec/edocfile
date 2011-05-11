@@ -1,7 +1,6 @@
 package com.edoc.scheduler.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.edoc.scheduler.Task;
 
@@ -11,6 +10,10 @@ import com.edoc.scheduler.Task;
  *
  */
 public interface SchedulerService {
+	//SimpleTrigger 2=CronTrigger定期 3=CronTrigger定周
+	public static final int TYPE_SIMPLE = 1;
+	public static final int TYPE_CRON1 = 2;
+	public static final int TYPE_CRON2 = 3;
 	
 	/**
 	 * 获取所有的任务信息
@@ -41,9 +44,8 @@ public interface SchedulerService {
 	/**
 	 * 启动任务
 	 * @param id
-	 * @param taskParam 
 	 */
-	public boolean startTask(String id, Map<String, Object> taskParam);
+	public boolean startTask(String id);
 
 	/**
 	 * 停止任务
@@ -51,6 +53,11 @@ public interface SchedulerService {
 	 * @return
 	 */
 	public boolean stopTask(String id);
+
+	/**
+	 * 获取任务
+	 */
+	public List<Task> getTasksByType(int type);
 	
 	
 	

@@ -18,6 +18,9 @@ public class Task extends AbstractBaseEntity{
 	@Column(name = "C_NAME", nullable = true)
 	private String name="";
 	
+	@Column(name = "C_DISPLAYNAME", nullable = true)
+	private String displayName = "";
+	
 	@Column(name = "I_STATE", nullable = true)
 	private int state=0;					//1=Æô¶¯ 0=Í£Ö¹
 	
@@ -50,6 +53,14 @@ public class Task extends AbstractBaseEntity{
 		id = new RandomGUID().toString();
 	}
 	
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
 	public int getIsDelete() {
 		return isDelete;
 	}
