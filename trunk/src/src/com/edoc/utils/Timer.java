@@ -76,12 +76,18 @@ public class Timer {
 		return null;
 	}
 	public synchronized static String convertToString(Date date) {
+		if(date==null){
+			return "";
+		}
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd   HH:mm:ss");
 		return format.format(date);
 	}
 
 	public synchronized static String convertToString(Date date,
 			String formatText) {
+		if(date==null){
+			return "";
+		}
 		DateFormat format = new SimpleDateFormat(formatText);
 		Calendar calendar = Calendar.getInstance();
 		StringBuffer sb = new StringBuffer();
