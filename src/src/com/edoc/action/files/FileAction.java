@@ -243,14 +243,14 @@ public class FileAction  extends AbstractAction{
 	 */
 	public String shoreFile(){
 		User user = (User)this.getSession().getAttribute("DOCUSER");
-		String sourceFileId = getParameter("sourceFileId");				//获取共享文件Id
+		String sourceFileId = getParameter("sourceFileId");					//获取共享文件Id
 		String shoreNowFlagStr = getParameter("shoreNowFlag");				//是否立即共享
 		if(!StringUtils.isValid(shoreNowFlagStr)){
 			shoreNowFlagStr = "true";
 		}
 		boolean shoreNowFlag = Boolean.parseBoolean(shoreNowFlagStr);
 		String parentId = this.getParameter("parentId");
-		int shoreMuluFlag = 0;											//是否共享目录,0不共享,1共享
+		int shoreMuluFlag = 0;												//是否共享目录,0不共享,1共享
 		String shoreMulu = this.getParameter("shoreMulu");
 		if(StringUtils.isValid(shoreMulu)){
 			shoreMuluFlag = Integer.parseInt(shoreMulu);
@@ -287,7 +287,7 @@ public class FileAction  extends AbstractAction{
 		if(visitUserIds!=null){
 			visitUserInfos = new ArrayList<VisitUserInfo>();
 			VisitUserInfo visitUserInfo = null;
-			boolean tempFlag = false;	//判断共享用户中是否存在当前用户
+			boolean tempFlag = false;								//判断共享用户中是否存在当前用户
 			for(String visitUserId:visitUserIds){
 				if(visitUserId.equals(user.getId())){
 					tempFlag = true;
@@ -304,8 +304,8 @@ public class FileAction  extends AbstractAction{
 				visitUserInfo.setPermissions(permissions);
 				visitUserInfos.add(visitUserInfo);
 			}
-			if(!tempFlag){
-				//默认添加当前用户为共享用户
+			//如果不存在当前用户的话,则将当前用户添加到共享用户信息中去(在页面上展示时可以不显示),并设为可预览可下载
+			if(!tempFlag){		
 				visitUserInfo = new VisitUserInfo();
 				visitUserInfo.setPerView(1);
 				visitUserInfo.setPerDownLoad(1);
@@ -328,18 +328,18 @@ public class FileAction  extends AbstractAction{
 		fileService.deleteFile(deleteParams,user.getId());
 		return getMyFilesByParentId();
 	}
-	/**
-	 * 获取"我的文件夹"中的根文件夹信息以及根文件信息
-	 * 
-	 * @author 陈超 2010-7-21
-	 * @return
-	 */
-	public String getRootFileFromMyFolder(){
-		String creatorId = "0";
-		PageValueObject<EdocFile> filePageVO = fileService.getRootFileFromMyFolder(getCurrentPage(), getPageSize(),creatorId);
-		this.getRequest().setAttribute("filePageVO", filePageVO);
-		return "showMyFileListPage";
-	}
+//	/**
+//	 * 获取"我的文件夹"中的根文件夹信息以及根文件信息
+//	 * 
+//	 * @author 陈超 2010-7-21
+//	 * @return
+//	 */
+//	public String getRootFileFromMyFolder(){
+//		String creatorId = "0";
+//		PageValueObject<EdocFile> filePageVO = fileService.getRootFileFromMyFolder(getCurrentPage(), getPageSize(),creatorId);
+//		this.getRequest().setAttribute("filePageVO", filePageVO);
+//		return "showMyFileListPage";
+//	}
 	
 	/**
 	 * 文件预览：将要预览的文件下载到 temp/ 文件夹下
