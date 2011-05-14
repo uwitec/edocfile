@@ -27,7 +27,18 @@ public class UserServiceImpl implements UserService{
 		return userDao.getAll();
 	}
 	
-	
+	/**
+	 * 获取用户的email地址
+	 * @param userIds
+	 * @return
+	 */
+	public List<String> getUserEmails(String[] userIds){
+		List<String> emails = null;
+		if(userIds!=null && userIds.length>0){
+			
+		}
+		return emails;
+	}
 	/**
 	 * 删除角色用户
 	 * @param roleId
@@ -43,7 +54,6 @@ public class UserServiceImpl implements UserService{
 			
 			sql = sql.substring(0, sql.length()-1);
 			sql += ")";
-			System.out.println("sql:"+sql);
 			userDao.delete(sql);
 		}
 		

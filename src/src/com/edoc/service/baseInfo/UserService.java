@@ -110,4 +110,11 @@ public interface UserService {
 	 * @param userIds
 	 */
 	public void deleteRoleUser(String roleId, String[] userIds);
+	
+	/**
+	 * 获取用户的email地址
+	 * @param userIds
+	 * @return
+	 */
+	public List<String> getUserEmails(String[] userIds);
 }

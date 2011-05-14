@@ -29,7 +29,7 @@ import com.edoc.entity.files.FileVersion;
 import com.edoc.entity.files.ShoreFile;
 import com.edoc.entity.files.VisitUserInfo;
 import com.edoc.mail.MailSender;
-import com.edoc.mail.Message;
+import com.edoc.mail.EmailInfo;
 import com.edoc.service.files.FileService;
 import com.edoc.service.files.ShoreFileService;
 import com.edoc.service.files.VisitUserService;
@@ -461,7 +461,7 @@ public class FileAction  extends AbstractAction{
 			//发送邮件通知相关人
 			String sendMailFlag = getParameter("sendMailFlag");						//是否发送邮件通知
 			if(StringUtils.isValid(sendMailFlag) && sendMailFlag.equals("true")){
-				Message msg = new Message();
+				EmailInfo msg = new EmailInfo();
 				msg.setSubject(getParameter("mailSubject"));
 				msg.setContent(getParameter("mailContent"));
 

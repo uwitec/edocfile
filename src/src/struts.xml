@@ -8,4 +8,5 @@
 	<include file="struts-baseinfo.xml"></include>
 	<include file="struts-filemanager.xml"></include>
 	<include file="struts-lucene.xml"></include>
+	<include file="struts-tools.xml"></include>
 </struts>
