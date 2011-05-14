@@ -29,7 +29,7 @@ public class MailSender {
 	private SystemParamSupport sysParamsSupport = new SystemParamSupport();
 	
 	
-	public boolean send(com.edoc.mail.Message msg, List<String> toEmails){
+	public boolean send(com.edoc.mail.EmailInfo msg, List<String> toEmails){
 		if(msg!=null && (toEmails!=null && !toEmails.isEmpty())){
 			MailProp mailProp = loadMailProp();
 			if(mailProp!=null){

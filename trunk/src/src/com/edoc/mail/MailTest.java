@@ -11,7 +11,7 @@ public class MailTest {
 	 */
 	public static void main(String[] args) {
 		MailSender s = new MailSender();
-		Message msg = new Message();
+		EmailInfo msg = new EmailInfo();
 		msg.setSubject("²âÊÔ"+(new Date()).toString());
 		msg.setContent("ÓÊ¼ş²âÊÔ");
 		List<String> toEmails = new LinkedList<String>();
