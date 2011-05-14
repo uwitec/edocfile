@@ -78,6 +78,8 @@
 				<value>com.edoc.entity.permission.Role</value>
 				<value>com.edoc.entity.files.RecycleInfo</value>
 				<value>com.edoc.scheduler.Task</value>
+				<value>com.edoc.entity.tools.SendMsg</value>
+				<value>com.edoc.entity.tools.ReceiveMsg</value>
 			</list>
 		</property>
 	</bean>
@@ -121,6 +123,18 @@
 	<bean id="menuDao" parent="genericDAO">
 		<property name="clazz">
 			<value>com.edoc.entity.permission.Menu</value>
+		</property>
+	</bean>
+	
+	<bean id="sendMsgDao" parent="genericDAO">
+		<property name="clazz">
+			<value>com.edoc.entity.tools.SendMsg</value>
+		</property>
+	</bean>
+	
+	<bean id="receiveMsgDao" parent="genericDAO">
+		<property name="clazz">
+			<value>com.edoc.entity.tools.ReceiveMsg</value>
 		</property>
 	</bean>
 	<bean id="roleDao" parent="genericDAO">
