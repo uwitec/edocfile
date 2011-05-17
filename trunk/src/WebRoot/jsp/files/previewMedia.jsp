@@ -11,7 +11,6 @@
 	
 	String filePath = basePath + "temp/" + fileName;
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 	<head>
 		<base href="<%=basePath%>">
@@ -22,14 +21,17 @@
 		<meta http-equiv="expires" content="0">
 		<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 		<meta http-equiv="description" content="This is my page">
-		<link href="css/default.css" rel="stylesheet" type="text/css" />
-		<link href="css/comm.css" rel="stylesheet" type="text/css" />
-		<link href="css/tbar.css" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="js/Validator.js"></script>
 		<style type="text/css">
 			IMG {
 				border-width: 0px;
 				margin-bottom:-3px;
+			}
+			.area{
+				margin:0 auto;
+				width:100%;
+				height:100%;
+				text-align:center;
 			}
 		</style>
 	</head>

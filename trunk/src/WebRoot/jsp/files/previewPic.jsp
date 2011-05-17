@@ -7,16 +7,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <% 
 	String fileName = (String)request.getAttribute("fileName");
 %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
   <head>
     <base href="<%=basePath%>">
     <title>查看图片</title>
   	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  	<style type="text/css">
+  			.area{
+				margin:0 auto;
+				width:100%;
+				height:100%;
+				text-align:center;
+			}
+  	
+  	</style>
   </head>
   
   <body>
-  	<div style="margin:0px auto;" >
+  	<div class="area">
   	<img src="temp/<%=fileName %>">
   	</div>
   </body>
