@@ -81,7 +81,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div id="topbar"> 
 			<span class="n">${DOCUSER.trueName }</span> <span class="sp"> | </span> 
 			<a href="./jsp/person/updatePassword.jsp" target="perspective_content">我的账号</a> <span class="sp"> | </span> 
-			<a href="javascript:void(0);">我的消息</a> <img src="./images/gotnewmsg.gif" alt="new messages" border="0" align="absmiddle"/> <span class="sp"> | </span> 
+			<a href="messageAction!getReceiveMessages.action?msgType=0"  target="perspective_content">我的消息</a> <img src="./images/gotnewmsg.gif" alt="new messages" border="0" align="absmiddle"/> <span class="sp"> | </span> 
 			<a href="javascript:void(0);" >帮助</a> <span class="sp"> | </span> 
 			<a href="userAction!doLogout.action">退出</a> <span class="sp">  </span> 
 		</div> 
