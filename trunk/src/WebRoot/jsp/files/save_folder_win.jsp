@@ -50,7 +50,7 @@
 						<img src="images/title.gif" width="7" height="33">
 					</td>
 					<td>
-						<strong>您当前的位置：</strong>系统管理 &gt;&gt; 模板管理 &gt;&gt; 模板字段设计
+						<strong>您当前的位置：</strong>我的文件夹 &gt;&gt; 创建文件夹
 					</td>
 				</tr>
 			</table>
