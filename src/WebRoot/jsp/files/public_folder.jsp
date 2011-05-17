@@ -82,9 +82,11 @@
 			</div>
 			<div class="tbar">
 				<ul id="nav">
+					<!-- 
 					<li>
 						<a href="javascript:void(0);" onclick="showUploadWin()"><img src="icon/delete.png"/>&nbsp;撤销</a>
 					</li>
+					 -->
 					<li style="width:230px;">
 							<input id="fileName" name="fileName" value="${fileName }" type="text" style="line-height:18px;" class="inputText" onmouseover="this.style.borderColor='#99E300'" onmouseout="this.style.borderColor='#A1BCA3'" /> <input onclick="searchFile()" type="button" style="line-height:18px;" value="查询"  class="button1"  />
 					</li>
