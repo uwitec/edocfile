@@ -8,10 +8,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <% 
 	String fileName = (String)request.getAttribute("fileName");
 	
-	String filePath = basePath + "temp/" + fileName;
+	String filePath = basePath + "temp/" + fileName+"_#_DISPLAYFILENAME";
 	Md5Double des = new Md5Double();    
     filePath = des.encrypt(filePath);
-
 %>
 <html>
   <head>
@@ -44,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		type="application/x-oleobject"
 		align="baseline" border="0"
 		codebase="<%=request.getContextPath()%>/back/uploadfile/PDEReader.rar"
-		WIDTH="100%" height="600">      
+		WIDTH="100%" height="660">      
     </OBJECT>
   </body>
 </html>
