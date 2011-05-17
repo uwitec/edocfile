@@ -8,16 +8,15 @@ function doSearch(){
 function showAddFolderWin(){
 	var params = [];
 	params[0] = document.getElementById('parentId').value;
-	showModalDialog("jsp/files/save_folder_win.jsp", params, "dialogWidth:600px; dialogHeight:300px; status:0; help:0");
+	showModalDialog("jsp/files/save_folder_win.jsp?Rnd="+Math.random(), params, "dialogWidth:600px; dialogHeight:300px; status:0; help:0");
 	doSearch();
-	alert('创建文件夹成功!');
 }
 //显示上传文件窗口
 function showUploadWin(){
 	//showModalDialog("jsp/files/uploadfile_win.jsp", "", "dialogWidth:800px; dialogHeight:400px; status:0; help:0");
 	var params = [];
 	params[0] = document.getElementById('parentId').value;
-	showModalDialog("jsp/files/addfile_win.jsp", params, "dialogWidth:600px; dialogHeight:300px; status:0; help:0");
+	showModalDialog("jsp/files/addfile_win.jsp?Rnd="+Math.random(), params, "dialogWidth:600px; dialogHeight:300px; status:0; help:0");
 	doSearch();
 }
 
