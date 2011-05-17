@@ -78,7 +78,8 @@ public class SessionFilter implements Filter {
 				|| forwardURL.startsWith("/jsplugin")
 				|| forwardURL.startsWith("/tree-menu")
 				|| forwardURL.startsWith("/tree-table")
-				|| forwardURL.startsWith("/tree-menu")) {
+				|| forwardURL.startsWith("/tree-menu")
+				|| forwardURL.startsWith("/temp")) {
 			return true;
 		}
 		return false;
