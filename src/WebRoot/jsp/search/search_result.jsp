@@ -123,7 +123,7 @@
 				<table cellspacing="0" class="from_table2">
 					<tr>
 						<td colspan="2" align="left">
-							<strong><font color="blue">文件名称：${r.fileName }</font></strong>			
+							<strong><font color="blue">文件名称：${r.sourceFileName }</font></strong>			
 						</td>
 				  </tr>
 					<tr>
