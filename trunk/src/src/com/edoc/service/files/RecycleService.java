@@ -4,7 +4,7 @@ import com.edoc.dbsupport.PageValueObject;
 import com.edoc.entity.files.RecycleInfo;
 
 /**
- * 回收站服务接口
+ * 回收站服务接口{@link RecycleServiceImpl}
  * @author 陈超 2011-4-11
  *
  */
