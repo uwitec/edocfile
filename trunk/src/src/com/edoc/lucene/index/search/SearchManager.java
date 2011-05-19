@@ -10,7 +10,6 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
@@ -38,8 +37,8 @@ import com.edoc.utils.ConfigResource;
 public class SearchManager {
 	private static final int TOP_NUM = 100;
 	private static SearchManager instance = null;
-	private static IndexSearcher searcher = null;
-	private static IndexReader indexReader = null;
+	private  IndexSearcher searcher = null;
+	private  IndexReader indexReader = null;
 	private SearchManager(){
 		super();
 	}
@@ -47,28 +46,28 @@ public class SearchManager {
 	public static SearchManager getSingleInstance(){
 		if(instance==null){
 			instance = new SearchManager();
-			init();
+//			init();
 		}
 		return instance;
 	}
 	
-	/**
-	 * 初始化IndexReader实例
-	 * 从硬盘中读取索引文件,并加载到内存中
-	 */
-	private static void init(){
-		//获取索引目录
-		File indexDir = new File(ConfigResource.getConfig(ConfigResource.EDOCINDEXFILE));
-		try {
-//			MultiReader a = null;
-			indexReader = IndexReader.open(FSDirectory.open(indexDir));		//从硬盘中读取索引文件
-			searcher = new IndexSearcher(indexReader);
-		} catch (CorruptIndexException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+//	/**
+//	 * 初始化IndexReader实例
+//	 * 从硬盘中读取索引文件,并加载到内存中
+//	 */
+//	private static void init(){
+//		//获取索引目录
+//		File indexDir = new File(ConfigResource.getConfig(ConfigResource.EDOCINDEXFILE));
+//		try {
+////			MultiReader a = null;
+//			indexReader = IndexReader.open(FSDirectory.open(indexDir));		//从硬盘中读取索引文件
+//			searcher = new IndexSearcher(indexReader);
+//		} catch (CorruptIndexException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	/**
 	 * 关键字查询
@@ -78,6 +77,11 @@ public class SearchManager {
 	public List<EdocDocument> keyWordSearch(String keyWord,int currentPage,int pageSize){
 		List<EdocDocument> rs = null;
 		try {
+			//从本地硬盘上加装索引文件信息
+			File indexDir = new File(ConfigResource.getConfig(ConfigResource.EDOCINDEXFILE));
+			indexReader = IndexReader.open(FSDirectory.open(indexDir));		//从硬盘中读取索引文件
+			searcher = new IndexSearcher(indexReader);
+			
 			Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_30);
 			QueryParser parser = new QueryParser(Version.LUCENE_30, FieldName.FIELD_CONTENT, analyzer);
 			Query query = parser.parse(keyWord);
