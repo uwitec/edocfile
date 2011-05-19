@@ -17,7 +17,7 @@ public interface IndexService {
 	 * @param edocFile	文件信息
 	 * @return
 	 */
-	public boolean addIndex(File file, EdocFile edocFile);
+	public boolean addIndex(String sourceFileName, File file, EdocFile edocFile);
 	
 	/**
 	 * 对单个文件创建索引
@@ -25,5 +25,5 @@ public interface IndexService {
 	 * @param edocFile	文件信息
 	 * @return
 	 */
-	public boolean addIndex(File file, FileVersion fileVersion);
+	public boolean addIndex(String sourceFileName, File file, FileVersion fileVersion);
 }
