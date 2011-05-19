@@ -15,7 +15,7 @@ import com.edoc.utils.FileUtils;
 public class DefaultIndexServiceImpl implements IndexService{
 
 	@SuppressWarnings("deprecation")
-	public boolean addIndex(File file, FileVersion fileVersion){
+	public boolean addIndex(String sourceFileName,File file, FileVersion fileVersion){
 		if(!canMakeIndex(file)){
 			return false;
 		}
@@ -28,7 +28,7 @@ public class DefaultIndexServiceImpl implements IndexService{
 		
 		//创建Document
 		EdocDocument doc = null;
-		doc = new EdocDocument(file.getName(),FileReader.getContent(file), "2010-8-28");
+		doc = new EdocDocument(sourceFileName,file.getName(),FileReader.getContent(file), "2010-8-28");
 		
 		//创建索引
 		try {
@@ -42,7 +42,7 @@ public class DefaultIndexServiceImpl implements IndexService{
 	
 	
 	@SuppressWarnings("deprecation")
-	public boolean addIndex(File file, EdocFile edocFile) {
+	public boolean addIndex(String sourceFileName, File file, EdocFile edocFile) {
 		if(!canMakeIndex(file)){
 			return false;
 		}
@@ -55,7 +55,7 @@ public class DefaultIndexServiceImpl implements IndexService{
 		
 		//创建Document
 		EdocDocument doc = null;
-		doc = new EdocDocument(file.getName(),FileReader.getContent(file), edocFile.getCreateTime().toString(),edocFile.getId(),edocFile.getCurrentVersion(),
+		doc = new EdocDocument(sourceFileName,file.getName(),FileReader.getContent(file), edocFile.getCreateTime().toString(),edocFile.getId(),edocFile.getCurrentVersion(),
 				edocFile.getCreatorName(),edocFile.getCreatorId(),Float.toString(edocFile.getFileSize()));
 		
 		//创建索引

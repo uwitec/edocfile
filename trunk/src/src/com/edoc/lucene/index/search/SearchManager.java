@@ -123,6 +123,9 @@ public class SearchManager {
 					if(doc.getField(EdocDocument.FIELD_VERSIONNUM)!=null){
 						edoc.setVersionNum(doc.getField(EdocDocument.FIELD_VERSIONNUM).stringValue());
 					}
+					if(doc.getField(EdocDocument.FIELD_SOURCEFILENAME)!=null){
+						edoc.setSourceFileName(doc.getField(EdocDocument.FIELD_SOURCEFILENAME).stringValue());
+					}
 					
 					rs.add(edoc);
 				}

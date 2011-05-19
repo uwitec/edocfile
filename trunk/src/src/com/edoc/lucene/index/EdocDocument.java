@@ -15,6 +15,7 @@ public class EdocDocument implements java.io.Serializable{
 	public static final String FIELD_CREATORNAME = "creatorName";
 	public static final String FIELD_CREATORID = "creatorId";
 	public static final String FIELD_FILESIZE = "fileSize";
+	public static final String FIELD_SOURCEFILENAME = "sourceFileName";
 	
 	private String fileName = null;
 	private FileReader fileReader = null;
@@ -25,16 +26,18 @@ public class EdocDocument implements java.io.Serializable{
 	private String creatorName = "";
 	private String creatorId = "";
 	private String fileSize = "";
+	private String sourceFileName = "";
 	private Document doc = null;
 	
-	public EdocDocument(String fileName, String content, String createTime){
+	public EdocDocument(String sourceFileName ,String fileName, String content, String createTime){
 		doc = new Document();
 	    doc.add(new Field(FIELD_CONTENT,content,Field.Store.YES, Field.Index.ANALYZED));
 	    doc.add(new Field(FIELD_FILENAME,fileName,Field.Store.YES, Field.Index.ANALYZED));
 	    doc.add(new Field(FIELD_CREATETIME,createTime,Field.Store.YES, Field.Index.NOT_ANALYZED));
+	    doc.add(new Field(FIELD_SOURCEFILENAME,sourceFileName,Field.Store.YES, Field.Index.ANALYZED));
 	}
 	
-	public EdocDocument(String fileName, String content, String createTime,String sourceFileId,
+	public EdocDocument(String sourceFileName,String fileName, String content, String createTime,String sourceFileId,
 				String versionNum,String creatorName,String creatorId,String fileSize){
 		doc = new Document();
 	    doc.add(new Field(FIELD_CONTENT,content,Field.Store.YES, Field.Index.ANALYZED));
@@ -45,6 +48,7 @@ public class EdocDocument implements java.io.Serializable{
 	    doc.add(new Field(FIELD_CREATORNAME,creatorName,Field.Store.YES, Field.Index.NOT_ANALYZED));
 	    doc.add(new Field(FIELD_CREATORID,creatorId,Field.Store.YES, Field.Index.NOT_ANALYZED));
 	    doc.add(new Field(FIELD_FILESIZE,fileSize,Field.Store.YES, Field.Index.NOT_ANALYZED));
+	    doc.add(new Field(FIELD_SOURCEFILENAME,sourceFileName,Field.Store.YES, Field.Index.ANALYZED));
 	}
 
 	public EdocDocument() {
@@ -128,6 +132,14 @@ public class EdocDocument implements java.io.Serializable{
 
 	public void setFileSize(String fileSize) {
 		this.fileSize = fileSize;
+	}
+
+	public String getSourceFileName() {
+		return sourceFileName;
+	}
+
+	public void setSourceFileName(String sourceFileName) {
+		this.sourceFileName = sourceFileName;
 	}
 	
 }

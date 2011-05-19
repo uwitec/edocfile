@@ -386,7 +386,7 @@ public class FileServiceImpl implements FileService{
 		edocFile.setCurrentVersion(currentVersion);
 		upService.uploadFile(newFileVersion.getNewFileName(), src);
 		
-		indexService.addIndex(new File(ConfigResource.getConfig(ConfigResource.EDOCUPLOADDIR)+"\\"+newFileVersion.getNewFileName()), newFileVersion);
+		indexService.addIndex(edocFile.getFileName(),new File(ConfigResource.getConfig(ConfigResource.EDOCUPLOADDIR)+"\\"+newFileVersion.getNewFileName()), newFileVersion);
 		fileVersionDao.save(newFileVersion);
 		edocFileDao.save(edocFile);
 		return true;
@@ -412,7 +412,7 @@ public class FileServiceImpl implements FileService{
 			edocFileDao.update(sourceFile);
 		}
 		upService.uploadFile(newFileVersion.getNewFileName(), fileInputStream);
-		indexService.addIndex(new File(ConfigResource.getConfig(ConfigResource.EDOCUPLOADDIR)+"\\"+newFileVersion.getNewFileName()), newFileVersion);
+		indexService.addIndex(newFileVersion.getFileName(),new File(ConfigResource.getConfig(ConfigResource.EDOCUPLOADDIR)+"\\"+newFileVersion.getNewFileName()), newFileVersion);
 		fileVersionDao.save(newFileVersion);
 	}
 	
