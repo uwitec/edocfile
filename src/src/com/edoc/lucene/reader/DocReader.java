@@ -1,8 +1,9 @@
 package com.edoc.lucene.reader;
 
 import java.io.File;
+import java.io.FileInputStream;
 
-import com.edoc.utils.FileUtils;
+import org.apache.poi.hwpf.extractor.WordExtractor;
 
 /**
  * 文件读取类
@@ -10,15 +11,18 @@ import com.edoc.utils.FileUtils;
  *
  */
 public class DocReader {
-	private static final String TYPE_TXT = "txt";
-	public synchronized static String getDocContent(File file){
-		String content = "";
-		if(file!=null){
-			String type = FileUtils.getFileType(file);
-			if(type.toLowerCase().equals(TYPE_TXT)){
-				content = TXTReader.getContent(file);
-			}
-		}
-		return content;
+	public static String getContent(File uWordFile){
+		String text = "";
+	    try {
+	      FileInputStream in = new FileInputStream(uWordFile);
+	      if (uWordFile.getName().toLowerCase().endsWith(".doc")) {
+	        WordExtractor extractor = null; // 创建WordExtractor
+	        extractor = new WordExtractor(in);// 对DOC文件进行提取
+	        text = extractor.getText();
+	      }
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	    }
+	    return text;
 	}
 }

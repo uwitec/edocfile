@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.edoc.entity.files.EdocFile;
 import com.edoc.entity.files.FileVersion;
-import com.edoc.lucene.reader.DocReader;
+import com.edoc.lucene.reader.FileReader;
 import com.edoc.utils.ConfigResource;
 import com.edoc.utils.FileUtils;
 @Component("defaultIndexService")
@@ -28,7 +28,7 @@ public class DefaultIndexServiceImpl implements IndexService{
 		
 		//创建Document
 		EdocDocument doc = null;
-		doc = new EdocDocument(file.getName(),DocReader.getDocContent(file), "2010-8-28");
+		doc = new EdocDocument(file.getName(),FileReader.getContent(file), "2010-8-28");
 		
 		//创建索引
 		try {
@@ -55,7 +55,7 @@ public class DefaultIndexServiceImpl implements IndexService{
 		
 		//创建Document
 		EdocDocument doc = null;
-		doc = new EdocDocument(file.getName(),DocReader.getDocContent(file), edocFile.getCreateTime().toString(),edocFile.getId(),edocFile.getCurrentVersion(),
+		doc = new EdocDocument(file.getName(),FileReader.getContent(file), edocFile.getCreateTime().toString(),edocFile.getId(),edocFile.getCurrentVersion(),
 				edocFile.getCreatorName(),edocFile.getCreatorId(),Float.toString(edocFile.getFileSize()));
 		
 		//创建索引
