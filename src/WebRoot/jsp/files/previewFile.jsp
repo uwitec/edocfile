@@ -23,7 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				document.getElementById("afrmxCommonFileView1").SetTransportMode(2);
 				document.getElementById("afrmxCommonFileView1").SetEncrypt(1);
 				document.getElementById("afrmxCommonFileView1").SetCanPrint(0);
-				document.getElementById("afrmxCommonFileView1").SetCanDownload(1);
+				document.getElementById("afrmxCommonFileView1").SetCanDownload(0);
 				document.getElementById("afrmxCommonFileView1").SetDisablePrtScrn(1);
 				document.getElementById("afrmxCommonFileView1").SetTransportPath("<%=filePath %>");
 				document.getElementById("afrmxCommonFileView1").ShowFile();		
