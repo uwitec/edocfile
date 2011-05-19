@@ -36,20 +36,20 @@ import com.edoc.utils.ConfigResource;
  */
 public class SearchManager {
 	private static final int TOP_NUM = 100;
-	private static SearchManager instance = null;
-	private  IndexSearcher searcher = null;
-	private  IndexReader indexReader = null;
-	private SearchManager(){
+	private SearchManager instance = null;
+	private IndexSearcher searcher = null;
+	private IndexReader indexReader = null;
+	private int recordCount = 0;
+	public SearchManager(){
 		super();
 	}
-	
-	public static SearchManager getSingleInstance(){
-		if(instance==null){
-			instance = new SearchManager();
-//			init();
-		}
-		return instance;
-	}
+//	public static SearchManager getSingleInstance(){
+//		if(instance==null){
+//			instance = new SearchManager();
+////			init();
+//		}
+//		return instance;
+//	}
 	
 //	/**
 //	 * 初始化IndexReader实例
@@ -87,7 +87,8 @@ public class SearchManager {
 			Query query = parser.parse(keyWord);
 			TopScoreDocCollector collector = TopScoreDocCollector.create(TOP_NUM , false);		//查询前TOP_NUM条符合条件的记录
 			searcher.search(query, collector);
-			ScoreDoc[] hits = collector.topDocs((currentPage-1)*pageSize,pageSize).scoreDocs;
+			setRecordCount(collector.getTotalHits());
+			ScoreDoc[] hits = collector.topDocs(currentPage,pageSize).scoreDocs;
 			
 			Highlighter highlighter = null; 
 			SimpleHTMLFormatter simpleHTMLFormatter = new SimpleHTMLFormatter("<font color=\"red\">", "</font>"); 
@@ -139,4 +140,15 @@ public class SearchManager {
 		}
 		return rs;
 	}
+
+	public int getRecordCount() {
+		return recordCount;
+	}
+
+	public void setRecordCount(int recordCount) {
+		this.recordCount = recordCount;
+	}
+	
+	
+	
 }

@@ -11,7 +11,7 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		List<EdocDocument> r = SearchManager.getSingleInstance().keyWordSearch("1",1,10);
+		List<EdocDocument> r = new SearchManager().keyWordSearch("1",1,10);
 		for(EdocDocument e:r){
 			System.out.println(e.getContents());
 		}
