@@ -11,13 +11,16 @@ public class DefaultLSearchServiceImpl implements LSearchService {
 	public PageValueObject<EdocDocument> keyWordSearch(String keyWord,int currentPage,int pageSize) {
 		PageValueObject<EdocDocument> rs = null;
 		if(StringUtils.isValid(keyWord)){
-			rs = new PageValueObject<EdocDocument>(currentPage,pageSize); 
+			rs = new PageValueObject<EdocDocument>(currentPage,pageSize);
+			SearchManager searchManager = new SearchManager();
 			//获取索引目录
 			if(rs.getFirstResult()==0){
-				rs.setResult(SearchManager.getSingleInstance().keyWordSearch(keyWord,1, rs.getPageSize()));
+				rs.setResult(searchManager.keyWordSearch(keyWord,rs.getFirstResult(), rs.getPageSize()));
 			}else{
-				rs.setResult(SearchManager.getSingleInstance().keyWordSearch(keyWord,rs.getFirstResult(), rs.getPageSize()));
+				rs.setResult(searchManager.keyWordSearch(keyWord,rs.getFirstResult(), rs.getPageSize()));
 			}
+			
+			rs.setTotalRows(searchManager.getRecordCount());
 		}
 		return rs;
 	}
