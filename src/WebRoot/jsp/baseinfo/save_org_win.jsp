@@ -68,7 +68,7 @@
 						</tr>
 						<tr>
 							<td align="right" width="30%">
-								<font color="red">*</font> 科&nbsp;&nbsp;室：
+								<font color="red">*</font> 所属科室：
 							</td>
 							<td width="70%">
 								<input id="parentOrgName" type="text" value="${pDept.deptName }" disabled dataType="Require" msg="请选择科室！" />
