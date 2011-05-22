@@ -137,7 +137,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <td width="50%" valign="bottom"><table width="100%" height="59" border="0" align="center" cellpadding="0" cellspacing="0">
             <tr>
               <td width="4%">&nbsp;</td>
-              <td width="96%" height="38"><span class="login_txt_bt">登陆信息网后台管理</span></td>
+              <td width="96%" height="38"><span class="login_txt_bt">登录企业档案管理系统</span></td>
             </tr>
             <tr>
               <td>&nbsp;</td>
