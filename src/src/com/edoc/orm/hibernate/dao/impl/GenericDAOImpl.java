@@ -137,12 +137,13 @@ public class GenericDAOImpl<T, PK extends Serializable> extends
 				Iterator<PropertyOrder> it = propertyOrders.iterator();
 				while (it.hasNext()) {
 					PropertyOrder propertyOrder = it.next();
-					if (propertyOrder.getOrderType().equals(OrderType.ASC))
+					if (propertyOrder.getOrderType().equals(OrderType.ASC)){
 						criteria.addOrder(Order.asc(propertyOrder
 								.getPropertyName()));
-					else
+					}else if(propertyOrder.getOrderType().equals(OrderType.DESC)){
 						criteria.addOrder(Order.desc(propertyOrder
 								.getPropertyName()));
+					}
 				}
 			} else {
 			}
