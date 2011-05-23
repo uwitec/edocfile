@@ -1,12 +1,16 @@
 package com.edoc.entity.files;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.edoc.dbsupport.PropertyOrder;
+import com.edoc.dbsupport.PropertyOrder.OrderType;
 import com.edoc.entity.AbstractBaseEntity;
 import com.edoc.utils.RandomGUID;
 
@@ -214,5 +218,22 @@ public class EdocFile  extends AbstractBaseEntity{
 		this.fileSuffix = fileSuffix;
 		this.setIcon("icon/"+fileSuffix+".gif");
 	}
+	
+	public List<PropertyOrder> getPropertyOrders() {
+		
+		List<PropertyOrder> orders  = new ArrayList<PropertyOrder>(2);
+		
+		PropertyOrder p1 = new PropertyOrder("isFolder",OrderType.DESC);
+		orders.add(p1);
+		
+		PropertyOrder p2 = new PropertyOrder("fileSuffix",OrderType.ASC);
+		orders.add(p2);
+		
+		PropertyOrder p3 = new PropertyOrder("updateTime",OrderType.DESC);
+		orders.add(p3);
+		
+		return orders;
+	}
+
 	
 }
