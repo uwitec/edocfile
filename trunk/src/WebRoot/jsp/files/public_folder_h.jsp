@@ -25,8 +25,41 @@
 			.font_red{
 			    color:#B9090C;
 			}
+			.file0 {
+				position:relative;
+				margin:5px 5px 5px 5px;
+				width:243px;
+				height:81px;
+				z-index:1;
+				float:left;
+			}
+			.file1 {
+				position:relative;
+				margin:5px 5px 5px 5px;
+				width:243px;
+				height:81px;
+				z-index:1;
+				background-image:url(images/ahover.jpg);
+				float:left;
+			}
+			.file_inner{
+				position:relative;
+				left:6px;
+				top:5px;
+				width:230px;
+				height:70px;
+			}
+			
+			.file_content{
+				position:relative;
+				left:6px;
+				top:5px;
+				width:1000px;
+				height:500px;
+			}
 		</style>
 		<script type="text/javascript">
+		var temp_obj;
 			function cancelShore(id){		//撤销共享文件操作
 				var parentId = document.getElementById("parentId").value;		//获取档案目录的上一级目录Id
 				var form = document.getElementById("queryForm1");
@@ -62,6 +95,21 @@
 				form.action = "fileAction!getShoredFiles.action?Rnd="+Math.random();
 				form.submit();
 			}
+			
+			function mouse_over(obj){
+				if(temp_obj){
+					temp_obj.className="file0";
+					
+					temp_obj = obj;
+				}else{
+					temp_obj = obj;
+				}
+				obj.className="file1";
+			}
+			
+			function mouse_out(obj){
+				//obj.className="file0";
+			}
 		</script>
 	</head>
 	<body class="body1">
@@ -92,11 +140,6 @@
 			</div>
 			<div class="tbar">
 				<ul id="nav">
-					<!-- 
-					<li>
-						<a href="javascript:void(0);" onclick="showUploadWin()"><img src="icon/delete.png"/>&nbsp;撤销</a>
-					</li>
-					 -->
 					<li>
 						<a href="javascript:void(0);" onclick="changeLayout(1)"><img src="icon/sjgl.gif"/>&nbsp;平铺</a>
 					</li>
@@ -109,75 +152,46 @@
 				</ul>
 			</div>
 			<div class="content">
-				<table cellspacing="0" class="list_table2" style="overflow-x:scroll;">
-						<tr bgcolor="#F2F4F6">
-							<th><input id="selectAll" type="checkbox" onclick="selectAllCheckbox()"></input></th>
-							<th>
-								名称
-							</th>
-							<th>
-								上传人
-							</th>
-							<th>
-								修改日期
-							</th>
-							<th>
-								类型
-							</th>
-							<th>
-								大小
-							</th>
-							<th>
-								当前版本
-							</th>
-							<th>
-								操作
-							</th>
-						</tr>
-						<c:forEach var="edocFile" items="${filePageVO.result}">
-							<tr>
-								<td align="center">
-									<input name="checkItem" value="${edocFile.id }" type="checkbox"></input>
-								</td>
-								<td>
-									<c:if test="${edocFile.isFolder==1}">
-										<a href="fileAction!getShoredFiles.action?parentId=${edocFile.id }"><img src="${edocFile.icon }"/>&nbsp;${edocFile.fileName }</a>
-									</c:if>
-									<c:if test="${edocFile.isFolder==0}">
-										<a href="javascript:void(0);" onclick="showFileInfo('${edocFile.sourceFileId }','${edocFile.fileName }')"><img src="${edocFile.icon }"/>&nbsp;${edocFile.fileName }</a>
-									</c:if>
-								</td>
-								<td>
-									${edocFile.shoreUserName }
-								</td>
-								<td>
-									${edocFile.updateTime }
-								</td>
-								<td>
-									${edocFile.fileType }
-								</td>
-								<td align="right">
-									${edocFile.fileSize }&nbsp;KB
-								</td>
-								<td align="right">
-									${edocFile.currentVersion }
-								</td>
-								<td>
-									<c:if test="${edocFile.shoreUserId==DOCUSER.id}"><!-- 只有文档创建人才能执行撤销共享操作 -->
-									<a href="javascript:void(0);" onclick="cancelShore('${edocFile.sourceFileId }')">撤销共享</a>&nbsp;&nbsp;
-									</c:if>
-									<c:if test="${edocFile.isFolder==0}"><!-- 除文件夹以外的所有文档都有预览和下载的操作 -->
-										<c:if test="${edocFile.perView==1 || edocFile.shoreUserId==DOCUSER.id}">
-											<a href="javascript:void(0);" onclick="previewFile('${edocFile.sourceFileId }','${edocFile.currentVersion }')">预览</a>&nbsp;&nbsp;
-										</c:if>
-										<c:if test="${edocFile.perDownLoad==1 || edocFile.shoreUserId==DOCUSER.id}">
-											<a href="fileAction!downLoadFile.action?sourceFileId=${edocFile.sourceFileId }">下载</a>&nbsp;&nbsp;
-										</c:if>
-									</c:if>
-								</td>
-							</tr>
-						</c:forEach>
-				</table>
+			<c:forEach var="edocFile" items="${filePageVO.result}">
+			<div id="file_div" class="file0" onMouseOver="mouse_over(this)" onMouseOut="mouse_out(this)">
+				<div class="file_inner">
+				  <table width="230px" height="70px" border="0" cellspacing="0">
+					<tr>
+					  <td>
+					  	<div style="width:230px;text-overflow:ellipsis; white-space:nowrap; overflow:hidden;" title="${edocFile.fileName }">
+					  	&nbsp;&nbsp;
+					  	<c:if test="${edocFile.isFolder==1}">
+							<a href="fileAction!getShoredFiles.action?parentId=${edocFile.id }"><img src="${edocFile.icon }"/>&nbsp;${edocFile.fileName }</a>
+						</c:if>
+						<c:if test="${edocFile.isFolder==0}">
+							<a href="javascript:void(0);" onclick="showFileInfo('${edocFile.sourceFileId }','${edocFile.fileName }')"><img src="${edocFile.icon }"/>&nbsp;${edocFile.fileName }</a>
+						</c:if>
+					  	<input id="sourceFileName${edocFile.id }" type="hidden" value="${edocFile.fileName }" >
+					  	</div>
+					  </td>
+				    </tr>
+					<tr>
+					  <td>&nbsp;&nbsp;&nbsp;当前版本：${edocFile.currentVersion }</td>
+				    </tr>
+					<tr>
+					  <td>&nbsp;&nbsp;&nbsp;
+					  	<c:if test="${edocFile.shoreUserId==DOCUSER.id}"><!-- 只有文档创建人才能执行撤销共享操作 -->
+							<a href="javascript:void(0);" onclick="cancelShore('${edocFile.sourceFileId }')">撤销共享</a>&nbsp;&nbsp;
+						</c:if>
+						<c:if test="${edocFile.isFolder==0}"><!-- 除文件夹以外的所有文档都有预览和下载的操作 -->
+							<c:if test="${edocFile.perView==1 || edocFile.shoreUserId==DOCUSER.id}">
+								<a href="javascript:void(0);" onclick="previewFile('${edocFile.sourceFileId }','${edocFile.currentVersion }')">预览</a>&nbsp;&nbsp;
+							</c:if>
+							<c:if test="${edocFile.perDownLoad==1 || edocFile.shoreUserId==DOCUSER.id}">
+								<a href="fileAction!downLoadFile.action?sourceFileId=${edocFile.sourceFileId }">下载</a>&nbsp;&nbsp;
+							</c:if>
+						</c:if>
+					  </td>
+				    </tr>
+				  </table>
+			  </div>
+			</div>
+			</c:forEach>
 				<table width="98%" border="0" align="center" cellpadding="5" cellspacing="0">
               		<tr> 
                 		<td align="right" nowrap>共 

@@ -13,6 +13,13 @@
 	padding:0px;
     font-size:12px;
 	margin: 0px;
+	font-size:12px;
+}
+
+.pos_css{
+	background-image: url(../images/pos_title.gif);
+	background-repeat: repeat-x;
+	width: 100%; height:5%;position: relative; float: left; top: 0px;
 }
 A:visited {text-decoration: none}
 .list_div{

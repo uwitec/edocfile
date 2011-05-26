@@ -88,13 +88,22 @@
 				form.action = "fileAction!cancelShore.action?fileId="+id+"&page=myFolder&Rnd="+Math.random();
 				form.submit();
 			}
+			
+			//展示方式的改变
+			function changeLayout(type){
+				document.getElementById('layoutStyle').value=type;	
+				
+				var form = document.getElementById("queryForm1");
+				form.action = "fileAction!getMyFilesByParentId.action?Rnd="+Math.random();
+				form.submit();
+			}
 		</script>
 	</head>
 	<body class="body1">
 		<form id="queryForm1" action="" method="post">
 			<input type="hidden" name="currentPage" id="currentPage_param" value="${filePageVO.currentPage }" />
 			<input type="hidden" name="parentId" id="parentId" value="${parentId }" />
-		
+			<input type="hidden" name="layoutStyle" id="layoutStyle" value="${layoutStyle }" />
 		<div class="area">
 			<div style="width: 100%; height:5%;position: relative; float: left; top: 0px;">
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -130,14 +139,14 @@
 					<li>
 						<a href="javascript:void(0);" onclick="showUploadWin()"><img src="icon/upload.png"/>&nbsp;上传</a>
 					</li>
-					<!-- 
+				
 					<li>
-						<a href="javascript:void(0);" onclick="showUploadWin()"><img src="icon/sjgl.gif"/>&nbsp;平铺</a>
+						<a href="javascript:void(0);" onclick="changeLayout(1)"><img src="icon/sjgl.gif"/>&nbsp;平铺</a>
 					</li>
 					<li>
-						<a href="javascript:void(0);" onclick="showUploadWin()"><img src="icon/scdh.gif"/>&nbsp;列表</a>
+						<a href="javascript:void(0);" onclick="changeLayout(0)"><img src="icon/scdh.gif"/>&nbsp;列表</a>
 					</li>
-					 -->
+				
 					<!-- 
 					<li>
 						<a href="javascript:void(0);" onclick="showUploadWin()"><img src="icon/shore.png"/>&nbsp;共享</a>
