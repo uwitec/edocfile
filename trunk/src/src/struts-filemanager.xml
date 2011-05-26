@@ -10,6 +10,7 @@
 			<result name="showMyFileListPage">jsp/files/my_folder.jsp</result>
 			<result name="showMyFileListPage_h">jsp/files/my_folder_h.jsp</result>
 			<result name="showShoreFileListPage">jsp/files/public_folder.jsp</result>
+			<result name="showShoreFileListPage_h">jsp/files/public_folder_h.jsp</result>
 			<!-- <result name="showFileVersions">jsp/files/showVersions.jsp</result> -->
 			<result name="showFileVersions">jsp/files/showFileInfo.jsp</result>
 			<result name="showFileInfo">jsp/files/showFileInfo.jsp</result>
