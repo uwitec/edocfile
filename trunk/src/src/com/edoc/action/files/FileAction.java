@@ -125,6 +125,12 @@ public class FileAction  extends AbstractAction{
 		//获取目录结构信息
 		List<EdocFile> mulus = fileService.getMulus(parentId,1,1);
 		this.setAttribute("mulus", mulus);
+		
+		String layoutStyle = this.getParameter("layoutStyle");
+		if(StringUtils.isValid(layoutStyle) && layoutStyle.equals("1")){
+			this.setAttribute("layoutStyle", layoutStyle);
+			return "showMyFileListPage_h";
+		}
 		if(StringUtils.isValid(this.getForward())){
 			return this.getForward();
 		}
@@ -150,6 +156,12 @@ public class FileAction  extends AbstractAction{
 		//获取目录结构信息
 		List<EdocFile> mulus = fileService.getShoredMulus(parentId,1,1);
 		this.setAttribute("mulus", mulus);
+		
+		String layoutStyle = this.getParameter("layoutStyle");
+		if(StringUtils.isValid(layoutStyle) && layoutStyle.equals("1")){
+			this.setAttribute("layoutStyle", layoutStyle);
+			return "showShoreFileListPage_h";
+		}
 		
 		return "showShoreFileListPage";
 	}
