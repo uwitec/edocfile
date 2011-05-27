@@ -86,6 +86,9 @@ A:visited {text-decoration: none}
 	line-height:23px;
 	text-align:center;
 }
+.list_table2 tr:hover{
+	background-color:#F2F4F6;
+}
 .list_table2 td{
 	height:23px;
 	padding-top:4px;
