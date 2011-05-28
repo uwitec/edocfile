@@ -394,6 +394,11 @@ public class FileAction  extends AbstractAction{
 			this.showMessage(this.getResponse(), "预览失败：不能正常获取该版本的文档信息!", true);
 		}
 		
+		this.setAttribute("fileVersion", fileVersion);
+		if(StringUtils.isValid(getForward())){
+			return this.getForward();
+		}
+		
 		if(FileUtils.isPic(fileVersion.getFileSuffix())){
 			return "previewPic";
 		}else if(FileUtils.isMedia(fileVersion.getFileSuffix())){
@@ -522,21 +527,6 @@ public class FileAction  extends AbstractAction{
 		return;
 	}
 	
-	/**
-	 * 获取文件的版本列表信息
-	 * @return
-	 */
-	public String getEdocFileVersions(){
-		HttpServletRequest req = this.getRequest();
-		String sourceFileId = req.getParameter("sourceFileId");			//获取原文件的ID
-		PageValueObject<FileVersion> fileVersions = fileService.getEdocFileVersions(getCurrentPage(), getPageSize(),sourceFileId);
-		
-		this.getRequest().setAttribute("fileVersions", fileVersions);
-		this.getRequest().setAttribute("sourceFileId", sourceFileId);
-		this.setAttribute("currentTab", 1);
-		return "showFileVersions";
-	}
-
 	/**
 	 * 创建文件夹
 	 * @return
