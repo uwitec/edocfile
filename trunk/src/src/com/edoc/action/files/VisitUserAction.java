@@ -31,6 +31,24 @@ public class VisitUserAction  extends AbstractAction{
 		this.print("删除成功!");
 		return null;
 	}
+	
+	/**
+	 * 验证用户权限
+	 * @return
+	 */
+	public String checkPermission(){
+		String currentUserId = this.getParameter("currentUserId");
+		String sourceFileId = this.getParameter("sourceFileId");
+		String perType = this.getParameter("perType");				//验证的权限类型,view、download、edit
+		
+		boolean flag = visitUserService.checkPermission(currentUserId,sourceFileId,perType);
+		if(flag){
+			this.print("true");
+		}else{
+			this.print("false");
+		}
+		return null;
+	}
 
 	
 }
