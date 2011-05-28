@@ -142,13 +142,13 @@ public class ShoreFileServiceImpl implements ShoreFileService{
 				for(int i=0;i<mulus.size();i++){
 					EdocFile mulu = mulus.get(i);
 					if(isExistSourceFile(mulu.getId())){
+						System.out.println("@@@@@@@@@@@@@@@@@@@@");
 						ShoreFile tempShoreFile = new ShoreFile();
 						tempShoreFile.setParentId(parentId);
 						tempShoreFile.setSourceFileId(mulu.getId());
 						tempShoreFile.setShoreUserId(user.getId());
 						tempShoreFile.setShoreUserName(user.getTrueName());
 						tempShoreFile.setFileName(mulu.getFileName());
-						
 						parentId = tempShoreFile.getId();
 						list.add(tempShoreFile);
 					}

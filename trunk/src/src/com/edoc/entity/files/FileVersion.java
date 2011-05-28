@@ -64,10 +64,32 @@ public class FileVersion extends AbstractBaseEntity{
 	@Column(name = "C_FILESUFFIX", nullable = true)
 	private String fileSuffix = null;					//文件后缀如doc、xls等
 	
+	@Column(name = "C_UPDATEUSERID", nullable = true)
+	private String updateUserId = "";					//修改人的ID
+	
+	@Column(name = "C_UPDATEUSERNAME", nullable = true)
+	private String updateUserName = "";					//修改人的姓名
+	
 	public FileVersion(){
 		id = new RandomGUID().toString();
 		createTime = new Date();
 		updateTime = new Date();
+	}
+
+	public String getUpdateUserId() {
+		return updateUserId;
+	}
+
+	public void setUpdateUserId(String updateUserId) {
+		this.updateUserId = updateUserId;
+	}
+
+	public String getUpdateUserName() {
+		return updateUserName;
+	}
+
+	public void setUpdateUserName(String updateUserName) {
+		this.updateUserName = updateUserName;
 	}
 
 	public String getNewFileName() {

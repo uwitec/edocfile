@@ -10,6 +10,9 @@ import com.edoc.entity.files.VisitUserInfo;
  */
 public interface VisitUserService {
 	
+	public  static final String PERTYPE_VIEW = "view";
+	public  static final String PERTYPE_DOWNLOAD = "download"; 
+	public  static final String PERTYPE_EDIT = "edit";
 	/**
 	 * 插入访问共享文件的用户信息
 	 * @param visitUserInfos
@@ -34,4 +37,14 @@ public interface VisitUserService {
 	 * @param id
 	 */
 	public void deleteVisitUserInfo(String id);
+
+	/**
+	 * 验证用户对文件的操作权限
+	 * @param currentUserId
+	 * @param sourceFileId
+	 * @param perType
+	 * @return
+	 */
+	public boolean checkPermission(String currentUserId, String sourceFileId,
+			String perType);
 }

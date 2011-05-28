@@ -15,6 +15,7 @@ public class VisitUserInfo extends AbstractBaseEntity{
 	private static final long serialVersionUID = 1L;
 	private static final String PERMISSION_VIEW = "view";
 	private static final String PERMISSION_DOWNLOAD = "download";
+	private static final String PERMISSION_EDIT = "edit";
 	
 	@Id
 	@Column(name = "ID")
@@ -30,6 +31,9 @@ public class VisitUserInfo extends AbstractBaseEntity{
 	@Column(name = "I_PERDOWNLOAD", nullable = true)
 	private int perDownLoad = 0;			//下载权限
 	
+	@Column(name = "I_PEREDIT", nullable = true)
+	private int perEdit = 0;			//编辑权限
+	
 	@Column(name = "D_SHORESTARTDATE", nullable = true)
 	private Date shoreStartDate = null;		//共享开始日期
 	@Column(name = "D_SHOREENDDATE", nullable = true)
@@ -44,6 +48,14 @@ public class VisitUserInfo extends AbstractBaseEntity{
 	public VisitUserInfo(){
 		super();
 		id = new RandomGUID().toString();
+	}
+
+	public int getPerEdit() {
+		return perEdit;
+	}
+
+	public void setPerEdit(int perEdit) {
+		this.perEdit = perEdit;
 	}
 
 	public int getIsDelete() {
@@ -125,6 +137,8 @@ public class VisitUserInfo extends AbstractBaseEntity{
 					this.setPerView(1);
 				}else if(s.toLowerCase().equals(VisitUserInfo.PERMISSION_DOWNLOAD)){
 					this.setPerDownLoad(1);
+				}else if(s.toLowerCase().equals(VisitUserInfo.PERMISSION_EDIT)){
+					this.setPerEdit(1);
 				}
 			}
 		}

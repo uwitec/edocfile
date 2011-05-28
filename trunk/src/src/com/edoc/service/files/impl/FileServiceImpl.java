@@ -226,33 +226,6 @@ public class FileServiceImpl implements FileService{
 	}
 	
 	/**
-	 * 获取文件的版本信息列表
-	 * @param currentPage
-	 * @param pageSize
-	 * @param sourceFileId
-	 * @return
-	 * @author 陈超 2011-01-09
-	 */
-	public PageValueObject<FileVersion> getEdocFileVersions(int currentPage,
-			int pageSize, String sourceFileId){
-		PageValueObject<FileVersion> page = null;
-		if(sourceFileId!=null && sourceFileId.trim().length()>0){
-			page = new PageValueObject<FileVersion>(currentPage,pageSize);
-			
-			/*
-			 * 设置查询条件:文件创建人ID=creatorId
-			 */
-			List<PropertyFilter> filterList = new ArrayList<PropertyFilter>(1);
-			PropertyFilter filter = new PropertyFilter("edocFileId",sourceFileId,PropertyFilter.MatchType.EQ);
-			filterList.add(filter);
-			
-			page.setResult(fileVersionDao.find(filterList, page.getFirstResult(), page.getPageSize()));
-			page.setTotalRows(fileVersionDao.getCount(filterList));
-		}
-		return page;
-	}
-	
-	/**
 	 * 共享文件:1.添加共享文件信息 2.添加访问该共享文件的用户 3.更新源文件的"共享"状态
 	 * 陈超 2010-11-6
 	 */
@@ -263,13 +236,12 @@ public class FileServiceImpl implements FileService{
 			//添加访问该文件的用户信息
 			visitUserService.insertVisitUserInfo(visitUserInfos);					
 			
-			//如果立即共享的话则执行以下操作,如果是暂不共享的话则要先查看该文件是否已经共享了,如果已经共享了则将其设置成位共享
+			//如果立即共享的话则执行以下操作,如果是暂不共享的话则要先查看该文件是否已经共享了,如果已经共享了则将其设置成未共享
 			//如果未共享则不作任何操作
 			if(shoreNowFlag){
 				
 				//获取共享文件的根目录
 				List<EdocFile> mulus = edocFileDao.getParentFiles(shoreFile.getSourceFileId(), 0, 0);
-				
 				//添加共享文件的信息
 				if(!shoreFileService.isExist(shoreFile.getId())){
 					shoreFileService.insertShoreFile(shoreFile,mulus,user,shoreMuluFlag);	
