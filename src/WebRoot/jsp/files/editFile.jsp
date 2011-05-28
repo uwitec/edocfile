@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="com.edoc.utils.*;"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -8,19 +7,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <% 
 	String fileName = (String)request.getAttribute("fileName");
 	
-	String filePath = basePath + "temp/" + fileName+"_#_DISPLAYFILENAME";
-	Md5Double des = new Md5Double();    
-    filePath = des.encrypt(filePath);
+	String filePath = basePath + "temp/" + fileName;
 %>
+
 <html>
   <head>
     <base href="<%=basePath%>">
-    <base target="_self">
     <title>查看原文</title>
   	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   	<script type="text/javascript" src="js/office_edit.js"></script>
-  	<script type="text/javascript" src="js/jquery.min.js"></script>
-  	<style type="text/css">
+	<style type="text/css">
 			.office_edit {
 				position:relative;
 				margin:0 auto;
@@ -72,49 +68,60 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 	</style>
 	<script type="text/javascript">
-		function ShowActiveX(){
+		function init(){
+			var webObj=document.getElementById("edocfile-office");
+			//隐藏工具栏
 			try{
-				document.getElementById("afrmxCommonFileView1").SetTransportMode(2);
-				document.getElementById("afrmxCommonFileView1").SetEncrypt(1);
-				document.getElementById("afrmxCommonFileView1").SetCanPrint(0);
-				document.getElementById("afrmxCommonFileView1").SetCanDownload(0);
-				document.getElementById("afrmxCommonFileView1").SetDisablePrtScrn(1);
-				document.getElementById("afrmxCommonFileView1").SetTransportPath("<%=filePath %>");
-				document.getElementById("afrmxCommonFileView1").ShowFile();		
-			}catch(err){
-				alert('系统检测到您电脑中未安装系统插件，请下载安装');
-				document.form1.submit();
-			}
+				webObj.ShowToolBar = 0;
+				//加载文档
+				var fileSuffix = document.getElementById('fileSuffix').value;
+				var filePath = document.getElementById('filePath').value;
+				webObj.LoadOriginalFile(filePath, fileSuffix);	
+			
+			
+				webObj.SetCurrUserName('陈超');
+                webObj.SetTrackRevisions(1);                   //处于修订状态
+                webObj.ShowRevisions(0);                         //隐藏修订信息
+
+				
+			}catch(e){
+				alert("异常\r\nError:"+e+"\r\nError Code:"+e.number+"\r\nError Des:"+e.description);
+			}	
+			
+			
+			
+			//webObj.SetToolBarButton2("Menu Bar",2,0);
 		}
 	</script>
   </head>
   
-  <body  onload = "javascript: ShowActiveX();">
-  	<form name="form1"  target="_blank"  action="sfile/DocView.exe" method="post">
-	</form>
-	<form id="previewFileForm" action="" method="post">
-		<input type="hidden" name="sourceFileId" value="${fileVersion.edocFileId }" />
-		<input type="hidden" name="version" value="${fileVersion.version }" />
-	</form>
-	 <div class="office_edit">
+ <body onload="init()">
+  <form action="" method="post">
+	<input id="sourceFileId" type="hidden" value="${fileVersion.edocFileId }"/>
+	<input id="fileSuffix" type="hidden" value="${fileVersion.fileSuffix }"/>
+	<input id="filePath" type="hidden" value="<%=filePath %>" />
+	<input id="fileName" type="hidden" value="${fileVersion.fileName }" />
+  </form>
+
+ <div class="office_edit">
   <div class="office_edit_tools">
   	<div style="position: relative;vertical-align: middle;display: table-cell;float:left;padding-left:10px;">
 		<span class="STYLE1">当前文件:</span>	<span style="font-size: 12px;font-family: "宋体";">${fileVersion.fileName }</span>
 	</div>
   	<div style="position: relative;top: 10%;vertical-align: middle;display: table-cell;float:right;padding-right:10px;">
-	<input type="button" class="offiec_button" onclick="before_edit_office('${fileVersion.edocFileId }','${DOCUSER.id }','${fileVersion.fileSuffix }')" value="编辑" />
-	<input type="button" class="offiec_button" onclick="exit()" value="退出" />
+  	<input type="button" class="offiec_button" onclick="save_office()" value="保存" />
+	<!-- <input type="button" class="offiec_button" onclick="edit_office()" value="编辑" />  -->
+	<input type="button" class="offiec_button" onclick="show_office_editinfo()" value="显示修订" />
+	<input type="button" class="offiec_button" onclick="hidden_office_editinfo()" value="隐藏修订" />
+	<input type="button" class="offiec_button" onclick="exit_office()" value="退出" />
 	</div>
   </div>
   <div class="office_edit_doc">
-  	<OBJECT id="afrmxCommonFileView1"
-		classid="clsid:5858AFC0-2EF5-45AA-B891-CE604CF228B7"
-		type="application/x-oleobject"
-		align="baseline" border="0"
-		codebase="<%=request.getContextPath()%>/back/uploadfile/PDEReader.rar"
-		WIDTH="100%" height="610">      
-    </OBJECT>
+  	<object id="edocfile-office" height="610" width='100%' style="top: 5px" classid='clsid:E77E049B-23FC-4DB8-B756-60529A35FAD5' codebase="<%=basePath %>sfile/edocfile-office.cab">
+  		<param name='_ExtentX' value='6350'>
+  		<param name='_ExtentY' value='6350'>
+  	</object>
   </div>
 </div>
-  </body>
+</body>
 </html>

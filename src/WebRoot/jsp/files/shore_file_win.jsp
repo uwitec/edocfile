@@ -92,7 +92,7 @@
 				
 				//设置列内容和属性
 				newTd0.innerHTML= "<input name='visitUserIds' value='"+args[0]+"' type='hidden'/><input type='hidden' name='visitUserInfoId_"+args[0]+"'/><input type='hidden' name='visitUserName_"+args[0]+"' value='"+args[1]+"' />"+args[1];
-				newTd1.innerHTML= "<input type='checkbox' name='permission_"+args[0]+"' value='view'>预览&nbsp;&nbsp;<input type='checkbox' name='permission_"+args[0]+"' value='downLoad'>下载";
+				newTd1.innerHTML= "<input type='checkbox' name='permission_"+args[0]+"' value='view'>预览&nbsp;&nbsp;<input type='checkbox' name='permission_"+args[0]+"' value='edit'>编辑&nbsp;&nbsp;<input type='checkbox' name='permission_"+args[0]+"' value='downLoad'>下载";
 				newTd2.innerHTML= "<a href=\"javascript:void(0)\" onclick=\"deleteRow(this,'')\">删除</a>";
     		}
     	}	
@@ -255,6 +255,16 @@
 								
 								<c:when test="${user.perView == 0}">
 								<input type="checkbox" name="permission_${user.visitUserId }" value="view">预览
+								</c:when>
+								</c:choose>
+								
+								<c:choose>
+								<c:when test="${user.perEdit == 1}">
+								<input type="checkbox" name="permission_${user.visitUserId }" value="edit" checked>编辑
+								</c:when>
+								
+								<c:when test="${user.perEdit == 0}">
+								<input type="checkbox" name="permission_${user.visitUserId }" value="edit">编辑
 								</c:when>
 								</c:choose>
 								
