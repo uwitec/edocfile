@@ -201,7 +201,7 @@
     
     function showVersion(){
     	var form = document.getElementById("queryForm1");
-    	form.action="fileAction!getEdocFileVersions.action";
+    	form.action="fileVersionAction!getFileVersions.action";
     	form.submit();
     }
     
@@ -209,7 +209,7 @@
 	function openPage(currentPage){
 		document.getElementById("currentPage_param").value=currentPage;
 		var form = document.getElementById("queryForm1");
-		form.action="fileAction!getEdocFileVersions.action";
+		form.action="fileVersionAction!getFileVersions.action";
 		form.submit();
 	}
 	
@@ -295,16 +295,25 @@
 				<table cellspacing="0" class="list_table2" style="overflow-x:scroll;">
 						<tr bgcolor="#F2F4F6">
 							<th width="1%"><input id="selectAll" type="checkbox" onclick="selectAllCheckbox()"></input></th>
-							<th width="20%">
+							<th>
 								名称
 							</th>
-							<th width="10%">
-								修改时间
+							<th>
+								大小
 							</th>
-							<th width="10%">
+							<th>
 								当前版本
 							</th>
-							<th width="10%">
+							<th>
+								更改说明
+							</th>
+							<th>
+								修改人
+							</th>
+							<th>
+								修改时间
+							</th>
+							<th>
 								操作
 							</th>
 						</tr>
@@ -316,11 +325,20 @@
 								<td>
 									<img src="${v.icon }"/>&nbsp;${v.fileName }
 								</td>
-								<td>
-									${v.updateTime }
+								<td align="right">
+									${v.fileSize }&nbsp;KB
+								</td>
+								<td align="right">
+									${v.version }
+								</td>
+								<td align="right">
+									${v.desc }
+								</td>
+								<td align="right">
+									${v.updateUserName }
 								</td>
 								<td>
-									${v.version }
+									${v.updateTime }
 								</td>
 								<td align="center">
 									&nbsp;&nbsp;<a href="javascript:void(0);" onclick="previewFile('${v.edocFileId }','${v.version }')" >预览</a>

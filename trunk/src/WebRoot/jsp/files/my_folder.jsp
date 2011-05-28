@@ -60,19 +60,24 @@
 			function showVersion(id,fileName){
 				var params = [];
 				params[0] = fileName;
-				showModalDialog("fileAction!getEdocFileVersions.action?sourceFileId="+id+"&Rnd="+Math.random(), params, "dialogWidth:1000px; dialogHeight:500px;help:no;scroll:no;status:no");
+				showModalDialog("fileAction!getEdocFileVersions.action?sourceFileId="+id+"&Rnd="+Math.random(), params, "dialogWidth:1100px; dialogHeight:500px;help:no;scroll:no;status:no");
 				//showModalDialog("jsp/files/show_version.jsp", "", "dialogWidth:1000px; dialogHeight:500px;help:no;scroll:no;status:no");
 			}
 			
 			function showFileInfo(id,fileName){
 				var params = [];
 				params[0] = fileName;
-				showModalDialog("fileAction!getFileInfo.action?sourceFileId="+id+"&Rnd="+Math.random(), params, "dialogWidth:1000px; dialogHeight:600px;help:no;scroll:no;status:no");
+				showModalDialog("fileAction!getFileInfo.action?sourceFileId="+id+"&Rnd="+Math.random(), params, "dialogWidth:1100px; dialogHeight:600px;help:no;scroll:no;status:no");
 			}
 			
 			//文档预览
 			function previewFile(id,version){
 				window.open("fileAction!beforePreviewFile.action?sourceFileId="+id+"&version="+version+"&Rnd="+Math.random(),"","resizable=yes,status=no,toolbar=no,menubar=no,location=no");
+			
+				//重新刷新页面
+				var form = document.getElementById("queryForm1");
+				form.action = "fileAction!getMyFilesByParentId.action?Rnd="+Math.random();
+				form.submit();
 			}
 			
 			function searchFile(){
