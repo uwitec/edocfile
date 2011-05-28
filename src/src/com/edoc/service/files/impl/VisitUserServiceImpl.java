@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.edoc.dbsupport.PropertyFilter;
+import com.edoc.entity.files.EdocFile;
 import com.edoc.entity.files.VisitUserInfo;
+import com.edoc.orm.hibernate.dao.FileDAO;
 import com.edoc.orm.hibernate.dao.GenericDAO;
 import com.edoc.service.files.VisitUserService;
 
@@ -20,6 +22,42 @@ public class VisitUserServiceImpl implements VisitUserService{
 	@Resource(name="visitUserInfoDao")
 	private GenericDAO<VisitUserInfo,String> visitUserInfoDao=null;
 	
+	@Resource(name="edocFileDao")
+	private FileDAO edocFileDao=null;
+	
+	/**
+	 * 验证用户对文件的操作权限
+	 * @param currentUserId
+	 * @param sourceFileId
+	 * @param perType
+	 * @return
+	 */
+	public boolean checkPermission(String currentUserId, String sourceFileId,
+			String perType){
+		EdocFile efile = edocFileDao.get(sourceFileId);
+		if(efile!=null){
+			if(efile.getCreatorId().equals(currentUserId)){
+				return true;
+			}else{
+				List<PropertyFilter> filters = new LinkedList<PropertyFilter>();
+				filters.add(new PropertyFilter("sourceFileId",sourceFileId,PropertyFilter.MatchType.EQ));
+				
+				if(perType.equals(VisitUserService.PERTYPE_VIEW)){
+					filters.add(new PropertyFilter("perView",1,PropertyFilter.MatchType.EQ));
+				}else if(perType.equals(VisitUserService.PERTYPE_DOWNLOAD)){
+					filters.add(new PropertyFilter("perDownLoad",1,PropertyFilter.MatchType.EQ));
+				}else if(perType.equals(VisitUserService.PERTYPE_EDIT)){
+					filters.add(new PropertyFilter("perEdit",1,PropertyFilter.MatchType.EQ));
+				}
+				
+				int count = visitUserInfoDao.getCount(filters);
+				if(count>0){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	/**
 	 * 删除共享用户信息
 	 * @param id

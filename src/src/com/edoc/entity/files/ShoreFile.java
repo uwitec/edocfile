@@ -44,7 +44,7 @@ public class ShoreFile extends AbstractBaseEntity{
 	private String parentId = null;						//上一级目录ID
 	
 	@Column(name = "C_FILENAME", nullable = true)
-	private String fileName = null;						//上一级目录ID
+	private String fileName = null;						//上一级目录名称
 	
 	@Column(name = "I_ISDELETE", nullable = true)
 	private int isDelete =0;							//该字段无意义

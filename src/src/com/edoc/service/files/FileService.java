@@ -123,17 +123,6 @@ public interface FileService {
 	public EdocFile getFileById(String id);
 
 	/**
-	 * 获取文件的版本信息列表
-	 * @param currentPage
-	 * @param pageSize
-	 * @param sourceFileId
-	 * @return
-	 * @author 陈超 2011-01-09
-	 */
-	public PageValueObject<FileVersion> getEdocFileVersions(int currentPage,
-			int pageSize, String sourceFileId);
-
-	/**
 	 * 查询文件夹
 	 * @param parentId
 	 * @param userId 
