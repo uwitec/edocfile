@@ -89,7 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</script>
   </head>
   
-  <body class="body1">
+  <body class="body2">
   <form id="form1" action="" method="post">
   	<input type="hidden" name="roleId" value="${roleId }" />
   	<input type="hidden" id="menuIds" name="menuIds" />

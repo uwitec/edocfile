@@ -221,7 +221,7 @@
 	</script>
 	</head>
 
-	<body class="body1" onload="init()">
+	<body class="body2" onload="init()">
 	<form id="queryForm1" action="" method="post">
 			<input type="hidden" name="currentPage" id="currentPage_param" value="${fileVersions.currentPage }" />
 			<input type="hidden" name="sourceFileId" id="sourceFileId" value="${sourceFileId }" />

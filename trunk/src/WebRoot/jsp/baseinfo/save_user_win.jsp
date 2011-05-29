@@ -55,7 +55,7 @@
 	</script>
 	</head>
 
-	<body class="body1">
+	<body class="body2">
 		<form id="save_form" action="" method="post">
 		<input id="userId" type="hidden" name="user.id" value="${user.id }">
 			<div

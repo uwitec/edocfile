@@ -120,7 +120,7 @@
 	</script>
 	</head>
 
-	<body class="body1">
+	<body class="body2">
 	<form id="addVisitForm" action="" method="post">
 		<input id="addVisitForm_visitUserIds" type="hidden" name="visitUserIds" />
 		<input id="addVisitForm_visitUserNames" type="hidden" name="visitUserNames" />

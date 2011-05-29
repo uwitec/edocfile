@@ -40,7 +40,7 @@
 	</script>
 	</head>
 
-	<body class="body1">
+	<body class="body2">
 		<form id="save_form" action="" onsubmit="return Validator.Validate(this,3)" method="post">
 		<input id="deptId" type="hidden" name="deptId" value="${dept.id }">
 			<div style="width: 100%; height: 100%; position: relative; float: left; top: 0px;">

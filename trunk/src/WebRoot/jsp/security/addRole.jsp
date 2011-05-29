@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</script>
   </head>
   
-  <body class="body1">
+  <body class="body2">
     <form id="save_form" action="" method="POST">
    <div style="width: 100%; height: 100%; position: relative; float: left; top: 0px;">
 		<div style="width: 100%; height:35px;position: relative; float: left; top: 0px;">

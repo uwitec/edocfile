@@ -35,7 +35,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</script>
   </head>
   
-  <body class="body1" onload="init()">
+  <body class="body2" onload="init()">
     <form id="save_form" action="fileAction!uploadFiles.action" method="POST" enctype="multipart/form-data">
     <input id="parentId" type="hidden" name="parentId" />
    <div style="width: 100%; height: 100%; position: relative; float: left; top: 0px;">

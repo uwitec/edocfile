@@ -46,7 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</script>
 	</head>
 	
-	<body class="body1">
+	<body class="body2">
 	<input id="orgId" type="hidden" />
 	<div style="width: 100%; height: 100%; position: relative; float: left; top: 0px;">
 		<div style="width: 100%; height:5%;position: relative; float: left; top: 0px;">
