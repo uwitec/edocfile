@@ -541,6 +541,7 @@ public class FileAction  extends AbstractAction{
 		edocFile.setCreatorId(user.getId());
 		edocFile.setCreatorName(user.getTrueName());
 		fileService.saveFolder(edocFile);
+		this.showMessage(this.getResponse(), "创建文件夹成功!", true);
 		return null;
 	}
 	public EdocFile getEdocFile() {
