@@ -86,7 +86,7 @@
 	</script>
 	</head>
 
-	<body class="body1">
+	<body class="body2">
 		<input type="hidden" name="fileName" id="fileName" />
 		<form id="queryForm1" action="" method="post">
 			<input type="hidden" name="currentPage" id="currentPage_param" value="${fileVersions.currentPage }" />

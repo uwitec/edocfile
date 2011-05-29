@@ -66,7 +66,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</script>
   </head>
   
-  <body class="body1">
+  <body class="body2">
     <form id="save_form" action="" method="POST">
     <input type="hidden" name="message.id" value="${sendMsg.id }" />
     <input type="hidden" name="message.fromUserName" value="${DOCUSER.trueName }" />

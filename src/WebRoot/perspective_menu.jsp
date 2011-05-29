@@ -20,7 +20,7 @@ if(script==null){
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		
 		<link type="text/css" rel="stylesheet" href="jsplugin/xtree2b/css/xtree2.css">
-				
+		<link href="css/default.css" rel="stylesheet" type="text/css" />		
 		<script type="text/javascript"></script>
 		<style type="text/css">
 			body,html {
@@ -35,21 +35,7 @@ if(script==null){
 				width:100%;
 				height:100%;
 				border-left: 1px solid #a6c5e4;
-				border-top: 1px solid #a6c5e4;
 				float:left;
-			}
-			.nav_title{
-				width:100%;
-				height:26px;
-				background:#e4f0f9;
-				text-align:left;
-				line-height:26px !important;
-				text-indent:10px;
-				FONT-SIZE: 12px;
-				color:#15428b;
-			    font-weight:bold;
-				float:left;
-				border-bottom: 1px solid #7b9ebd;
 			}
 			.nav{
 				width:100%;
@@ -86,13 +72,13 @@ if(script==null){
 	
 	<body>
 		<div class="menu_content">
-			<div class="nav_title">
+			<div class="pos_css">
 				<table width="100%">
-					<tr>
+					<tr height="30">
 						<td align="left">
 							<span><img class="img2" src='./icon/nav.gif' border="0">功能导航</span>
 						</td>
-						<td align="right">
+						<td align="right" style="padding-right:5px;">
 							<a href="javascript:void(0);" onclick="refresh();"><span><img class="img2" src='./images/refresh.gif' border="0">刷新</span></a>
 						</td>
 					</tr>

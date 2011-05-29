@@ -76,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</script>
   </head>
   
-  <body class="body1">
+  <body class="body2">
     <form id="form1" action="" method="POST">
     <input id="taskId" name="id" type="hidden" value="${task.id }">
      <input id="taskState" name="task.state" type="hidden" value="${task.state }">

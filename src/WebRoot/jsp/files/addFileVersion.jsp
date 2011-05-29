@@ -41,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</script>
   </head>
   
-  <body class="body1" onload="init()">
+  <body class="body2" onload="init()">
     <form id="save_form" action="fileAction!addNewVersionFile.action" method="POST" enctype="multipart/form-data" onsubmit="return checkForm();">
     <input id="sourceFileId" type="hidden" name="sourceFileId" />
      <input id="sourceFileName" type="hidden" name="sourceFileName" />

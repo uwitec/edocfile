@@ -59,7 +59,7 @@
 	</script>
 	</head>
 
-	<body class="body1">
+	<body class="body2">
 		<div
 			style="width: 100%; height: 100%; position: relative; float: left; top: 0px;">
 			<div

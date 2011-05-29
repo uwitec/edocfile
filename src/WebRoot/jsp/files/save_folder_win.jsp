@@ -39,7 +39,7 @@
 		</script>
 	</head>
 
-	<body class="body1" onload="init()">
+	<body class="body2" onload="init()">
 	    <form id="save_form" action="fileAction!createFolder.action" onsubmit="return Validator.Validate(this,3)" method="post">
     	<input id="parentId" type="hidden" name="edocFile.parentId" />
 	<div style="width: 100%; height: 100%; position: relative; float: left; top: 0px;">

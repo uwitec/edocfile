@@ -105,13 +105,10 @@
 			<input type="hidden" name="keyWord" value="${keyWord }">
 		</form>
 		<div class="area">
-			<div style="width: 100%; height:5%;position: relative; float: left; top: 0px;">
+			<div class="pos_css">
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
-						<td style="font-size: 13px;" align="center" width="30" nowrap>
-							<img src="images/title.gif" width="7" height="32">
-						</td>
-						<td>
+						<td style="padding-left:10px;">
 							<strong>您当前的位置：</strong>全文检索
 						</td>
 					</tr>
