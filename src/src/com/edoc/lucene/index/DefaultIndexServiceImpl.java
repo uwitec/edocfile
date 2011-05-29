@@ -70,7 +70,7 @@ public class DefaultIndexServiceImpl implements IndexService{
 	private boolean canMakeIndex(File file){
 		if(file!=null){
 			String type = FileUtils.getFileType(file).toLowerCase();
-			if(type.equals("txt") || type.equals("doc")){
+			if(type.equals("txt") || type.equals("doc") || type.equals("docx") || type.equals("xls") || type.equals("xlsx") || type.equals("pdf")){
 				return true;
 			}
 		}
