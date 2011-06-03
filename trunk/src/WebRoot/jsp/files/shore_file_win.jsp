@@ -126,7 +126,7 @@
 		<input id="addVisitForm_visitUserNames" type="hidden" name="visitUserNames" />
 		<input id="addVisitForm_sourceFileId" type="hidden" name="sourceFileId" value="${edocFile.id }"/>
 	</form>
-	<form id="save_form" action="fileAction!shoreFile.action" method="post">
+	<form id="save_form" action="shoreFileAction!shoreFile.action" method="post">
 	<input id="sourceFileId" name="sourceFileId" type="hidden" value="${edocFile.id }"/>
 	<input id="parentId" name="parentId" type="hidden" value="${edocFile.parentId }" />
 	<input id="shoredFlag" name="shoredFlag" type="hidden" value="${edocFile.isShored }" />

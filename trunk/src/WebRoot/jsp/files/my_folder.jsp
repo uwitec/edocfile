@@ -47,7 +47,7 @@
 				params[0] = args;
 				//showModalDialog("jsp/files/shore_file_win.jsp", params, "dialogWidth:800px; dialogHeight:500px;help:no;scroll:no;status:no");
 				
-				var flag = showModalDialog("fileAction!beforeShoreFile.action?sourceFileId="+id+"&Rnd="+Math.random(), params, "dialogWidth:900px; dialogHeight:550px;help:no;scroll:no;status:no");
+				var flag = showModalDialog("shoreFileAction!beforeShoreFile.action?sourceFileId="+id+"&Rnd="+Math.random(), params, "dialogWidth:900px; dialogHeight:550px;help:no;scroll:no;status:no");
 				
 				if(flag==true){
 					alert('共享设置已完成!');

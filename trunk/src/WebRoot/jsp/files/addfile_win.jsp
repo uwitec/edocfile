@@ -22,11 +22,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		function doClose(){
 			this.close();
 		}
+		//暂时不用
 		function doSubmit(){
-			var form=document.getElementById('save_form');
-			form.action = "fileAction!uploadFiles.action";
-			form.submit();
-			window.close();
+			//var form=document.getElementById('save_form');
+			//form.action = "fileAction!uploadFiles.action";
+			//form.submit();
+			//window.close();
 		}
 		function init(){
 			var params = window.dialogArguments;	//参数为上一级文件夹的Id

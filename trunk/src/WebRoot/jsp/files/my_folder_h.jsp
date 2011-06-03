@@ -75,7 +75,7 @@
 				var params = [];
 				params[0] = args;
 				
-				var flag = showModalDialog("fileAction!beforeShoreFile.action?sourceFileId="+id+"&Rnd="+Math.random(), params, "dialogWidth:900px; dialogHeight:550px;help:no;scroll:no;status:no");
+				var flag = showModalDialog("shoreFileAction!beforeShoreFile.action?sourceFileId="+id+"&Rnd="+Math.random(), params, "dialogWidth:900px; dialogHeight:550px;help:no;scroll:no;status:no");
 				if(flag==true){
 					alert('共享设置已完成!');
 					var form = document.getElementById("queryForm1");
@@ -213,7 +213,11 @@
 					  </td>
 				    </tr>
 					<tr>
-					  <td>&nbsp;&nbsp;&nbsp;当前版本：${edocFile.currentVersion }</td>
+					  <td>
+					  <c:if test="${edocFile.isFolder==0}">
+					  &nbsp;&nbsp;&nbsp;当前版本：${edocFile.currentVersion }
+					  </c:if>
+					  </td>
 				    </tr>
 					<tr>
 					  <td>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" onclick="previewFile('${edocFile.id }','${edocFile.currentVersion }')">预览</a> &nbsp;&nbsp;<a href="javascript:void(0);" onclick="showShoreFileWin('${edocFile.id }',${edocFile.isShored})">共享</a> &nbsp;&nbsp;<a href="javascript:void(0);" onclick="deleteOne('${edocFile.id }')">删除</a>					  </td>

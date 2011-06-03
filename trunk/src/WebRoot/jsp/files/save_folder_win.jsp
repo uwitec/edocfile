@@ -23,11 +23,13 @@
     	function doClose(){
 			this.close();
 		}
+		//暂时不用
 		function doSubmit(){
-			var form=document.getElementById('save_form');
-			var c = document.getElementById('parentId').value;
-			form.submit();
-			window.close();		//关闭窗口
+			//var form=document.getElementById('save_form');
+			//var c = document.getElementById('parentId').value;
+			//form.action  = "fileAction!createFolder.action?Rnd="+Math.random();
+			//form.submit();
+			//window.close();		//关闭窗口
 		}
 		function init(){
 			var params = window.dialogArguments;	//参数为上一级文件夹的Id
@@ -40,7 +42,7 @@
 	</head>
 
 	<body class="body2" onload="init()">
-	    <form id="save_form" action="fileAction!createFolder.action" onsubmit="return Validator.Validate(this,3)" method="post">
+	    <form id="save_form" action="fileAction!createFolder.action"  method="post">
     	<input id="parentId" type="hidden" name="edocFile.parentId" />
 	<div style="width: 100%; height: 100%; position: relative; float: left; top: 0px;">
 		<div style="width: 100%; height:35px;position: relative; float: left; top: 0px;">
@@ -59,7 +61,7 @@
 					<table width="100%" align="center">
 			    		<tr>
 			    			<td align="right" width="22%"><font color="red">*</font> 文件夹名称：</td>
-		    			  <td width="78%"><input type="text" name="edocFile.fileName" dataType="Require" msg="请输入正确的姓名！"/></td>
+		    			  <td width="78%"><input type="text" name="edocFile.fileName" /></td>
 		    		  </tr>
                       <tr>
 			    			<td align="right" width="22%"><font color="red">*</font> 文件夹描述：</td>
@@ -74,7 +76,7 @@
 					<table width="100%" align="center" cellspacing="0" cellpadding="2">
 						<tr>
 							<td align="center" height="24">
-								<input type="button" class="button" value="确&nbsp;&nbsp;认" onClick="doSubmit()">
+								<input type="submit" class="button" value="确&nbsp;&nbsp;认">
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<input type="button" class="button" value="取&nbsp;&nbsp;消" onClick="doClose()">
 							</td>
