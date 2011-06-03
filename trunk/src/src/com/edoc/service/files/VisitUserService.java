@@ -2,6 +2,8 @@ package com.edoc.service.files;
 
 import java.util.List;
 
+import com.edoc.entity.files.EdocFile;
+import com.edoc.entity.files.ShoreFile;
 import com.edoc.entity.files.VisitUserInfo;
 /**
  * 共享访问用户服务接口 {@link VisitUserServiceImpl}
@@ -16,8 +18,9 @@ public interface VisitUserService {
 	/**
 	 * 插入访问共享文件的用户信息
 	 * @param visitUserInfos
+	 * @param useHome 
 	 */
-	public void insertVisitUserInfo(List<VisitUserInfo> visitUserInfos);
+	public void insertVisitUserInfo(List<VisitUserInfo> visitUserInfos, List<EdocFile> mulus);
 	
 	/**
 	 * 删除访问用户的信息

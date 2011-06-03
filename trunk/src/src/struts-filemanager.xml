@@ -14,7 +14,6 @@
 			<!-- <result name="showFileVersions">jsp/files/showVersions.jsp</result> -->
 			<!-- <result name="showFileVersions">jsp/files/showFileInfo.jsp</result> -->
 			<result name="showFileInfo">jsp/files/showFileInfo.jsp</result>
-			<result name="showShorePage">jsp/files/shore_file_win.jsp</result>
 			<result name="editFile">jsp/files/editFile.jsp</result>
 			<result name="previewFile">jsp/files/previewFile.jsp</result>
 			<result name="previewPic">jsp/files/previewPic.jsp</result>
@@ -31,6 +30,11 @@
 		
 		<action name="fileVersionAction" class="fileVersionAction">
 			<result name="showFileVersions">jsp/files/showFileInfo.jsp</result>
+		</action>
+		
+		<action name="shoreFileAction" class="shoreFileAction">
+			<result name="showShorePage">jsp/files/shore_file_win.jsp</result>
+		
 		</action>
 	</package>
 </struts>

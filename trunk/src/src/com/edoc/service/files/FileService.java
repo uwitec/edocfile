@@ -4,11 +4,8 @@ import java.io.FileInputStream;
 import java.util.List;
 
 import com.edoc.dbsupport.PageValueObject;
-import com.edoc.entity.baseinfo.User;
 import com.edoc.entity.files.EdocFile;
 import com.edoc.entity.files.FileVersion;
-import com.edoc.entity.files.ShoreFile;
-import com.edoc.entity.files.VisitUserInfo;
 
 /**
  * 文件服务类,包括:获取文件存放地址,文件上传、下载等等操作.实现类{@link FileServiceImpl}
@@ -71,15 +68,6 @@ public interface FileService {
 	public PageValueObject<EdocFile> getRootFileFromShoreFolder(
 			int currentPage, int pageSize);
 
-	/**
-	 * 共享文件
-	 * 陈超 2010-11-6
-	 * @param user 
-	 * @param shoreMuluFlag 是否共享该文件的上级目录
-	 * @param shoreNowFlag 	是否立即共享
-	 */
-	public boolean shoreFile(ShoreFile shoreFile, List<VisitUserInfo> visitUserInfos, User user, int shoreMuluFlag, boolean shoreNowFlag);
-	
 	/**
 	 * 根据parentId获取对应的子文件信息
 	 * @param currentPage
