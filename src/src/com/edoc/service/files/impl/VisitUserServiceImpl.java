@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.edoc.dbsupport.PropertyFilter;
 import com.edoc.entity.files.EdocFile;
+import com.edoc.entity.files.ShoreFile;
 import com.edoc.entity.files.VisitUserInfo;
 import com.edoc.orm.hibernate.dao.FileDAO;
 import com.edoc.orm.hibernate.dao.GenericDAO;
@@ -102,8 +103,25 @@ public class VisitUserServiceImpl implements VisitUserService{
 	}
 	
 	@Transactional(readOnly=false)
-	public void insertVisitUserInfo(List<VisitUserInfo> visitUserInfos) {
+	public void insertVisitUserInfo(List<VisitUserInfo> visitUserInfos, List<EdocFile> mulus) {
 		if(visitUserInfos!=null && !visitUserInfos.isEmpty()){
+			
+			if(mulus!=null && !mulus.isEmpty()){
+//				EdocFile temp = new EdocFile();
+//				temp.setId(userHome.getSourceFileId());
+//				mulus.add(temp);
+				List<VisitUserInfo> tempVisitUserInfo = new LinkedList<VisitUserInfo>(visitUserInfos);
+				for(EdocFile m:mulus){
+					for(VisitUserInfo v:tempVisitUserInfo){
+						VisitUserInfo visitUserInfo = new VisitUserInfo();
+						visitUserInfo.setVisitUserId(v.getVisitUserId());
+						visitUserInfo.setVisitUserName(v.getVisitUserName());
+						visitUserInfo.setSourceFileId(m.getId());
+						visitUserInfo.setPermissions(new String[]{"view"});
+						visitUserInfos.add(visitUserInfo);
+					}
+				}
+			}
 			for(VisitUserInfo v:visitUserInfos){
 				visitUserInfoDao.saveOrUpdate(v);
 			}

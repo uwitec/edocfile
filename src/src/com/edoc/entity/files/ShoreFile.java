@@ -25,20 +25,19 @@ public class ShoreFile extends AbstractBaseEntity{
 	private String id = null;
 	
 	@Column(name = "C_SHOREUSERNAME", nullable = true)
-	private String shoreUserName = null;		//共享此文件的用户姓名
+	private String shoreUserName = null;				//共享此文件的用户姓名
 	
 	@Column(name = "C_SHOREUSERID", nullable = true)
-	private String shoreUserId = null;			//共享此文件的用户Id
+	private String shoreUserId = null;					//共享此文件的用户Id
 	
 	@Column(name = "D_SHORE_STARTTIME", nullable = true)
-	private Date shoreStartTime = null;				//共享开始时间
+	private Date shoreStartTime = null;					//共享开始时间
 	
 	@Column(name = "D_SHORE_ENDTIME", nullable = true)
-	private Date shoreEndTime = null;			//共享截止时间
-	
+	private Date shoreEndTime = null;					//共享截止时间
 	
 	@Column(name = "C_SOURCE_ID", nullable = true)
-	private String sourceFileId = null;		//共享文件的ID
+	private String sourceFileId = null;					//共享文件的ID
 	
 	@Column(name = "C_PARENTID", nullable = true)
 	private String parentId = null;						//上一级目录ID
@@ -48,6 +47,10 @@ public class ShoreFile extends AbstractBaseEntity{
 	
 	@Column(name = "I_ISDELETE", nullable = true)
 	private int isDelete =0;							//该字段无意义
+	
+	@Column(name = "I_ISHOME", nullable = true)
+	private int isHome = 0;								//是否是用户主目录
+	
 	
 	@Transient
 	private String newFileName = null;					//新文件名称
@@ -72,21 +75,29 @@ public class ShoreFile extends AbstractBaseEntity{
 	@Transient
 	private int shoredFlag = 0;							//判断对于的文件是否已经共享
 	@Transient
-	private int perView = 0;				//查看权限
+	private int perView = 0;							//查看权限
 	@Transient
-	private int perDownLoad = 0;			//下载权限
+	private int perDownLoad = 0;						//下载权限
 	
-//	private String visitUserId = null;			//访问用户的ID
+//	private String visitUserId = null;					//访问用户的ID
 //
 //	@OneToOne(fetch=FetchType.LAZY)
 //	@JoinColumn(name="C_USERID")
-//	private User user = null;					//允许访问该文件的用户
+//	private User user = null;							//允许访问该文件的用户
 	
 	public ShoreFile(){
 		super();
 		id = new RandomGUID().toString();
 	}
 	
+	public int getIsHome() {
+		return isHome;
+	}
+
+	public void setIsHome(int isHome) {
+		this.isHome = isHome;
+	}
+
 	public int getIsDelete() {
 		return isDelete;
 	}

@@ -14,12 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.edoc.dbsupport.PageValueObject;
 import com.edoc.dbsupport.PropertyFilter;
-import com.edoc.entity.baseinfo.User;
 import com.edoc.entity.files.EdocFile;
 import com.edoc.entity.files.FileVersion;
 import com.edoc.entity.files.RecycleInfo;
-import com.edoc.entity.files.ShoreFile;
-import com.edoc.entity.files.VisitUserInfo;
 import com.edoc.lucene.index.IndexService;
 import com.edoc.orm.hibernate.dao.FileDAO;
 import com.edoc.orm.hibernate.dao.GenericDAO;
@@ -30,6 +27,7 @@ import com.edoc.service.files.VisitUserService;
 import com.edoc.utils.ConfigResource;
 import com.edoc.utils.StringUtils;
 import com.edoc.utils.Timer;
+
 @Component("fileService")
 @Transactional(readOnly=true)
 public class FileServiceImpl implements FileService{
@@ -223,49 +221,6 @@ public class FileServiceImpl implements FileService{
 		}
 		return page;
 		
-	}
-	
-	/**
-	 * 共享文件:1.添加共享文件信息 2.添加访问该共享文件的用户 3.更新源文件的"共享"状态
-	 * 陈超 2010-11-6
-	 */
-	@Transactional(readOnly=false)
-	public boolean shoreFile(ShoreFile shoreFile, List<VisitUserInfo> visitUserInfos, User user, int shoreMuluFlag, boolean shoreNowFlag){
-		try{
-			EdocFile sourceFile = this.getFileById(shoreFile.getSourceFileId());
-			//添加访问该文件的用户信息
-			visitUserService.insertVisitUserInfo(visitUserInfos);					
-			
-			//如果立即共享的话则执行以下操作,如果是暂不共享的话则要先查看该文件是否已经共享了,如果已经共享了则将其设置成未共享
-			//如果未共享则不作任何操作
-			if(shoreNowFlag){
-				
-				//获取共享文件的根目录
-				List<EdocFile> mulus = edocFileDao.getParentFiles(shoreFile.getSourceFileId(), 0, 0);
-				//添加共享文件的信息
-				if(!shoreFileService.isExist(shoreFile.getId())){
-					shoreFileService.insertShoreFile(shoreFile,mulus,user,shoreMuluFlag);	
-				}
-				//修改文件共享状态
-				String updateSQL = "update EdocFile set isShored = 1 where id in('"+shoreFile.getSourceFileId()+"'";
-				if(shoreMuluFlag==1 && mulus!=null && !mulus.isEmpty()){
-					for(EdocFile e:mulus){
-						updateSQL += ",'"+e.getId()+"'";
-					}
-				}
-				updateSQL += ")";
-				edocFileDao.executeUpdate(updateSQL);
-			}else{
-				if(sourceFile.getIsShored()==1){
-					sourceFile.setIsShored(0);
-					edocFileDao.update(sourceFile);
-				}
-			}
-			return true;
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return false;
 	}
 	
 	/**

@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.LockObtainFailedException;
@@ -47,5 +48,25 @@ public class IndexManager {
 		}
 		return;
 	}
+	
+	public static void deleteDoc(File indexDir, Analyzer analyzer, EdocDocument doc)
+			throws Exception {
+		try {
+			// 创建IndexWriter,增量创建索引
+			IndexWriter writer = new IndexWriter(FSDirectory.open(indexDir),analyzer, false, IndexWriter.MaxFieldLength.UNLIMITED);
+			writer.addDocument(doc.getDoc());
+			writer.close();
+			
+			IndexReader indexReader = IndexReader.open(FSDirectory.open(indexDir));		//从硬盘中读取索引文件
+			
+		} catch (CorruptIndexException e) {
+			e.printStackTrace();
+		} catch (LockObtainFailedException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return;
+		}
 
 }
