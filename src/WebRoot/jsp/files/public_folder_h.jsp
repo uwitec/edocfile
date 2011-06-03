@@ -168,7 +168,11 @@
 					  </td>
 				    </tr>
 					<tr>
-					  <td>&nbsp;&nbsp;&nbsp;当前版本：${edocFile.currentVersion }</td>
+					  <td>
+					   <c:if test="${edocFile.isFolder==0}">
+					  &nbsp;&nbsp;&nbsp;当前版本：${edocFile.currentVersion }
+					  </c:if>
+					  </td>
 				    </tr>
 					<tr>
 					  <td>&nbsp;&nbsp;&nbsp;
