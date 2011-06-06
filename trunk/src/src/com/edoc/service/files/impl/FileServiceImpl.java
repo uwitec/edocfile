@@ -376,7 +376,7 @@ public class FileServiceImpl implements FileService{
 	public void deleteFile(String[] deleteParams, String creatorId){
 		if(deleteParams!=null){
 			
-			visitUserService.deleteVisitUserBySourceFileId(deleteParams);		//添加访问该文件的用户信息
+			visitUserService.deleteVisitUserBySourceFileId(deleteParams);				//添加访问该文件的用户信息
 			shoreFileService.deleteShoreFileBySourceFileId(deleteParams);				//添加共享文件的信息
 			List<RecycleInfo> recyclyInfos = new LinkedList<RecycleInfo>();
 			//将文件设置成已删除且取消共享设置

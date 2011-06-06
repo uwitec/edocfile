@@ -67,16 +67,6 @@ public interface ShoreFileService {
 	
 	
 	/**
-	 * 创建文件夹,改文件夹会直接在"共享文件夹"中显示(其他用户都能查看到,但文件夹中的文件是受权限限制的)
-	 * 在创建文件夹的时候会在 sys_fileinfo 这张表中添加一条记录,表示是由该用户创建的,其中c_parentid = '-1'
-	 * 表示不再"我的文件夹"中显示
-	 * 
-	 * @param shoreFile		共享文件信息
-	 * @author 				陈超 2011-06-01
-	 */
-	public void createFolder(EdocFile edocFile,String parentId);
-
-	/**
 	 * 共享文件操作。在共享该文件的同时要将该文件的上层文件夹设置成已共享(但文件夹下面的其他文件不做共享操作)
 	 * 首先在"共享文件夹"下检查是否存在一个名称为: 姓名(登录名) 的文件夹,如果不存在则创建,然后将共享文件的
 	 * parentId 设置成该文件夹的ID
