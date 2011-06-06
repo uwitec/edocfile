@@ -32,8 +32,20 @@
 			    color:#B9090C;
 			}
 		</style>
+		<script type="text/javascript">
+		
+			//重设密码
+			function resetPassword(id){
+				var form = document.getElementById("form1");
+				form.action = "userAction!resetPassword.action?userId="+id+"&Rnd="+Math.random();
+				form.submit();
+			}
+		</script>
 	</head>
 	<body>
+		<form id="form1" action="" method="post">
+		
+		</form>
 		<form id="queryForm" action="userAction!getUsersByOrgId.action" method="post">
 			<input id="orgId" name="orgId" type="hidden" value="${orgId }"/>
 			<input id="userName" name="userName" type="hidden" value="${userName }"/>
@@ -69,6 +81,8 @@
 									<a href="javascript:void(0);" onclick="updateUser('${user.id }')" >修改</a>
 									&nbsp;&nbsp;
 									<a href="javascript:void(0);" onclick="deleteOne('${user.id }')">删除</a>
+									&nbsp;&nbsp;
+									<a href="javascript:void(0);" onclick="resetPassword('${user.id }')">重设密码</a>
 								</td>
 							</tr>
 						</c:forEach>
