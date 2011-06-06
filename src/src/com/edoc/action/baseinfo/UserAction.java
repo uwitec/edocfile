@@ -85,6 +85,14 @@ public class UserAction extends AbstractAction{
 		userService.updatePassword(user.getId(),newPassword);
 		this.showMessage2(this.getResponse(), "密码修改成功!", true);
 	}
+	
+	/**
+	 * 重设密码
+	 */
+	public void resetPassword(){
+		userService.updatePassword(this.getParameter("userId"),"888");
+		this.showMessage2(this.getResponse(), "密码重设成功!", true);
+	}
 	/**
 	 * 登录功能
 	 * @return
