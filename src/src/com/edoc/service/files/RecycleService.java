@@ -30,13 +30,13 @@ public interface RecycleService {
 
 
 	/**
-	 * 清空回收站
+	 * 清空回收站,清空回收站的同时要删除文件的信息包括：文件记录、版本信息、共享信息等等
 	 */
 	void clearAll();
 
 
 	/**
-	 * 删除回收站中的文件
+	 * 删除回收站中的文件,删除文件的同时要删除文件的信息包括：文件记录、版本信息、共享信息等等
 	 * @param fileIds
 	 */
 	void delete(String[] fileIds);

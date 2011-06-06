@@ -138,23 +138,6 @@ public class ShoreFileServiceImpl implements ShoreFileService{
 		}
 	}
 	/**
-	 * 创建文件夹,改文件夹会直接在"共享文件夹"中显示(其他用户都能查看到,但文件夹中的文件是受权限限制的)
-	 * 在创建文件夹的时候会在 sys_fileinfo 这张表中添加一条记录,表示是由该用户创建的,其中c_parentid = '-1'
-	 * 表示不再"我的文件夹"中显示
-	 * 
-	 * @param shoreFile		共享文件信息
-	 * @author 				陈超 2011-06-01
-	 */
-	public void createFolder(EdocFile edocFile,String parentId){
-//		ShoreFile shoreFile = copyFromEdocFile(edocFile,parentId);
-		
-		
-		
-		
-		
-	}
-	
-	/**
 	 * 获取共享文件信息
 	 * @param currentPage
 	 * @param pageSize
@@ -195,7 +178,6 @@ public class ShoreFileServiceImpl implements ShoreFileService{
 				sql += " and b.C_FILENAME like '%"+fileName+"%'";
 				countSQL += " and b.C_FILENAME like '%"+fileName+"%'";
 			}
-			System.out.println("countSQL:"+countSQL);
 			page.setTotalRows(shoreFileDao.excuteGetCountSQL(countSQL));
 			List r = shoreFileDao.excuteQuerySQL(sql, page.getFirstResult(), page.getPageSize());
 			page.setResult(parserResult(r));
@@ -318,44 +300,6 @@ public class ShoreFileServiceImpl implements ShoreFileService{
 		shoreFileDao.save(list);
 	}
 	
-//	/**
-//	 * 插入新的共享文件信息
-//	 * @param shoreFile 共享文件信息
-//	 * @author 			陈超 2010-11-16
-//	 */
-//	@Transactional(readOnly=false)
-//	public void insertShoreFile(ShoreFile shoreFile, List<EdocFile> mulus,User user,int shoreMuluFlag) {
-//		//先判断该文件是否已经共享
-//		//如果没有上级目录的话则将该共享文件存放在"共享文件夹"的目录下,否则依次保持上级目录
-//		List<ShoreFile> list = new LinkedList<ShoreFile>();
-//		if(shoreMuluFlag==1){
-//			if(mulus!=null && !mulus.isEmpty()){
-//				String parentId = "-1";
-//				for(int i=0;i<mulus.size();i++){
-//					EdocFile mulu = mulus.get(i);
-//					if(isExistSourceFile(mulu.getId())){
-//						ShoreFile tempShoreFile = new ShoreFile();
-//						tempShoreFile.setParentId(parentId);
-//						tempShoreFile.setSourceFileId(mulu.getId());
-//						tempShoreFile.setShoreUserId(user.getId());
-//						tempShoreFile.setShoreUserName(user.getTrueName());
-//						tempShoreFile.setFileName(mulu.getFileName());
-//						parentId = tempShoreFile.getId();
-//						list.add(tempShoreFile);
-//					}
-//				}
-//				shoreFile.setParentId(parentId);
-//			}else{
-//				shoreFile.setParentId("-1");
-//			}
-//		}else{
-//			shoreFile.setParentId("-1");
-//		}
-//		list.add(shoreFile);
-//		shoreFileDao.save(list);
-//	}
-	
-	
 	/**
 	 * 判断记录是否存在
 	 * @param id
@@ -378,7 +322,12 @@ public class ShoreFileServiceImpl implements ShoreFileService{
 		String sql = "delete from sys_shorefile where C_SOURCE_ID in('000'";
 		if(sourceFileIds!=null){
 			for(String sFileId:sourceFileIds){
-				sql += ",'"+sFileId+"'";
+				List<EdocFile> edocList = edocFileDao.getSubFileInfos(sFileId,1);
+				if(edocList!=null && !edocList.isEmpty()){
+					for(EdocFile e:edocList){
+						sql += ",'"+e.getId()+"'";
+					}
+				}
 			}
 		}
 		sql += ")";

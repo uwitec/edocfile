@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.edoc.dbsupport.PropertyFilter;
 import com.edoc.entity.files.EdocFile;
-import com.edoc.entity.files.ShoreFile;
 import com.edoc.entity.files.VisitUserInfo;
 import com.edoc.orm.hibernate.dao.FileDAO;
 import com.edoc.orm.hibernate.dao.GenericDAO;
@@ -88,13 +87,15 @@ public class VisitUserServiceImpl implements VisitUserService{
 	 */
 	@Transactional(readOnly=false)
 	public void deleteVisitUserBySourceFileId(String[] sourceFileIds){
-//		visitUserInfoDao.update("delete sys_visituserinfo where C_SOURCEFILEID='"+fileId+"'");
-//		visitUserInfoDao.update("delete from sys_visituserinfo where C_SOURCEFILEID = '"+fileId+"'");
-		
 		String sql = "delete from sys_visituserinfo where C_SOURCEFILEID in('000'";
 		if(sourceFileIds!=null){
 			for(String sFileId:sourceFileIds){
-				sql += ",'"+sFileId+"'";
+				List<EdocFile> edocList = edocFileDao.getSubFileInfos(sFileId,1);
+				if(edocList!=null && !edocList.isEmpty()){
+					for(EdocFile e:edocList){
+						sql += ",'"+e.getId()+"'";
+					}
+				}
 			}
 		}
 		sql += ")";
