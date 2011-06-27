@@ -308,6 +308,9 @@ public class FileServiceImpl implements FileService{
 		newFileVersion.setCreatorId(edocFile.getCreatorId());									//设置创建人员ID
 		newFileVersion.setCreatorName(edocFile.getCreatorName());								//设置创建人员名称
 		
+		newFileVersion.setUpdateUserId(edocFile.getCreatorId());								//设置当前版本的编辑人员Id
+		newFileVersion.setUpdateUserName(edocFile.getCreatorName());							//设置当前版本的编辑人员姓名
+		
 		String currentVersion = getFileVersion(edocFile.getId());								//获取版本号
 		newFileVersion.setVersion(currentVersion);
 		edocFile.setCurrentVersion(currentVersion);
@@ -343,6 +346,11 @@ public class FileServiceImpl implements FileService{
 		fileVersionDao.save(newFileVersion);
 	}
 	
+	/**
+	 * 获取文档的版本信息
+	 * @param sourceFileId
+	 * @return
+	 */
 	private String getFileVersion(String sourceFileId){
 		//获取当前版本号:VyyyyMMDD-version
 		String currentDate = Timer.convertToString(new Date(), "yyyyMMdd");
