@@ -102,6 +102,13 @@
 				form.action = "fileAction!getMyFilesByParentId.action?Rnd="+Math.random();
 				form.submit();
 			}
+			
+			function openFolder(parentId){
+				document.getElementById('parentId').value=parentId;
+				var form = document.getElementById("queryForm1");
+				form.action = "fileAction!getMyFilesByParentId.action?Rnd="+Math.random();
+				form.submit();
+			}
 		</script>
 	</head>
 	<body class="body1">
@@ -116,7 +123,7 @@
 						<td style="padding-left:10px;">
 							<strong>您当前的位置：</strong>
 							<c:forEach var="v" items="${mulus}">
-							<a href="fileAction!getMyFilesByParentId.action?parentId=${v.id }">${v.fileName } </a>
+							<a href="javascript:void(0);" onclick="openFolder('${v.id }')">${v.fileName } </a>
 							<c:choose>
 							<c:when test="${v.id != parentId}">
 							&gt;&gt;
@@ -189,7 +196,7 @@
 								</td>
 								<td id="fileName${edocFile.id }" align="left">
 									<c:if test="${edocFile.isFolder==1}">
-										<a href="fileAction!getMyFilesByParentId.action?parentId=${edocFile.id }"><img src="${edocFile.icon }"/>&nbsp;${edocFile.fileName }</a>
+										<a href="javascript:void(0);" onclick="openFolder('${edocFile.id }')"><img src="${edocFile.icon }"/>&nbsp;${edocFile.fileName }</a>
 									</c:if>
 									<c:if test="${edocFile.isFolder==0}">
 										<a href="javascript:void(0);" onclick="showFileInfo('${edocFile.id }','${edocFile.fileName }')"><img src="${edocFile.icon }"/>&nbsp;${edocFile.fileName }</a>
