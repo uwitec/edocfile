@@ -36,8 +36,25 @@ public class IndexManager {
 			throws Exception {
 		try {
 			// 创建IndexWriter,增量创建索引
-			IndexWriter writer = new IndexWriter(FSDirectory.open(indexDir),analyzer, false, IndexWriter.MaxFieldLength.UNLIMITED);
+			//判断是否存在 segments  文件
+			boolean segExistFlag = false;		
+			if(indexDir.exists() && indexDir.isDirectory()){
+				File[] files = indexDir.listFiles();
+				for(File f:files){
+					if(f.getName().startsWith("segments")){
+						segExistFlag = true;
+						break;
+					}
+				}
+			}
+			IndexWriter writer = null;
+			if(segExistFlag){
+				writer = new IndexWriter(FSDirectory.open(indexDir),analyzer, false, IndexWriter.MaxFieldLength.UNLIMITED);
+			}else{
+				writer = new IndexWriter(FSDirectory.open(indexDir),analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
+			}
 			writer.addDocument(doc.getDoc());
+			writer.commit();
 			writer.close();
 		} catch (CorruptIndexException e) {
 			e.printStackTrace();
