@@ -94,7 +94,8 @@ public class FileAction  extends AbstractAction{
 	 * @return
 	 */
 	public String getMyFilesByParentId(){
-		
+//		System.out.println("!!!!!!!!!!!!!!!!");
+//		new Thread(new ThreadTest()).start();
 		//获取parentId下的文件信息
 		//获取上级目录ID,如果上级菜单ID无效的话则设为"0"
 		String parentId = getRequest().getParameter("parentId");
