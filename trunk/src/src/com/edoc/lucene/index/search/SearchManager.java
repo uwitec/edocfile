@@ -1,6 +1,7 @@
 package com.edoc.lucene.index.search;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -131,12 +132,9 @@ public class SearchManager {
 					rs.add(edoc);
 				}
 			}
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}catch (IOException e) {
-			e.printStackTrace();
-		}catch (InvalidTokenOffsetsException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+//			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		return rs;
 	}
