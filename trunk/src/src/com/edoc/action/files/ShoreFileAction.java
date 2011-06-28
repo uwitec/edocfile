@@ -13,7 +13,6 @@ import com.edoc.entity.baseinfo.User;
 import com.edoc.entity.files.EdocFile;
 import com.edoc.entity.files.ShoreFile;
 import com.edoc.entity.files.VisitUserInfo;
-import com.edoc.mail.MailSender;
 import com.edoc.service.files.FileService;
 import com.edoc.service.files.ShoreFileService;
 import com.edoc.service.files.VisitUserService;
@@ -32,14 +31,13 @@ public class ShoreFileAction  extends AbstractAction{
 	@Resource(name="fileService")
 	private FileService fileService = null;
 
-//	@Resource(name="mailSender")
-//	private MailSender mailSender = null;
-	
 	@Resource(name="shoreFileService")
 	private ShoreFileService shoreFileService = null;
 	
 	@Resource(name="visitUserService")
 	private VisitUserService visitUserService = null;
+	
+	private boolean sendMsgFlag = false;
 	
 	/**
 	 * 共享操作前的准备工作
@@ -71,12 +69,6 @@ public class ShoreFileAction  extends AbstractAction{
 		}
 		boolean shoreNowFlag = Boolean.parseBoolean(shoreNowFlagStr);
 		String parentId = this.getParameter("parentId");
-//		int shoreMuluFlag = 0;												//是否共享目录,0不共享,1共享
-//		String shoreMulu = this.getParameter("shoreMulu");
-//		if(StringUtils.isValid(shoreMulu)){
-//			shoreMuluFlag = Integer.parseInt(shoreMulu);
-//		}
-
 		
 		ShoreFile shoreFile = new ShoreFile();
 		String shoreFileId = this.getParameter("shoreFileId");
@@ -89,7 +81,7 @@ public class ShoreFileAction  extends AbstractAction{
 		shoreFile.setShoreUserName(user.getTrueName());
 		
 		List<VisitUserInfo> visitUserInfos = getVisitUserInfos(user, sourceFileId);
-		shoreFileService.shoreFile(shoreFile,visitUserInfos,user,shoreNowFlag);
+		shoreFileService.shoreFile(shoreFile,visitUserInfos,user,shoreNowFlag,sendMsgFlag);
 		return null;
 	}
 	
@@ -139,5 +131,12 @@ public class ShoreFileAction  extends AbstractAction{
 		
 		return visitUserInfos;
 	}
-	
+
+
+	public boolean isSendMsgFlag() {
+		return sendMsgFlag;
+	}
+	public void setSendMsgFlag(boolean sendMsgFlag) {
+		this.sendMsgFlag = sendMsgFlag;
+	}
 }
