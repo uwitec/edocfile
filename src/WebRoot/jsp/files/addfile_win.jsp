@@ -24,10 +24,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		//暂时不用
 		function doSubmit(){
-			//var form=document.getElementById('save_form');
-			//form.action = "fileAction!uploadFiles.action";
-			//form.submit();
-			//window.close();
+			var value = document.getElementById('file').value;
+			if(!value){
+				alert('请选择要上传的文件!');
+				return;
+			}
+			var form=document.getElementById('save_form');
+			form.action = "fileAction!uploadFiles.action";
+			form.enctype="multipart/form-data";
+			form.method = "post";
+			form.submit();
 		}
 		function init(){
 			var params = window.dialogArguments;	//参数为上一级文件夹的Id
@@ -56,7 +62,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<table width="100%" align="center">
 	    		<tr>
 	    			<td align="right" width="22%"><font color="red">*</font> 选择文件：</td>
-	    			<td width="78%"><input  type="file" name="docFile"/></td>
+	    			<td width="78%"><input id="file"  type="file" name="docFile"/></td>
 	    		</tr>
                 <tr>
 	    			<td align="right" width="22%">文件描述：</td>
@@ -83,9 +89,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<table width="100%" align="center" cellspacing="0" cellpadding="2">
 						<tr>
 							<td align="center" height="24">
-								<input type="submit" class="button" value="确&nbsp;&nbsp;认" />
+								<input type="button" onclick="doSubmit()" class="button" value="确&nbsp;&nbsp;认" />
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<input type="button" class="button" value="取&nbsp;&nbsp;消" onClick="closeWin()" />
+								<input type="button" class="button" value="取&nbsp;&nbsp;消" onClick="doClose()" />
 							</td>
 						</tr>
 					</table>

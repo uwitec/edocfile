@@ -220,7 +220,9 @@
 									${edocFile.currentVersion }
 								</td>
 								<td align="center">
+									<c:if test="${edocFile.isFolder==0}">
 									&nbsp;&nbsp;<a href="javascript:void(0);" onclick="previewFile('${edocFile.id }','${edocFile.currentVersion }')">预览</a>
+									</c:if>
 									&nbsp;&nbsp;<a href="javascript:void(0);" onclick="showShoreFileWin('${edocFile.id }',${edocFile.isShored})">共享</a>
 									&nbsp;&nbsp;<a href="javascript:void(0);" onclick="deleteOne('${edocFile.id }')">删除</a>
 								</td>

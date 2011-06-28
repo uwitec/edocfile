@@ -294,7 +294,7 @@
 				<div class="content">
 				<table cellspacing="0" class="list_table2" style="overflow-x:scroll;">
 						<tr bgcolor="#F2F4F6">
-							<th width="1%"><input id="selectAll" type="checkbox" onclick="selectAllCheckbox()"></input></th>
+							<!--<th width="1%"><input id="selectAll" type="checkbox" onclick="selectAllCheckbox()"></input></th>-->
 							<th>
 								名称
 							</th>
@@ -319,9 +319,11 @@
 						</tr>
 						<c:forEach var="v" items="${fileVersions.result}">
 							<tr>
+							<!--
 								<td align="center">
 									<input name="checkItem" value="${v.id }" type="checkbox"></input>
 								</td>
+							-->
 								<td>
 									<img src="${v.icon }"/>&nbsp;${v.fileName }
 								</td>
