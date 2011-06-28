@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.edoc.dbsupport.PageValueObject;
 import com.edoc.dbsupport.PropertyFilter;
-import com.edoc.entity.files.EdocFile;
 import com.edoc.entity.tools.ReceiveMsg;
 import com.edoc.entity.tools.SendMsg;
 import com.edoc.orm.hibernate.dao.GenericDAO;
