@@ -1,7 +1,5 @@
 package com.edoc.service.tools;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.edoc.dbsupport.PageValueObject;
 import com.edoc.entity.tools.ReceiveMsg;
 import com.edoc.entity.tools.SendMsg;
