@@ -28,7 +28,8 @@ public class DefaultIndexServiceImpl implements IndexService{
 		
 		//创建Document
 		EdocDocument doc = null;
-		doc = new EdocDocument(sourceFileName,file.getName(),FileReader.getContent(file), "2010-8-28");
+		doc = new EdocDocument(sourceFileName,file.getName(),FileReader.getContent(file), fileVersion.getCreateTime().toString(),fileVersion.getEdocFileId(),fileVersion.getVersion(),
+				fileVersion.getCreatorName(),fileVersion.getCreatorId(),Float.toString(fileVersion.getFileSize()));
 		
 		//创建索引
 		try {
