@@ -100,14 +100,18 @@ public class UserAction extends AbstractAction{
 	public String doLogin(){
 		String username = this.getParameter("j_username");
 		String password = this.getParameter("j_password");
+		if(!StringUtils.isValid(username) || !StringUtils.isValid(password)){
+			this.showMessage2(this.getResponse(), "用户名或密码不能为空！", true);
+			return null;
+		}
 		User user = userService.doLogin(username,password);
 		if(user!=null){
 			this.getSession().setAttribute("DOCUSER", user);
 			return "showIndex";
 		}else{
 			this.showMessage2(this.getResponse(), "用户名或密码不正确！请确认后重试！", true);
+			return null;
 		}
-		return null;
 	}
 	
 	/**
