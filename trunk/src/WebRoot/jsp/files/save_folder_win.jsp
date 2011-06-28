@@ -25,11 +25,14 @@
 		}
 		//暂时不用
 		function doSubmit(){
-			//var form=document.getElementById('save_form');
-			//var c = document.getElementById('parentId').value;
-			//form.action  = "fileAction!createFolder.action?Rnd="+Math.random();
-			//form.submit();
-			//window.close();		//关闭窗口
+			var filename = document.getElementById('filename').value;
+			if(!filename){
+				alert('请输入文件夹名称!');
+				return;
+			}
+			var form=document.getElementById('save_form');
+			form.action  = "fileAction!createFolder.action?Rnd="+Math.random();
+			form.submit();
 		}
 		function init(){
 			var params = window.dialogArguments;	//参数为上一级文件夹的Id
@@ -61,10 +64,10 @@
 					<table width="100%" align="center">
 			    		<tr>
 			    			<td align="right" width="22%"><font color="red">*</font> 文件夹名称：</td>
-		    			  <td width="78%"><input type="text" name="edocFile.fileName" /></td>
+		    			  <td width="78%"><input id="filename" type="text" name="edocFile.fileName" /></td>
 		    		  </tr>
                       <tr>
-			    			<td align="right" width="22%"><font color="red">*</font> 文件夹描述：</td>
+			    			<td align="right" width="22%"> 文件夹描述：</td>
 		    			    <td width="78%"><label>
 		    			      <textarea name="textarea" id="textarea" cols="45" rows="5"></textarea>
 	    			      </label></td>
@@ -76,7 +79,7 @@
 					<table width="100%" align="center" cellspacing="0" cellpadding="2">
 						<tr>
 							<td align="center" height="24">
-								<input type="submit" class="button" value="确&nbsp;&nbsp;认">
+								<input type="button" onclick="doSubmit()" class="button" value="确&nbsp;&nbsp;认">
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<input type="button" class="button" value="取&nbsp;&nbsp;消" onClick="doClose()">
 							</td>
