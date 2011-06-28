@@ -21,7 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	-->
 	<script type="text/javascript">
 		function init(){
-			window.open("index.html","","resizable=yes,status=no,toolbar=no,menubar=no,location=no");
+			window.open("index.html","_blank","resizable=yes,status=no,toolbar=no,menubar=no,location=no");
 			window.opener = null;
 			window.close();
 		}
