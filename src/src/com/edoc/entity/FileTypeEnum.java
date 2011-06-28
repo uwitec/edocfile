@@ -7,6 +7,7 @@ package com.edoc.entity;
 public enum FileTypeEnum {
 	EXCEL("xls","excel文档"),
 	WORD("doc","word文档"),
+	WORDX("docx","word2007文档"),
 	PDE("pdf","pdf文档"),
 	TXT("txt","txt文档"),
 	PPT("ppt","ppt文档"),
