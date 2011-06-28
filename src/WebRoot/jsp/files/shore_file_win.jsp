@@ -63,17 +63,20 @@
     	//	return;
     	//}
     	
-    	if(confirm("是否共享该文件的上级文件夹?")){
-    		document.getElementById("shoreMulu").value= "1";
-    		document.getElementById("save_form").submit();
-    		window.returnValue=true;
-        	window.close();
-		}else{
-			document.getElementById("shoreMulu").value= "0";
-    		document.getElementById("save_form").submit();
-    		window.returnValue=true;
-        	window.close();
-		}
+    	//if(confirm("是否共享该文件的上级文件夹?")){
+    	//	document.getElementById("shoreMulu").value= "1";
+    	//	document.getElementById("save_form").submit();
+    	//	window.returnValue=true;
+        // 	window.close();
+		//}else{
+		//	document.getElementById("shoreMulu").value= "0";
+    	//	document.getElementById("save_form").submit();
+    	//	window.returnValue=true;
+        //	window.close();
+		//}
+		document.getElementById("save_form").submit();
+    	window.returnValue=true;
+        window.close();
     }
     
     function selectUser(){
@@ -92,7 +95,7 @@
 				
 				//设置列内容和属性
 				newTd0.innerHTML= "<input name='visitUserIds' value='"+args[0]+"' type='hidden'/><input type='hidden' name='visitUserInfoId_"+args[0]+"'/><input type='hidden' name='visitUserName_"+args[0]+"' value='"+args[1]+"' />"+args[1];
-				newTd1.innerHTML= "<input type='checkbox' name='permission_"+args[0]+"' value='view'>预览&nbsp;&nbsp;<input type='checkbox' name='permission_"+args[0]+"' value='edit'>编辑&nbsp;&nbsp;<input type='checkbox' name='permission_"+args[0]+"' value='downLoad'>下载";
+				newTd1.innerHTML= "<input type='checkbox' name='permission_"+args[0]+"' value='view' checked>预览&nbsp;&nbsp;<input type='checkbox' name='permission_"+args[0]+"' value='edit'>编辑&nbsp;&nbsp;<input type='checkbox' name='permission_"+args[0]+"' value='downLoad'>下载";
 				newTd2.innerHTML= "<a href=\"javascript:void(0)\" onclick=\"deleteRow(this,'')\">删除</a>";
     		}
     	}	
@@ -117,6 +120,18 @@
 			   	});
     	}
     }
+    //设置消息发送类型
+    function setSendMsgType(type){
+    	if(type==1){
+    		var checked = document.getElementById('sysMsgType').checked;
+    		var sendMsgFlag = document.getElementById('sendMsgFlag');
+    		if(checked==true){
+    			sendMsgFlag.value = "true";
+    		}else if(checked==false){
+    			sendMsgFlag.value = "false";
+    		}
+    	}
+    }
 	</script>
 	</head>
 
@@ -127,11 +142,6 @@
 		<input id="addVisitForm_sourceFileId" type="hidden" name="sourceFileId" value="${edocFile.id }"/>
 	</form>
 	<form id="save_form" action="shoreFileAction!shoreFile.action" method="post">
-	<input id="sourceFileId" name="sourceFileId" type="hidden" value="${edocFile.id }"/>
-	<input id="parentId" name="parentId" type="hidden" value="${edocFile.parentId }" />
-	<input id="shoredFlag" name="shoredFlag" type="hidden" value="${edocFile.isShored }" />
-	<input id="shoreMulu" name="shoreMulu" type="hidden" />
-	<input id="shoreFileId" name="shoreFileId" type="hidden" value="${shoreFile.id }">
 	<div style="width: 100%; height: 100%; position: relative; float: left; top: 0px;">
 		<div style="width: 100%; height:5%;position: relative; float: left; top: 0px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -169,10 +179,6 @@
 								<input type="radio" value="false" name="shoreNowFlag" checked>
 								暂不共享
 							</td>
-							<td width="20%">
-							</td>
-							<td width="126">
-							</td>
 							</c:if>
 							
 							<c:if test="${edocFile.isShored==1}">
@@ -184,11 +190,13 @@
 								<input type="radio" value="false" name="shoreNowFlag">
 								暂不共享
 							</td>
-							<td width="20%">
+							</c:if>
+                            <td width="10%">
+                            <strong><font color="blue">消息提醒：</font></strong>
 							</td>
 							<td width="126">
+								<input id="sysMsgType" type="checkbox" onclick="setSendMsgType(1)" value="msg">系统消息
 							</td>
-							</c:if>
 						</tr>
 						 
 						<!-- 
@@ -219,10 +227,10 @@
 				<div class="tbar">
 				<ul id="nav">
 					<li>
-						<a href="javascript:void(0);" onclick="selectUser()"><img src="icon/add.png"/>&nbsp;添加</a>
+						<a href="javascript:void(0);" onClick="selectUser()"><img src="icon/add.png"/>&nbsp;添加</a>
 					</li>
 					<li>
-						<a href="javascript:void(0);" onclick="deleteMore()"><img src="icon/delete.png"/>&nbsp;删除</a>
+						<a href="javascript:void(0);" onClick="deleteMore()"><img src="icon/delete.png"/>&nbsp;删除</a>
 					</li>
 				</ul>
 			</div>
@@ -279,7 +287,7 @@
 								</c:choose>
 							</td>
 							<td width="10%">
-								<a href="javascript:void(0);" onclick="deleteRow(this,'${user.id }')">删除</a>
+								<a href="javascript:void(0);" onClick="deleteRow(this,'${user.id }')">删除</a>
 							</td>
 						</tr>
 						</c:forEach>
@@ -297,6 +305,13 @@
 					</table>
 				</div>
 		</div>
+		<input id="sourceFileId" name="sourceFileId" type="hidden" value="${edocFile.id }"/>
+		<input id="parentId" name="parentId" type="hidden" value="${edocFile.parentId }" />
+		<input id="shoredFlag" name="shoredFlag" type="hidden" value="${edocFile.isShored }" />
+		<input id="shoreMulu" name="shoreMulu" type="hidden" />
+		<input id="shoreFileId" name="shoreFileId" type="hidden" value="${shoreFile.id }">
+		<input id="sendMsgFlag" name="sendMsgFlag" type="hidden" value="false" />
+	
 		</form>
 	</body>
 </html>
