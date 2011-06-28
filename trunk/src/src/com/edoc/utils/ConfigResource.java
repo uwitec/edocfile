@@ -14,6 +14,8 @@ public class ConfigResource {
 	
 	public static final String EDOCUPLOADDIR = "edocUploadDir";			//上传文件的目录
 	public static final String EDOCINDEXFILE = "edocIndexFile";			//索引文件目录
+	public static final String TEMPEDOCINDEXFILE = "tempEdocIndexFile";			//索引文件临时存放目录
+	public static final String MAXSIZEINDEXINRAMMB = "maxSizeIndexInRamMB";		//内存中存放最大的索引大小(单位MB)
 	
     private static Map<String,String> configs = null;
     
