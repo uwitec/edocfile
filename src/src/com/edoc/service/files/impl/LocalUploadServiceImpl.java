@@ -27,6 +27,10 @@ public class LocalUploadServiceImpl implements UploadService {
 			BufferedInputStream bufin = null;
 			BufferedOutputStream bufout = null;
 			try {
+				File dir = new File(ConfigResource.getConfig(ConfigResource.EDOCUPLOADDIR));
+				if(!dir.exists()){
+					dir.mkdirs();
+				}
 				File desc = new File(ConfigResource.getConfig(ConfigResource.EDOCUPLOADDIR)+"\\"+fileName);
 				bufin = new BufferedInputStream(in,BUFFER_SIZE);
 				bufout = new BufferedOutputStream(new FileOutputStream(desc),BUFFER_SIZE);
