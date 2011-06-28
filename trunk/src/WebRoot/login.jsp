@@ -80,7 +80,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body onLoad="correctPNG()">
-  <form id="loginForm" action="">
+  <form id="loginForm" action="userAction!doLogin.action" method="post">
   <table width="100%" height="166" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td height="42" valign="top"><table width="100%" height="42" border="0" cellpadding="0" cellspacing="0" class="login_top_bg">
@@ -147,7 +147,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <table cellSpacing="0" cellPadding="0" width="100%" border="0" height="143" id="table212">
                           <tr>
                             <td width="13%" height="38" class="top_hui_text"><span class="login_txt">用户名：&nbsp;&nbsp; </span></td>
-                            <td height="38" colspan="2" class="top_hui_text"><input  id="username" name="j_username" class="editbox4" value="" size="20">                            </td>
+                            <td height="38" colspan="2" class="top_hui_text"><input  id="username"  name="j_username" class="editbox4" value="" size="20">                            </td>
                           </tr>
                           <tr>
                             <td width="13%" height="38" class="top_hui_text"><span class="login_txt"> 密 码： &nbsp;&nbsp; </span></td>
@@ -156,7 +156,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                           </tr>
                           <tr>
                             <td height="35" >&nbsp;</td>
-                            <td width="20%" height="35" ><input name="Submit" type="button" onClick="do_login()" class="button" id="Submit" value="登 陆"> </td>
+                            <td width="20%" height="35" ><input name="Submit" type="submit" class="button" id="Submit" value="登 陆"> </td>
                             <td width="67%" class="top_hui_text"><input name="cs" type="reset" class="button" id="cs" value="取 消"></td>
                           </tr>
                         </table>
