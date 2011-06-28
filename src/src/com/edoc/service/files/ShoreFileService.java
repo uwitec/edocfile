@@ -75,8 +75,9 @@ public interface ShoreFileService {
 	 * @param visitUserInfos	共享用户的信息
 	 * @param user				共享该文件的用户信息
 	 * @param shoreNowFlag		是否立即共享
+	 * @param sendMsgFlag 		是否发送消息通知
 	 * @author 陈超 2011-06-02
 	 */
 	public boolean shoreFile(ShoreFile shoreFile,
-			List<VisitUserInfo> visitUserInfos, User user, boolean shoreNowFlag);
+			List<VisitUserInfo> visitUserInfos, User user, boolean shoreNowFlag, boolean sendMsgFlag);
 }

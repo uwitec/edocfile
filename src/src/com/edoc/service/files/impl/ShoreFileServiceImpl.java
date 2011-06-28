@@ -16,11 +16,13 @@ import com.edoc.entity.baseinfo.User;
 import com.edoc.entity.files.EdocFile;
 import com.edoc.entity.files.ShoreFile;
 import com.edoc.entity.files.VisitUserInfo;
+import com.edoc.entity.tools.SendMsg;
 import com.edoc.orm.hibernate.dao.FileDAO;
 import com.edoc.orm.hibernate.dao.GenericDAO;
 import com.edoc.service.files.FileService;
 import com.edoc.service.files.ShoreFileService;
 import com.edoc.service.files.VisitUserService;
+import com.edoc.service.tools.MessageService;
 import com.edoc.utils.StringUtils;
 
 /**
@@ -41,9 +43,11 @@ public class ShoreFileServiceImpl implements ShoreFileService{
 	@Resource(name="fileService")
 	private FileService fileService = null;
 	
-	
 	@Resource(name="visitUserService")
 	private VisitUserService visitUserService = null;
+	
+	@Resource(name="messageService")
+	private MessageService messageService = null;
 	
 	/**
 	 * 共享文件操作。在共享该文件的同时要将该文件的上层文件夹设置成已共享(但文件夹下面的其他文件不做共享操作)
@@ -57,41 +61,47 @@ public class ShoreFileServiceImpl implements ShoreFileService{
 	 * @author 陈超 2011-06-02
 	 */
 	@Transactional(readOnly=false)
-	public boolean shoreFile(ShoreFile shoreFile,
-			List<VisitUserInfo> visitUserInfos, User user, boolean shoreNowFlag){
+	public boolean shoreFile(ShoreFile shoreFile,List<VisitUserInfo> visitUserInfos,
+			User user, boolean shoreNowFlag, boolean sendMsgFlag){
 		try{
 			EdocFile sourceFile = fileService.getFileById(shoreFile.getSourceFileId());
 			//获取共享文件的上级目录
 			List<EdocFile> mulus = edocFileDao.getParentFiles(shoreFile.getSourceFileId(), 0, 0);
 			
-			
 			//添加访问该文件的用户信息
 			visitUserService.insertVisitUserInfo(visitUserInfos, mulus);					
-			
+			String msg = "";
 			//如果立即共享的话则执行以下操作,如果是暂不共享的话则要先查看该文件是否已经共享了,如果已经共享了则将其设置成未共享
 			//如果未共享则不作任何操作
 			if(shoreNowFlag){
-				//"共享文件夹"下用户上传文件的目录信息
-				ShoreFile userHome = createUserDirIfNotExist(user);
-				
-				//添加共享文件的信息
-				if(!isExist(shoreFile.getId())){
-					insertShoreFile(shoreFile,mulus,user,userHome);	
-				}
-				//修改文件共享状态,包括该文件的上级目录
-				String updateSQL = "update EdocFile set isShored = 1 where id in('"+shoreFile.getSourceFileId()+"'";
-				if(mulus!=null && !mulus.isEmpty()){
-					for(EdocFile e:mulus){
-						updateSQL += ",'"+e.getId()+"'";
+				msg = user.getTrueName()+"共享了文件'"+sourceFile.getFileName()+"'";
+				if(sourceFile.getIsShored()==0){
+					//"共享文件夹"下用户上传文件的目录信息
+					ShoreFile userHome = createUserDirIfNotExist(user);
+					
+					//添加共享文件的信息
+					if(!isExist(shoreFile.getId())){
+						insertShoreFile(shoreFile,mulus,user,userHome);	
 					}
+					//修改文件共享状态,包括该文件的上级目录
+					String updateSQL = "update EdocFile set isShored = 1 where id in('"+shoreFile.getSourceFileId()+"'";
+					if(mulus!=null && !mulus.isEmpty()){
+						for(EdocFile e:mulus){
+							updateSQL += ",'"+e.getId()+"'";
+						}
+					}
+					updateSQL += ")";
+					edocFileDao.executeUpdate(updateSQL);
 				}
-				updateSQL += ")";
-				edocFileDao.executeUpdate(updateSQL);
 			}else{
+				msg = user.getTrueName()+"取消了对文件'"+sourceFile.getFileName()+"'的共享";
 				if(sourceFile.getIsShored()==1){
 					sourceFile.setIsShored(0);
 					edocFileDao.update(sourceFile);
 				}
+			}
+			if(sendMsgFlag){
+				sendMsg(visitUserInfos,user.getTrueName(),msg);
 			}
 			return true;
 		}catch(Exception e){
@@ -103,6 +113,27 @@ public class ShoreFileServiceImpl implements ShoreFileService{
 		
 	}
 	
+	private void sendMsg(List<VisitUserInfo> visitUserInfos,String userName,String msg) {
+		if(visitUserInfos!=null && !visitUserInfos.isEmpty()){
+			SendMsg sendMsg = new SendMsg();
+			sendMsg.setState(1);
+			sendMsg.setTitle("系统消息");
+			sendMsg.setContent(msg);
+			sendMsg.setFromUserName("系统消息");
+			String[] receiverIds = new String[visitUserInfos.size()];
+			String[] receiverNames = new String[visitUserInfos.size()];
+			int size = visitUserInfos.size();
+			for(int i=0;i<size;i++){
+				VisitUserInfo v = visitUserInfos.get(i);
+				receiverIds[i] = v.getVisitUserId();
+				receiverNames[i] = v.getVisitUserName();
+			}
+			
+			messageService.saveMessage(sendMsg, receiverIds, receiverNames);
+		}
+		
+	}
+
 	/**
 	 * 如果以该用户名称命名的文件夹不存在的话则创建该共享文件信息
 	 * @param user
@@ -235,8 +266,8 @@ public class ShoreFileServiceImpl implements ShoreFileService{
 				s.setParentId((String)vs[6]);
 				s.setFileName((String)vs[7]);
 				s.setFileType((String)vs[8]);
-				s.setCreateTime(new Date());
-				s.setUpdateTime(new Date());
+				s.setCreateTime((Date)vs[9]);
+				s.setUpdateTime((Date)vs[10]);
 				s.setFileSize(1);
 				s.setIsFolder((Integer)vs[12]);
 				s.setFileSuffix((String)vs[13]);
