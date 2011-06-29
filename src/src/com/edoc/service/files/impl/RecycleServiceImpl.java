@@ -36,6 +36,26 @@ public class RecycleServiceImpl implements RecycleService{
 	private GenericDAO<FileVersion,String> fileVersionDao=null;
 	
 	/**
+	 * 获取回收站中的文件ID
+	 * @return
+	 */
+	public String[] getRecycleFileIds(){
+		String[] ids = null;
+		List<RecycleInfo> recycleInfos = recycleDao.getAll();
+		
+		//如果recycleInfos不为空,遍历recycleInfos中的元素并设置ids
+		if(recycleInfos!=null && !recycleInfos.isEmpty()){
+			ids = new String[recycleInfos.size()];
+			int index = 0;
+			for(RecycleInfo r:recycleInfos){
+				ids[index] = r.getSourceId();
+				index++;
+			}
+		}
+		return ids;
+	}
+	
+	/**
 	 * 清空回收站,清空回收站的同时要删除文件的信息包括：文件记录、版本信息、共享信息等等
 	 */
 	@Transactional(readOnly=false)

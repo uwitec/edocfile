@@ -40,5 +40,11 @@ public interface RecycleService {
 	 * @param fileIds
 	 */
 	void delete(String[] fileIds);
+	
+	/**
+	 * 获取回收站中的文件ID
+	 * @return
+	 */
+	public String[] getRecycleFileIds();
 
 }
