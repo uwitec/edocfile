@@ -35,6 +35,10 @@ public class EdocDocument implements java.io.Serializable{
 	    doc.add(new Field(FIELD_FILENAME,fileName,Field.Store.YES, Field.Index.ANALYZED));
 	    doc.add(new Field(FIELD_CREATETIME,createTime,Field.Store.YES, Field.Index.NOT_ANALYZED));
 	    doc.add(new Field(FIELD_SOURCEFILENAME,sourceFileName,Field.Store.YES, Field.Index.ANALYZED));
+	    this.sourceFileName = sourceFileName;
+	    this.fileName = fileName;
+	    this.contents = content;
+	    this.createTime = createTime;
 	}
 	
 	public EdocDocument(String sourceFileName,String fileName, String content, String createTime,String sourceFileId,
@@ -49,6 +53,16 @@ public class EdocDocument implements java.io.Serializable{
 	    doc.add(new Field(FIELD_CREATORID,creatorId,Field.Store.YES, Field.Index.NOT_ANALYZED));
 	    doc.add(new Field(FIELD_FILESIZE,fileSize,Field.Store.YES, Field.Index.NOT_ANALYZED));
 	    doc.add(new Field(FIELD_SOURCEFILENAME,sourceFileName,Field.Store.YES, Field.Index.ANALYZED));
+	    
+	    this.sourceFileName = sourceFileName;
+	    this.fileName = fileName;
+	    this.contents = content;
+	    this.createTime = createTime;
+	    this.sourceFileId = sourceFileId;
+	    this.versionNum = versionNum;
+	    this.creatorName = creatorName;
+	    this.creatorId = creatorId;
+	    this.fileSize = fileSize;
 	}
 
 	public EdocDocument() {

@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.store.RAMDirectory;
@@ -84,6 +86,42 @@ public class IndexManager {
 			e.printStackTrace();
 		}
 		return;
+	}
+
+	public static void updateDoc(File indexDir, StandardAnalyzer analyzer, EdocDocument doc) {
+		try {
+			// 创建IndexWriter,增量创建索引
+			//判断是否存在 segments  文件
+			boolean segExistFlag = false;		
+			if(indexDir.exists() && indexDir.isDirectory()){
+				File[] files = indexDir.listFiles();
+				for(File f:files){
+					if(f.getName().startsWith("segments")){
+						segExistFlag = true;
+						break;
+					}
+				}
+			}
+			IndexWriter writer = null;
+			if(segExistFlag){
+				writer = new IndexWriter(FSDirectory.open(indexDir),analyzer, false, IndexWriter.MaxFieldLength.UNLIMITED);
+			}else{
+				writer = new IndexWriter(FSDirectory.open(indexDir),analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
+			}
+			
+			Term term = new Term(EdocDocument.FIELD_SOURCEFILEID,doc.getSourceFileId());
+			writer.updateDocument(term, doc.getDoc());
+			writer.commit();
+			writer.close();
+		} catch (CorruptIndexException e) {
+			e.printStackTrace();
+		} catch (LockObtainFailedException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		return;
+		
+	}
 
 }
