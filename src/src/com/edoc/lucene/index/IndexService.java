@@ -26,4 +26,12 @@ public interface IndexService {
 	 * @return
 	 */
 	public boolean addIndex(String sourceFileName, File file, FileVersion fileVersion);
+	
+	/**
+	 * 更新索引信息
+	 * @param file			索引文件
+	 * @param fileVersion   文件信息
+	 * @return
+	 */
+	public boolean updateIndex(File file, FileVersion fileVersion);
 }
