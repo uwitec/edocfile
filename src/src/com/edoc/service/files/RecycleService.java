@@ -37,12 +37,12 @@ public interface RecycleService {
 
 	/**
 	 * 删除回收站中的文件,删除文件的同时要删除文件的信息包括：文件记录、版本信息、共享信息等等
-	 * @param fileIds
+	 * @param recycleInfoIds		回收站中信息ID
 	 */
-	void delete(String[] fileIds);
+	void delete(String[] recycleInfoIds);
 	
 	/**
-	 * 获取回收站中的文件ID
+	 * 获取回收站中的原始文件ID
 	 * @return
 	 */
 	public String[] getRecycleFileIds();
