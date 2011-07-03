@@ -120,11 +120,6 @@ function showVersion(id,fileName){
 //文档预览
 function previewFile(id,version){
 	window.open("fileAction!beforePreviewFile.action?sourceFileId="+id+"&version="+version+"&Rnd="+Math.random(),"","resizable=yes,status=no,toolbar=no,menubar=no,location=no");
-
-	//重新刷新页面
-	var form = document.getElementById("queryForm1");
-	form.action = "fileAction!getMyFilesByParentId.action?Rnd="+Math.random();
-	form.submit();
 }
 
 //文件查找
@@ -154,6 +149,13 @@ function changeLayout(type){
 //打开文件夹操作
 function openFolder(parentId){
 	document.getElementById('parentId').value=parentId;
+	var form = document.getElementById("queryForm1");
+	form.action = "fileAction!getMyFilesByParentId.action?Rnd="+Math.random();
+	form.submit();
+}
+
+//重新加载页面
+function reloadPage(){
 	var form = document.getElementById("queryForm1");
 	form.action = "fileAction!getMyFilesByParentId.action?Rnd="+Math.random();
 	form.submit();
