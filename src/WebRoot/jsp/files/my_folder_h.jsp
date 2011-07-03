@@ -60,61 +60,7 @@
 			}
 		</style>
 		<script type="text/javascript">
-		var temp_obj;
-			//共享文件(文件夹)
-			function showShoreFileWin(id,isShored){
-				var args = [];
-				args[0] = id;
-					
-				var fileName = document.getElementById("sourceFileName"+id).value;
-				args[1] = fileName;
-				
-				var parentId = document.getElementById('parentId').value;
-				args[2] = parentId;
-				
-				var params = [];
-				params[0] = args;
-				
-				var flag = showModalDialog("shoreFileAction!beforeShoreFile.action?sourceFileId="+id+"&Rnd="+Math.random(), params, "dialogWidth:900px; dialogHeight:550px;help:no;scroll:no;status:no");
-				if(flag==true){
-					alert('共享设置已完成!');
-					var form = document.getElementById("queryForm1");
-					form.action = "fileAction!getMyFilesByParentId.action?Rnd="+Math.random();
-					form.submit();
-				}
-			}
-			
-			//查看文件信息
-			function showFileInfo(id,fileName){
-				var params = [];
-				params[0] = fileName;
-				showModalDialog("fileAction!getFileInfo.action?sourceFileId="+id+"&Rnd="+Math.random(), params, "dialogWidth:1100px; dialogHeight:600px;help:no;scroll:no;status:no");
-			}
-			
-			//文档预览
-			function previewFile(id,version){
-				window.open("fileAction!beforePreviewFile.action?sourceFileId="+id+"&version="+version+"&Rnd="+Math.random(),"","resizable=yes,status=no,toolbar=no,menubar=no,location=no");
-			
-				//重新刷新页面
-				var form = document.getElementById("queryForm1");
-				form.action = "fileAction!getMyFilesByParentId.action?Rnd="+Math.random();
-				form.submit();
-			}
-			
-			//重新刷新页面
-			function searchFile(){
-				var form = document.getElementById("queryForm1");
-				form.action = "fileAction!getMyFilesByParentId.action?Rnd="+Math.random();
-				form.submit();
-			}
-			
-			//撤销共享文件操作
-			function cancelShore(id){		
-				var parentId = document.getElementById("parentId").value;		//获取档案目录的上一级目录Id
-				var form = document.getElementById("queryForm1");
-				form.action = "fileAction!cancelShore.action?fileId="+id+"&page=myFolder&Rnd="+Math.random();
-				form.submit();
-			}
+			var temp_obj;
 			
 			function mouse_over(obj){
 				if(temp_obj){
@@ -131,21 +77,6 @@
 				//obj.className="file0";
 			}
 			
-			//展示方式的改变
-			function changeLayout(type){
-				document.getElementById('layoutStyle').value=type;	
-				
-				var form = document.getElementById("queryForm1");
-				form.action = "fileAction!getMyFilesByParentId.action?Rnd="+Math.random();
-				form.submit();
-			}
-			
-			function openFolder(parentId){
-				document.getElementById('parentId').value=parentId;
-				var form = document.getElementById("queryForm1");
-				form.action = "fileAction!getMyFilesByParentId.action?Rnd="+Math.random();
-				form.submit();
-			}
 		</script>
 	</head>
 	<body class="body1">

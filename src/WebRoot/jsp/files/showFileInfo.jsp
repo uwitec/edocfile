@@ -184,7 +184,7 @@
 			var returnValue = showModalDialog("jsp/files/addFileVersion.jsp", params, "dialogWidth:600px; dialogHeight:300px; status:0; help:0");
 			
 			var form = document.getElementById("queryForm1");
-			form.action="fileAction!getEdocFileVersions.action";
+			form.action="fileVersionAction!getFileVersions.action";
 			form.submit();
     }
     
