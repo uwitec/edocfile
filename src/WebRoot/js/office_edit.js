@@ -34,6 +34,7 @@ function save_office(){
 			edocfile.Save();
 			if(confirm('保存成功!是否退出当前编辑窗口？')){
 				window.close();
+				opener.reloadPage();
 			}
 		}else{
 			alert('保存失败!');
@@ -54,6 +55,7 @@ function exit_office(){
 	//alert(edocfile.IsModify);
 	
 	window.close();
+	opener.reloadPage();
 	
 }
 
@@ -85,6 +87,7 @@ function hidden_office_editinfo(){
 function exit(){
 
 	window.close();
+	opener.reloadPage();
 }
 
 //检查该用户是否拥有编辑权限,如果没有的话则弹出申请编辑权限的窗口,相反则进入编辑页面
