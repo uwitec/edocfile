@@ -34,4 +34,10 @@ public interface IndexService {
 	 * @return
 	 */
 	public boolean updateIndex(File file, FileVersion fileVersion);
+
+	/**
+	 * É¾³ýË÷Òý
+	 * @param recycleFileIds
+	 */
+	public void deleteIndex(String[] recycleFileIds);
 }

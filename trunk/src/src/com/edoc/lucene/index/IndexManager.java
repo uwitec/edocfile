@@ -6,7 +6,6 @@ import java.io.IOException;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.CorruptIndexException;
-import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.store.FSDirectory;
@@ -68,22 +67,30 @@ public class IndexManager {
 		return;
 	}
 	
-	public static void deleteDoc(File indexDir, Analyzer analyzer, EdocDocument doc)
-			throws Exception {
-		try {
-			// 创建IndexWriter,增量创建索引
-			IndexWriter writer = new IndexWriter(FSDirectory.open(indexDir),analyzer, false, IndexWriter.MaxFieldLength.UNLIMITED);
-			writer.addDocument(doc.getDoc());
-			writer.close();
-			
-			IndexReader indexReader = IndexReader.open(FSDirectory.open(indexDir));		//从硬盘中读取索引文件
-			
-		} catch (CorruptIndexException e) {
-			e.printStackTrace();
-		} catch (LockObtainFailedException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+	public static void deleteDoc(File indexDir, Analyzer analyzer, String[] recycleFileIds){
+		if(recycleFileIds!=null && recycleFileIds.length>0){
+			try {
+				// 创建IndexWriter,增量创建索引
+				IndexWriter writer = new IndexWriter(FSDirectory.open(indexDir),analyzer, false, IndexWriter.MaxFieldLength.UNLIMITED);
+				Term[] terms = new Term[recycleFileIds.length];
+				int index = 0;
+				for(String fileId:recycleFileIds){
+					terms[index] = new Term(EdocDocument.FIELD_SOURCEFILEID,fileId);
+					index++;
+				}
+				
+				writer.deleteDocuments(terms);
+				writer.optimize();
+				writer.commit();
+				writer.close();
+				
+			} catch (CorruptIndexException e) {
+				e.printStackTrace();
+			} catch (LockObtainFailedException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return;
 	}
@@ -91,26 +98,11 @@ public class IndexManager {
 	public static void updateDoc(File indexDir, StandardAnalyzer analyzer, EdocDocument doc) {
 		try {
 			// 创建IndexWriter,增量创建索引
-			//判断是否存在 segments  文件
-			boolean segExistFlag = false;		
-			if(indexDir.exists() && indexDir.isDirectory()){
-				File[] files = indexDir.listFiles();
-				for(File f:files){
-					if(f.getName().startsWith("segments")){
-						segExistFlag = true;
-						break;
-					}
-				}
-			}
-			IndexWriter writer = null;
-			if(segExistFlag){
-				writer = new IndexWriter(FSDirectory.open(indexDir),analyzer, false, IndexWriter.MaxFieldLength.UNLIMITED);
-			}else{
-				writer = new IndexWriter(FSDirectory.open(indexDir),analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
-			}
+			IndexWriter writer = new IndexWriter(FSDirectory.open(indexDir),analyzer, false, IndexWriter.MaxFieldLength.UNLIMITED);
 			
 			Term term = new Term(EdocDocument.FIELD_SOURCEFILEID,doc.getSourceFileId());
 			writer.updateDocument(term, doc.getDoc());
+			writer.optimize();
 			writer.commit();
 			writer.close();
 		} catch (CorruptIndexException e) {

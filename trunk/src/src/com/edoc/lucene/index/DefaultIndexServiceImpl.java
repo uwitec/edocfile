@@ -110,5 +110,19 @@ public class DefaultIndexServiceImpl implements IndexService{
 		}
 		return true;
 	}
+	
+	/**
+	 * 删除索引
+	 * @param recycleFileIds
+	 */
+	public void deleteIndex(String[] recycleFileIds){
+		//获取索引目录
+		String indexDirPath = ConfigResource.getConfig(ConfigResource.EDOCINDEXFILE);
+		File indexDir = new File(indexDirPath);
+		if(!indexDir.exists() || !indexDir.isDirectory()){
+			indexDir.mkdirs();
+		}
+		IndexManager.deleteDoc(indexDir, new StandardAnalyzer(Version.LUCENE_CURRENT), recycleFileIds);
+	}
 
 }
