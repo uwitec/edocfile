@@ -13,6 +13,7 @@ import com.edoc.dbsupport.PageValueObject;
 import com.edoc.entity.files.EdocFile;
 import com.edoc.entity.files.FileVersion;
 import com.edoc.entity.files.RecycleInfo;
+import com.edoc.lucene.index.IndexService;
 import com.edoc.orm.hibernate.dao.FileDAO;
 import com.edoc.orm.hibernate.dao.GenericDAO;
 import com.edoc.service.files.RecycleService;
@@ -35,8 +36,11 @@ public class RecycleServiceImpl implements RecycleService{
 	@Resource(name="fileVersionDao")
 	private GenericDAO<FileVersion,String> fileVersionDao=null;
 	
+	@Resource(name="defaultIndexService")
+	private IndexService indexService = null;
+	
 	/**
-	 * 获取回收站中的文件ID
+	 * 获取回收站中的原始文件ID
 	 * @return
 	 */
 	public String[] getRecycleFileIds(){
@@ -60,13 +64,14 @@ public class RecycleServiceImpl implements RecycleService{
 	 */
 	@Transactional(readOnly=false)
 	public void clearAll() {
-		List<RecycleInfo> recycles = recycleDao.getAll();
-		if(recycles!=null && !recycles.isEmpty()){
+		String[] recycleFileIds = this.getRecycleFileIds();
+		if(recycleFileIds!=null && recycleFileIds.length>0){
+			
 			//第一步：删除sys_fileinfo表中对于的文件
 			String sql = "delete from sys_fileinfo where id in ('000'";					//删除文件信息
 			String sql1 = "delete from sys_fileversion where C_EDOCFILEID in ('000'";	//删除文件版本信息
-			for(RecycleInfo r:recycles){
-				List<EdocFile> edocList = edocFileDao.getSubFileInfos(r.getSourceId(),1);
+			for(String id:recycleFileIds){
+				List<EdocFile> edocList = edocFileDao.getSubFileInfos(id,1);
 				if(edocList!=null && !edocList.isEmpty()){
 					for(EdocFile e:edocList){
 						sql += ",'"+e.getId()+"'";
@@ -84,6 +89,8 @@ public class RecycleServiceImpl implements RecycleService{
 			String sql4 = "delete from sys_recycle";
 			recycleDao.delete(sql4);
 			
+			
+			indexService.deleteIndex(recycleFileIds);
 		}
 	}
 
@@ -91,11 +98,11 @@ public class RecycleServiceImpl implements RecycleService{
 	 * 删除回收站中的文件,删除文件的同时要删除文件的信息包括：文件记录、版本信息、共享信息等等
 	 */
 	@Transactional(readOnly=false)
-	public void delete(String[] fileIds) {
-		if(fileIds!=null){
+	public void delete(String[] recycleInfoIds) {
+		if(recycleInfoIds!=null){
 			//查询要被删除的回收站中的信息
 			String querySQL = "select ID,C_SOURCE_ID,C_TABLENAME,C_DISPLAY_NAME,C_CREATOR_ID,D_DELETE_TIME,I_ISDELETE from sys_recycle where id in ('000'";
-			for(String id:fileIds){
+			for(String id:recycleInfoIds){
 				querySQL += ",'"+id+"'";
 			}
 			querySQL += ")";
@@ -103,9 +110,10 @@ public class RecycleServiceImpl implements RecycleService{
 			
 			String sql = "delete from sys_fileinfo where id in ('000'";
 			String sql2 = "delete from sys_recycle where id in('000'";
-			
 			String sql3 = "delete from sys_fileversion where C_EDOCFILEID in ('000'";	//删除文件版本信息
 			
+			String[] sourceFileIds = new String[recycles.size()];
+			int index = 0;
 			for(RecycleInfo r:recycles){
 				List<EdocFile> edocList = edocFileDao.getSubFileInfos(r.getSourceId(),1);
 				if(edocList!=null && !edocList.isEmpty()){
@@ -115,6 +123,8 @@ public class RecycleServiceImpl implements RecycleService{
 					}
 				}
 				sql2 += ",'"+r.getId()+"'";
+				sourceFileIds[index] = r.getSourceId();
+				index++;
 			}
 			
 			sql += ")";
@@ -128,6 +138,8 @@ public class RecycleServiceImpl implements RecycleService{
 			recycleDao.delete(sql2);
 			
 			fileVersionDao.delete(sql3);
+			
+			indexService.deleteIndex(sourceFileIds);
 		}
 	}
 

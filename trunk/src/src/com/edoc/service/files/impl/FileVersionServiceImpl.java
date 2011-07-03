@@ -79,7 +79,8 @@ public class FileVersionServiceImpl implements FileVersionService{
 		//对新版本文件进行上传、建索引操作
 		upService.uploadFile(fileVersion.getNewFileName(), fileInputStream);					//上次文件
 		String filePath = ConfigResource.getConfig(ConfigResource.EDOCUPLOADDIR)+"\\"+fileVersion.getNewFileName();
-		indexService.addIndex(fileVersion.getFileName(),new File(filePath), fileVersion);		//创建索引
+//		indexService.addIndex(fileVersion.getFileName(),new File(filePath), fileVersion);		//创建索引
+		indexService.updateIndex(new File(filePath), fileVersion);
 		
 		fileVersionDao.save(fileVersion);
 	}
