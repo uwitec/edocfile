@@ -35,10 +35,10 @@ import com.edoc.utils.StringUtils;
 public class ShoreFileServiceImpl implements ShoreFileService{
 
 	@Resource(name="shoreFileDao")
-	private GenericDAO<ShoreFile,String> shoreFileDao=null;
+	private GenericDAO<ShoreFile,String> shoreFileDao = null;
 	
 	@Resource(name="edocFileDao")
-	private FileDAO edocFileDao=null;
+	private FileDAO edocFileDao = null;
 	
 	@Resource(name="fileService")
 	private FileService fileService = null;
@@ -48,6 +48,32 @@ public class ShoreFileServiceImpl implements ShoreFileService{
 	
 	@Resource(name="messageService")
 	private MessageService messageService = null;
+	
+	/**
+	 * 根据userId获取该用户能预览到的文件ID
+	 * @param userId
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public String[] getShoredViewSourceFileId(String userId){
+		String[] sourceFileIds = null;
+		String sql = "select b.ID from sys_shorefile as a,sys_fileinfo as b,sys_visituserinfo as c"
+			+" where a.C_SOURCE_ID = b.ID and b.ID=c.C_SOURCEFILEID and"
+			+" c.C_VISITUSERID='"+userId+"' and c.I_PERVIEW=1  and b.I_ISSHORED=1 and b.I_ISFOLDER=0 and b.I_ISDELETE=0";
+		List rs = shoreFileDao.excuteQuery(sql);
+		
+		if(rs!=null && !rs.isEmpty()){
+			sourceFileIds = new String[rs.size()];
+			int index = 0;
+			for(Object obj:rs){
+				sourceFileIds[index] = (String)obj;
+				index++;
+			}
+		}
+		
+		
+		return sourceFileIds;
+	}
 	
 	/**
 	 * 共享文件操作。在共享该文件的同时要将该文件的上层文件夹设置成已共享(但文件夹下面的其他文件不做共享操作)
@@ -188,7 +214,7 @@ public class ShoreFileServiceImpl implements ShoreFileService{
 			if(!parentId.equals("-1")){
 				sql = "select a.ID,a.C_SOURCE_ID,a.C_SHOREUSERNAME,a.C_SHOREUSERID,a.D_SHORE_STARTTIME,a.D_SHORE_ENDTIME,"
 					+" a.C_PARENTID,b.C_FILENAME,b.C_FILETYPE,b.D_CREATETIME,b.D_UPDATETIME,b.F_FILESIZE,b.I_ISFOLDER,b.C_FILESUFFIX,"
-					+" b.C_ICON,b.C_DESC,b.C_NEWFILENAME,b.C_CURRENTVERSION,c.I_PERVIEW,c.I_PERDOWNLOAD from sys_shorefile as a,"
+					+" b.C_ICON,b.C_DESC,b.C_NEWFILENAME,b.C_CURRENTVERSION,c.I_PERVIEW,c.I_PERDOWNLOAD,c.I_PEREDIT from sys_shorefile as a,"
 					+" sys_fileinfo as b,sys_visituserinfo as c where a.C_SOURCE_ID = b.ID and b.ID=c.C_SOURCEFILEID and"
 					+" c.C_VISITUSERID='"+userId+"' and a.C_PARENTID='"+parentId+"' and b.I_ISSHORED=1";
 				
@@ -231,7 +257,7 @@ public class ShoreFileServiceImpl implements ShoreFileService{
 			if(!parentId.equals("-1")){
 				sql = "select a.ID,a.C_SOURCE_ID,a.C_SHOREUSERNAME,a.C_SHOREUSERID,a.D_SHORE_STARTTIME,a.D_SHORE_ENDTIME,"
 					+" a.C_PARENTID,b.C_FILENAME,b.C_FILETYPE,b.D_CREATETIME,b.D_UPDATETIME,b.F_FILESIZE,b.I_ISFOLDER,b.C_FILESUFFIX,"
-					+" b.C_ICON,b.C_DESC,b.C_NEWFILENAME,b.C_CURRENTVERSION,c.I_PERVIEW,c.I_PERDOWNLOAD from sys_shorefile as a,"
+					+" b.C_ICON,b.C_DESC,b.C_NEWFILENAME,b.C_CURRENTVERSION,c.I_PERVIEW,c.I_PERDOWNLOAD,c.I_PEREDIT from sys_shorefile as a,"
 					+" sys_fileinfo as b,sys_visituserinfo as c where a.C_SOURCE_ID = b.ID and b.ID=c.C_SOURCEFILEID and"
 					+" c.C_VISITUSERID='"+userId+"' and a.C_PARENTID='"+parentId+"' and b.I_ISFOLDER=1";
 			}else if(parentId.equals("-1")){
@@ -278,6 +304,7 @@ public class ShoreFileServiceImpl implements ShoreFileService{
 				if(vs.length>18){
 					s.setPerView(((Integer)vs[18]).intValue());
 					s.setPerDownLoad(((Integer)vs[19]).intValue());
+					s.setPerEdit(((Integer)vs[20]).intValue());
 				}else{
 					s.setPerView(1);
 				}

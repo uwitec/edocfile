@@ -55,6 +55,35 @@ public class FileServiceImpl implements FileService{
 	
 
 	/**
+	 * 或许我的所有文件ID,不包含以删除的文件
+	 * @return
+	 */
+	public String[] getMyFileIds(String userId,int fileType){
+		String[] fileIds = null;
+		List<PropertyFilter> filters = new LinkedList<PropertyFilter>();
+		if(fileType!=2){
+			if(fileType==0){
+				PropertyFilter filter01 = new PropertyFilter("isFolder",1,PropertyFilter.MatchType.EQ);
+				filters.add(filter01);
+			}else if(fileType==1){
+				PropertyFilter filter01 = new PropertyFilter("isFolder",0,PropertyFilter.MatchType.EQ);
+				filters.add(filter01);
+			}
+		}
+		PropertyFilter filter02 = new PropertyFilter("creatorId",userId,PropertyFilter.MatchType.EQ);
+		filters.add(filter02);
+		List<EdocFile> rs = edocFileDao.find(filters);
+		if(rs!=null && !rs.isEmpty()){
+			fileIds = new String[rs.size()];
+			int index = 0;
+			for(EdocFile e:rs){
+				fileIds[index] = e.getId();
+				index++;
+			}
+		}
+		return fileIds;
+	}
+	/**
 	 * 查询文件版本
 	 * @param sourceFileId	源文件记录ID
 	 * @param version		文件版本号
@@ -304,6 +333,7 @@ public class FileServiceImpl implements FileService{
 		newFileVersion.setFileSuffix(edocFile.getFileSuffix());									//设置文件的后缀
 		newFileVersion.setFileType(edocFile.getFileType());										//设置文件类型
 		newFileVersion.setNewFileName(edocFile.getNewFileName());								//设置文件的新的名称(新文件名称是使用GUID生成的32位字符串)
+		newFileVersion.setIcon(edocFile.getIcon());
 		
 		newFileVersion.setCreatorId(edocFile.getCreatorId());									//设置创建人员ID
 		newFileVersion.setCreatorName(edocFile.getCreatorName());								//设置创建人员名称
