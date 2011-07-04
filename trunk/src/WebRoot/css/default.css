@@ -171,8 +171,6 @@ A:visited {text-decoration: none}
 	border-right:#7b9ebd 1px solid;
 }
 
-
-
 .tbar{
 	border-bottom: 1px solid #CCCCCC;
 	border-top: 1px solid #CCCCCC;
@@ -180,15 +178,16 @@ A:visited {text-decoration: none}
 }
 #nav {
 	position: relative; 
-text-indent:10px;
-list-style-type: none;
-background:url(../images/tbarbg.gif) 0 0px repeat-x;
+	width:100%;
+	text-indent:10px;
+	list-style-type: none;
+	background:url(../images/tbarbg.gif) 0 0px repeat-x;
 }
 #nav li {
 	text-align:center;
-float: left; width: auto;
-top:0px;
-height:26px;
+	float: left; width: auto;
+	top:0px;
+	height:26px;
 }
 #nav li a:hover{
 color:#416aa3;
