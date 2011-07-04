@@ -13,12 +13,12 @@ import com.edoc.service.files.FileService;
  * 文件使用记录信息
  * @author 陈超 2011-07-04
  */
-@Component("fileVersionAction")
-@Scope("prototype")
+//@Component("fileVersionAction")
+//@Scope("prototype")
 public class FileUseRecordAction extends AbstractAction {
 	private static final long serialVersionUID = 1L;
-	@Resource(name="fileService")
-	private FileService fileService = null;
+//	@Resource(name="fileService")
+//	private FileService fileService = null;
 
 	
 	
