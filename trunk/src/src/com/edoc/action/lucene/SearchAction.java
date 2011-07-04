@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.edoc.action.AbstractAction;
 import com.edoc.dbsupport.PageValueObject;
+import com.edoc.entity.baseinfo.User;
 import com.edoc.lucene.index.EdocDocument;
 import com.edoc.lucene.index.search.LSearchService;
 
@@ -24,7 +25,8 @@ public class SearchAction extends AbstractAction{
 	 * @author 		³Â³¬ 2010-9-2
 	 */
 	public String documentSearch(){
-		PageValueObject<EdocDocument> docs = search.keyWordSearch(keyWord,this.getCurrentPage(),this.getPageSize());
+		User user = (User)this.getSession().getAttribute("DOCUSER");
+		PageValueObject<EdocDocument> docs = search.keyWordSearch(keyWord,user.getId(),this.getCurrentPage(),this.getPageSize());
 		getRequest().setAttribute("docs", docs);
 		this.setAttribute("keyWord", keyWord);
 		return "showSearchResults";
