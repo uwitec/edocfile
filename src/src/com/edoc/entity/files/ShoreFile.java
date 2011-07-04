@@ -78,6 +78,8 @@ public class ShoreFile extends AbstractBaseEntity{
 	private int perView = 0;							//查看权限
 	@Transient
 	private int perDownLoad = 0;						//下载权限
+	@Transient
+	private int perEdit = 0;						//下载权限
 	
 //	private String visitUserId = null;					//访问用户的ID
 //
@@ -278,6 +280,14 @@ public class ShoreFile extends AbstractBaseEntity{
 
 	public void setCurrentVersion(String currentVersion) {
 		this.currentVersion = currentVersion;
+	}
+
+	public int getPerEdit() {
+		return perEdit;
+	}
+
+	public void setPerEdit(int perEdit) {
+		this.perEdit = perEdit;
 	}
 
 
