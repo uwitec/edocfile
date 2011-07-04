@@ -15,6 +15,7 @@
 		<link href="css/tbar.css" rel="stylesheet" type="text/css" />
 		<link href="css/default.css" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="tree-table/javascripts/jquery.js"></script>
+		<script type="text/javascript" src="js/files/files.js"></script>
 		<!-- BEGIN Plugin Code -->
 		<style type="text/css">
 			IMG {
@@ -120,7 +121,7 @@
 				<table cellspacing="0" class="from_table2">
 					<tr>
 						<td colspan="2" align="left">
-							<strong><font color="blue">文件名称：${r.sourceFileName }</font></strong>			
+							<strong><font color="blue">文件名称：<img src="${r.icon }"/>&nbsp;${r.sourceFileName }&nbsp;&nbsp;<a href="javascript:void(0);" onclick="previewFile('${r.sourceFileId }','${r.versionNum }')">[预览]</a></font></strong>			
 						</td>
 				  </tr>
 					<tr>
