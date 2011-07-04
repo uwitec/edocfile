@@ -80,4 +80,11 @@ public interface ShoreFileService {
 	 */
 	public boolean shoreFile(ShoreFile shoreFile,
 			List<VisitUserInfo> visitUserInfos, User user, boolean shoreNowFlag, boolean sendMsgFlag);
+
+	/**
+	 * 根据userId获取该用户能预览到的文件ID
+	 * @param userId
+	 * @return
+	 */
+	public String[] getShoredViewSourceFileId(String userId);
 }

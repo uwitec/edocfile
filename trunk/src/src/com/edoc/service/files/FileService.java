@@ -13,6 +13,9 @@ import com.edoc.entity.files.FileVersion;
  *
  */
 public interface FileService {
+	public static int FILETYPE_FOLDER = 0;	//文件夹
+	public static int FILETYPE_FILE = 1;	//普通文件
+	public static int FILETYPE_ALL = 2;		//所有文件类型
 	
 	/**
 	 * 创建文件夹操作
@@ -157,6 +160,12 @@ public interface FileService {
 	 * @return
 	 */
 	public FileVersion getFileVersion(String sourceFileId, String version);
+	
+	/**
+	 * 或许我的所有文件ID,不包含以删除的文件
+	 * @return
+	 */
+	public String[] getMyFileIds(String userId,int fileType);
 
 	
 	
