@@ -78,7 +78,10 @@ public class SearchManager {
 	 * @param keyWord	查询关键字
 	 * @return
 	 */
-	public List<EdocDocument> keyWordSearch(String keyWord,String[] excludeFileIds, int currentPage,int pageSize){
+	public List<EdocDocument> keyWordSearch(String keyWord,String[] excludeFileIds,String[] includeFileIds, int currentPage,int pageSize){
+		if(includeFileIds==null || includeFileIds.length<1){
+			return null;
+		}
 		List<EdocDocument> rs = null;
 		try {
 			//从本地硬盘上加装索引文件信息
@@ -87,8 +90,7 @@ public class SearchManager {
 			searcher = new IndexSearcher(indexReader);
 			
 			//创建查询query
-			Query query = createQuery(keyWord,excludeFileIds);						
-			
+			Query query = createQuery(keyWord,excludeFileIds,includeFileIds);						
 			//分页查询设置
 			TopScoreDocCollector collector = TopScoreDocCollector.create(TOP_NUM , false);
 			searcher.search(query, collector);
@@ -127,7 +129,7 @@ public class SearchManager {
 	 * @return
 	 * @throws ParseException
 	 */
-	private Query createQuery(String keyWord, String[] excludeFileIds) throws ParseException {
+	private Query createQuery(String keyWord, String[] excludeFileIds,String[] includeFileIds) throws ParseException {
 		//Query query 
 		QueryParser parser = new QueryParser(Version.LUCENE_30, FieldName.FIELD_CONTENT, new StandardAnalyzer(Version.LUCENE_30));
 		Query query = parser.parse(keyWord);
@@ -137,6 +139,13 @@ public class SearchManager {
 		if(excludeFileIds!=null && excludeFileIds.length>0){
 			for(String fileId:excludeFileIds){
 				bQuery.add( new TermQuery(new Term(EdocDocument.FIELD_SOURCEFILEID,fileId)), BooleanClause.Occur.MUST_NOT );
+			}
+		}
+		
+		//或查询
+		if(includeFileIds!=null && includeFileIds.length>0){
+			for(String fileId:includeFileIds){
+				bQuery.add( new TermQuery(new Term(EdocDocument.FIELD_SOURCEFILEID,fileId)), BooleanClause.Occur.SHOULD );
 			}
 		}
 		return bQuery;
@@ -185,6 +194,9 @@ public class SearchManager {
 				}
 				if(doc.getField(EdocDocument.FIELD_SOURCEFILENAME)!=null){
 					edoc.setSourceFileName(doc.getField(EdocDocument.FIELD_SOURCEFILENAME).stringValue());
+				}
+				if(doc.getField(EdocDocument.FIELD_SOURCEFILEICON)!=null){
+					edoc.setIcon(doc.getField(EdocDocument.FIELD_SOURCEFILEICON).stringValue());
 				}
 				
 				rs.add(edoc);
