@@ -29,7 +29,7 @@ public class DefaultIndexServiceImpl implements IndexService{
 		//创建Document
 		EdocDocument doc = null;
 		doc = new EdocDocument(sourceFileName,file.getName(),FileReader.getContent(file), fileVersion.getCreateTime().toString(),fileVersion.getEdocFileId(),fileVersion.getVersion(),
-				fileVersion.getCreatorName(),fileVersion.getCreatorId(),Float.toString(fileVersion.getFileSize()));
+				fileVersion.getCreatorName(),fileVersion.getCreatorId(),Float.toString(fileVersion.getFileSize()),fileVersion.getIcon());
 		
 		//创建索引
 		try {
@@ -57,7 +57,7 @@ public class DefaultIndexServiceImpl implements IndexService{
 		//创建Document
 		EdocDocument doc = null;
 		doc = new EdocDocument(sourceFileName,file.getName(),FileReader.getContent(file), edocFile.getCreateTime().toString(),edocFile.getId(),edocFile.getCurrentVersion(),
-				edocFile.getCreatorName(),edocFile.getCreatorId(),Float.toString(edocFile.getFileSize()));
+				edocFile.getCreatorName(),edocFile.getCreatorId(),Float.toString(edocFile.getFileSize()),edocFile.getIcon());
 		
 		//创建索引
 		try {
@@ -99,7 +99,7 @@ public class DefaultIndexServiceImpl implements IndexService{
 		//创建Document
 		EdocDocument doc = null;
 		doc = new EdocDocument(fileVersion.getFileName(),file.getName(),FileReader.getContent(file), fileVersion.getCreateTime().toString(),fileVersion.getEdocFileId(),fileVersion.getVersion(),
-				fileVersion.getCreatorName(),fileVersion.getCreatorId(),Float.toString(fileVersion.getFileSize()));
+				fileVersion.getCreatorName(),fileVersion.getCreatorId(),Float.toString(fileVersion.getFileSize()),fileVersion.getIcon());
 		
 		//创建索引
 		try {

@@ -16,6 +16,7 @@ public class EdocDocument implements java.io.Serializable{
 	public static final String FIELD_CREATORID = "creatorId";
 	public static final String FIELD_FILESIZE = "fileSize";
 	public static final String FIELD_SOURCEFILENAME = "sourceFileName";
+	public static final String FIELD_SOURCEFILEICON = "icon";
 	
 	private String fileName = null;
 	private FileReader fileReader = null;
@@ -28,6 +29,7 @@ public class EdocDocument implements java.io.Serializable{
 	private String fileSize = "";
 	private String sourceFileName = "";
 	private Document doc = null;
+	private String icon = "";
 	
 	public EdocDocument(String sourceFileName ,String fileName, String content, String createTime){
 		doc = new Document();
@@ -42,7 +44,7 @@ public class EdocDocument implements java.io.Serializable{
 	}
 	
 	public EdocDocument(String sourceFileName,String fileName, String content, String createTime,String sourceFileId,
-				String versionNum,String creatorName,String creatorId,String fileSize){
+				String versionNum,String creatorName,String creatorId,String fileSize,String icon){
 		doc = new Document();
 	    doc.add(new Field(FIELD_CONTENT,content,Field.Store.YES, Field.Index.ANALYZED));
 	    doc.add(new Field(FIELD_FILENAME,fileName,Field.Store.YES, Field.Index.ANALYZED));
@@ -53,6 +55,7 @@ public class EdocDocument implements java.io.Serializable{
 	    doc.add(new Field(FIELD_CREATORID,creatorId,Field.Store.YES, Field.Index.NOT_ANALYZED));
 	    doc.add(new Field(FIELD_FILESIZE,fileSize,Field.Store.YES, Field.Index.NOT_ANALYZED));
 	    doc.add(new Field(FIELD_SOURCEFILENAME,sourceFileName,Field.Store.YES, Field.Index.ANALYZED));
+	    doc.add(new Field(FIELD_SOURCEFILEICON,icon,Field.Store.YES, Field.Index.NOT_ANALYZED));
 	    
 	    this.sourceFileName = sourceFileName;
 	    this.fileName = fileName;
@@ -63,9 +66,18 @@ public class EdocDocument implements java.io.Serializable{
 	    this.creatorName = creatorName;
 	    this.creatorId = creatorId;
 	    this.fileSize = fileSize;
+	    this.icon = icon;
 	}
 
 	public EdocDocument() {
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
 	public String getContents() {
