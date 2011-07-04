@@ -15,5 +15,5 @@ public interface LSearchService {
 	 * @return		
 	 * @author 			³Â³¬ 2010-9-4
 	 */
-	public PageValueObject<EdocDocument> keyWordSearch(String keyWord,int currentPage,int pageSize);
+	public PageValueObject<EdocDocument> keyWordSearch(String keyWord,String userId,int currentPage,int pageSize);
 }
