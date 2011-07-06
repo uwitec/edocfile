@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -26,8 +27,8 @@ import com.edoc.entity.baseinfo.User;
 import com.edoc.entity.files.EdocFile;
 import com.edoc.entity.files.FileVersion;
 import com.edoc.entity.files.ShoreFile;
-import com.edoc.mail.MailSender;
 import com.edoc.mail.EmailInfo;
+import com.edoc.mail.MailSender;
 import com.edoc.service.files.FileService;
 import com.edoc.service.files.ShoreFileService;
 import com.edoc.utils.ConfigResource;
@@ -45,6 +46,12 @@ import com.edoc.utils.StringUtils;
 @Scope("prototype")
 public class FileAction  extends AbstractAction{
 	private static final long serialVersionUID = 1L;
+	public static boolean CHECK_FLAG = false;
+	public static final String PARMA_CAT = "cat";
+	public static final String PARAM_COPY = "copy";
+	public static final String SESSION_ATTR_CLIPBOARD = "clipBoard";
+	public static final String SESSION_ATTR_CLIPBOARDTYPE = "clipBoardType";
+	
 	private EdocFile edocFile = null;	//文件信息
 	private File docFile;				//上传的文件
 	private String docFileFileName;		//文件名称
@@ -58,6 +65,89 @@ public class FileAction  extends AbstractAction{
 	
 	@Resource(name="shoreFileService")
 	private ShoreFileService shoreFileService = null;
+	
+	
+	/**
+	 * 拷贝文件
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public String copyOrCatFile(){
+		List<String> copyFileIds = (List<String>)this.getSession().getAttribute(SESSION_ATTR_CLIPBOARD);
+		String[] newCopyFileIds = this.getParameterValues("sFileIds");
+		String clipBoardType = this.getParameter(SESSION_ATTR_CLIPBOARDTYPE);
+		//拷贝文件之前要把上一次拷贝的文件覆盖掉ClipBoard
+		if(copyFileIds!=null){
+			copyFileIds.clear();
+		}else{
+			copyFileIds = new LinkedList<String>();
+		}
+		
+		if(newCopyFileIds!=null && newCopyFileIds.length>0){
+			for(String fileId:newCopyFileIds){
+				copyFileIds.add(fileId);
+			}
+		}
+		this.getSession().setAttribute(SESSION_ATTR_CLIPBOARD, copyFileIds);
+		this.getSession().setAttribute(SESSION_ATTR_CLIPBOARDTYPE, clipBoardType);
+		return null;
+	}
+	
+//	/**
+//	 * 粘贴前得检查操作,检查当前文件夹下是否存在同名的文件
+//	 */
+//	public void beforePasteFile(){
+//		List<String> copyFileIds = (List<String>)this.getSession().getAttribute(SESSION_ATTR_CLIPBOARD);
+//		String parentFileId = this.getParameter("parentFileId");
+//		List<EdocFile> edocFiles = fileService.findFiles(copyFileIds);
+//		if(edocFiles!=null && !edocFiles.isEmpty()){
+//			//检查当前文件夹下是否存在同名的文件
+//			List<String> existFileNames = new LinkedList<String>();
+//			String existFileNameStr = "";
+//			for(EdocFile e:edocFiles){
+//				if(fileService.isExist(parentFileId, e.getFileName(), null)){
+//					existFileNameStr += "'"+e.getFileName()+"','";
+//				}
+//			}
+//			if(existFileNameStr.length()>0){
+//				existFileNameStr = "当前文件夹中存在同名文件"+existFileNameStr.substring(0, existFileNameStr.length()-1);
+//				this.print("{'remainType':'confirm','msg':'"+existFileNameStr+"'}");
+//			}
+//		}else{
+//			this.print("{'remainType':'warn','msg':'剪贴板中没有信息!'}");
+//		}
+//		
+//	}
+	
+	/**
+	 * 粘贴文件,执行该操作之前要先执行beforePasteFile()方法
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public String pasteFile(){
+		User user = (User)this.getSession().getAttribute("DOCUSER");
+		List<String> copyFileIds = (List<String>)this.getSession().getAttribute(SESSION_ATTR_CLIPBOARD);
+		if(copyFileIds!=null && !copyFileIds.isEmpty()){
+			//获取参数操作类型：复制/拷贝
+			int clipBoardType = 0;
+			String clipBoardTypeStr = (String)this.getSession().getAttribute(SESSION_ATTR_CLIPBOARDTYPE);
+			if(StringUtils.isValid(clipBoardTypeStr)){
+				clipBoardType = Integer.parseInt(clipBoardTypeStr);
+			}
+			
+			String parentFileId = this.getParameter("parentFileId");
+			
+			
+			fileService.copyOrCatFile(copyFileIds,clipBoardType, user, parentFileId);
+			
+			
+			this.getSession().removeAttribute(SESSION_ATTR_CLIPBOARD);
+			this.getSession().removeAttribute(SESSION_ATTR_CLIPBOARDTYPE);
+		}else{
+			this.print("剪贴板中没有信息!");
+		}
+		return null;
+	}
 	
 	/**
 	 * 取消共享操作
