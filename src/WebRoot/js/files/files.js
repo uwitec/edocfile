@@ -161,5 +161,68 @@ function reloadPage(){
 	form.submit();
 }
 
+//拷贝或者复制文件
+function copyOrCatFiles(copyOrCatFlag){
+	var array = document.getElementsByName("checkItem");
+	var length = array.length;
+	var param = "";
+	var selectFlag = false;
+	for (var i = 0; i < length; i++) {
+		if (array[i].checked == true) {
+			selectFlag = true;
+			param +="&sFileIds="+array[i].value;
+		}
+	}
+	if(selectFlag){
+		var url  = "fileAction!copyOrCatFile.action?clipBoardType="+copyOrCatFlag+param+"&Rnd="+Math.random();
+		$.ajax({
+				url:url, 
+				type:'post',
+				error: function(){
+					if(copyOrCatFlag==0){
+						alert('复制操作失败,请稍候再试......');
+					}else if(copyOrCatFlag==1){
+						alert('剪切操作失败,请稍候再试......');
+					}
+					return false;
+				},
+				success: function(json){
+					if(json){
+						alert(json);
+					}
+					return;
+				}
+		});
+	}else{
+		if(copyOrCatFlag==0){
+			alert('请选择要复制的文件!');
+		}else if(copyOrCatFlag==1){
+			alert('请选择要剪切的文件!');
+		}
+		return;
+	}
+}
+
+//拷贝或者复制文件
+function pasteFiles(){
+	var parentId = document.getElementById("parentId").value;		//获取当前目录ID
+	var url  = "fileAction!pasteFile.action?parentFileId="+parentId+"&Rnd="+Math.random();
+	$.ajax({
+			url:url, 
+			type:'post',
+			error: function(){
+				alert('粘贴失败,请稍候再试......');
+				return false;
+			},
+			success: function(json){
+				if(json){
+					alert(json);
+				}
+				reloadPage();
+				return;
+			}
+	});
+}
+
 
 
