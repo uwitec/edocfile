@@ -198,4 +198,11 @@ public interface GenericDAO<T, PK extends Serializable> {
 	public void update(String sql);
 	
 	public void delete(String sql);
+	
+	/**
+	 * 根据ID集合查询对应的实体信息
+	 * @param ids
+	 * @return
+	 */
+	public List<T> findByIds(List<PK> ids);
 }
