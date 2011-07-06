@@ -16,6 +16,7 @@
 		<link href="css/default.css" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="tree-table/javascripts/jquery.js"></script>
 		<script type="text/javascript" src="js/files/files.js"></script>
+		<script type="text/javascript" src="js/office_edit.js"></script>
 		<!-- BEGIN Plugin Code -->
 		<style type="text/css">
 			IMG {
@@ -56,15 +57,20 @@
 						<a href="javascript:void(0);" onclick="showAddFolderWin()"><img src="icon/add.png"/>&nbsp;新目录</a>
 					</li>
 					<li>
-						<a href="javascript:void(0);" onclick="edit_permission()"><img src="icon/edit.png"/>&nbsp;编辑</a>
+						<a href="javascript:void(0);" onclick="showUploadWin()"><img src="icon/upload.png"/>&nbsp;上传</a>
 					</li>
 					<li>
 						<a href="javascript:void(0);" onclick="deleteMore()"><img src="icon/delete.png"/>&nbsp;删除</a>
 					</li>
 					<li>
-						<a href="javascript:void(0);" onclick="showUploadWin()"><img src="icon/upload.png"/>&nbsp;上传</a>
+						<a href="javascript:void(0);" onclick="copyOrCatFiles(0)"><img src="icon/copy.png"/>&nbsp;复制</a>
 					</li>
-				
+						<li>
+						<a href="javascript:void(0);" onclick="copyOrCatFiles(1)"><img src="icon/cut.gif"/>&nbsp;剪切</a>
+					</li>
+						<li>
+						<a href="javascript:void(0);" onclick="pasteFiles()"><img src="icon/paste.png"/>&nbsp;粘贴</a>
+					</li>
 					<li>
 						<a href="javascript:void(0);" onclick="changeLayout(1)"><img src="icon/sjgl.gif"/>&nbsp;平铺</a>
 					</li>
@@ -138,6 +144,7 @@
 								<td align="center">
 									<c:if test="${edocFile.isFolder==0}">
 									&nbsp;&nbsp;<a href="javascript:void(0);" onclick="previewFile('${edocFile.id }','${edocFile.currentVersion }')">预览</a>
+									&nbsp;&nbsp;<a href="javascript:void(0);" onclick="before_edit_office_open_newwin('${edocFile.id }','${DOCUSER.id }','${edocFile.fileSuffix }','${edocFile.currentVersion }')">编辑</a>
 									</c:if>
 									&nbsp;&nbsp;<a href="javascript:void(0);" onclick="showShoreFileWin('${edocFile.id }',${edocFile.isShored})">共享</a>
 									&nbsp;&nbsp;<a href="javascript:void(0);" onclick="deleteOne('${edocFile.id }')">删除</a>

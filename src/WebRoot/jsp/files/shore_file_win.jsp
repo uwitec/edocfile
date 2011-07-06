@@ -56,24 +56,6 @@
     
     function onSubmit(){
     	
-    	//var edocTable = document.getElementById("edoctable");
-    	//var edocTableRows = edocTable.rows.length;
-    	//if(edocTableRows<2){
-    	//	alert("请选择共享的文件！");
-    	//	return;
-    	//}
-    	
-    	//if(confirm("是否共享该文件的上级文件夹?")){
-    	//	document.getElementById("shoreMulu").value= "1";
-    	//	document.getElementById("save_form").submit();
-    	//	window.returnValue=true;
-        // 	window.close();
-		//}else{
-		//	document.getElementById("shoreMulu").value= "0";
-    	//	document.getElementById("save_form").submit();
-    	//	window.returnValue=true;
-        //	window.close();
-		//}
 		document.getElementById("save_form").submit();
     	window.returnValue=true;
         window.close();
