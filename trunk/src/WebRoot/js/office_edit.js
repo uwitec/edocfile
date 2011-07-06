@@ -111,7 +111,38 @@ function before_edit_office(sourceFileId,userId,fileSuffix){
 		    			form.action = "fileAction!beforePreviewFile.action?forward=editFile&Rnd="+Math.random();
 		    			form.submit();
 		    		}else{
-		    			alert('您没有权限对该文档执行编辑操作,需求申请编辑权限!');
+		    			alert('您没有权限对该文档执行编辑操作,需要申请编辑权限!');
+		    		}
+		    	}else{
+		    		alert('编辑操作失败!');
+		    	}
+		   }
+	   	});
+	
+	}
+}
+
+
+//检查该用户是否拥有编辑权限,如果没有的话则弹出申请编辑权限的窗口,相反则进入编辑页面
+function before_edit_office_open_newwin(sourceFileId,userId,fileSuffix,version){
+	if(fileSuffix){
+		if(fileSuffix!="doc" && fileSuffix!="xls" && fileSuffix!="ppt" && fileSuffix!="docx" && fileSuffix!="xlsx" && fileSuffix!="pptx"){
+			alert("系统目前不支持"+fileSuffix+"文档的在线编辑操作!");
+			return;
+		}
+		
+		$.ajax({
+		    url:"visitUserAction!checkPermission.action?currentUserId="+userId+"&sourceFileId="+sourceFileId+"&perType=edit&Rnd="+Math.random(), 
+		    type:'post',
+		    error: function(){
+		    	return false;
+		    },
+		    success: function(json){
+		    	if(json!=null && json!=""){
+		    		if(json=="true"){
+		    			window.open("fileAction!beforePreviewFile.action?forward=editFile&sourceFileId="+sourceFileId+"&version="+version+"&Rnd="+Math.random(),"","resizable=yes,status=no,toolbar=no,menubar=no,location=no");
+		    		}else{
+		    			alert('您没有权限对该文档执行编辑操作,需要申请编辑权限!');
 		    		}
 		    	}else{
 		    		alert('编辑操作失败!');
