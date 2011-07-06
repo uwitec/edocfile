@@ -33,12 +33,34 @@ public class GenericDAOImpl<T, PK extends Serializable> extends
 
 	protected Class<T> clazz;
 	
+	
+	/**
+	 * 根据ID集合查询对应的实体信息
+	 * @param ids
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<T> findByIds(List<PK> ids){
+		if(ids!=null && !ids.isEmpty()){
+			String className = clazz.getSimpleName();
+			String sql = "from "+className+" where id in('000'";
+			for(PK id:ids){
+				sql += ",'"+id+"'";
+			}
+			sql += ")";
+			
+			return getSession(false).createQuery(sql).list();
+		}
+		return null;
+	}
+	/**
+	 * 合并操作
+	 */
 	public void merge(T instance){
 		getSession(false).merge(instance);
 	}
 	/**
 	 * 删除操作
-	 * 
 	 * @param instance
 	 *            删除的实例
 	 */
