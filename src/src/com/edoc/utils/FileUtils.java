@@ -17,6 +17,37 @@ import java.io.OutputStream;
  * 
  */
 public class FileUtils {
+	
+	/**
+	 * 文件拷贝
+	 * @param sourceFile
+	 * @param destFile
+	 */
+	public synchronized static void copy(File sourceFile, File destFile){
+		if(sourceFile.exists()){
+			try{
+				if(!destFile.exists()){
+					destFile.createNewFile();
+				}
+	            //输入流   
+	            InputStream in =new FileInputStream(sourceFile);   
+	            //输出流   
+	            OutputStream out =new FileOutputStream(destFile,true);   
+	            
+	            byte[] buffer=new byte[1024];   
+                while(true){   
+                    int byteRead=in.read(buffer);   
+                    if(byteRead==-1)
+                    	break;   
+                    out.write(buffer,0,byteRead);   
+                }   
+                out.close();
+                in.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+	} 
 	/**
 	 * 将文件写到目标目录
 	 * 
