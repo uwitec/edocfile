@@ -9,11 +9,13 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.edoc.dbsupport.PageValueObject;
 import com.edoc.dbsupport.PropertyFilter;
+import com.edoc.entity.baseinfo.User;
 import com.edoc.entity.files.EdocFile;
 import com.edoc.entity.files.FileVersion;
 import com.edoc.entity.files.RecycleInfo;
@@ -25,6 +27,8 @@ import com.edoc.service.files.ShoreFileService;
 import com.edoc.service.files.UploadService;
 import com.edoc.service.files.VisitUserService;
 import com.edoc.utils.ConfigResource;
+import com.edoc.utils.FileUtils;
+import com.edoc.utils.RandomGUID;
 import com.edoc.utils.StringUtils;
 import com.edoc.utils.Timer;
 
@@ -53,6 +57,83 @@ public class FileServiceImpl implements FileService{
 	@Resource(name="visitUserService")
 	private VisitUserService visitUserService = null;
 	
+	/**
+	 * 根据文件ID集合查询对应的文件信息
+	 * @param fileIds
+	 * @return
+	 */
+	public List<EdocFile> findFiles(List<String> fileIds){
+		return edocFileDao.findByIds(fileIds);
+	}
+	
+
+	/**
+	 * 文件拷贝操作,如果是剪切操作的话只需修改被剪切文件的上级目录Id即可。如果是拷贝操作的话需要保留
+	 * 源文件信息同时需要对电子文件实体进行拷贝。
+	 * 
+	 * (拷贝操作时暂时不拷贝版本信息)
+	 * 
+	 * @param sFileIds				拷贝文件ID
+	 * @param clipBoardType 		操作类型
+	 * @param destFolderFileId		目标文件夹ID
+	 */
+	@Transactional(readOnly = false)
+	public void copyOrCatFile(List<String> sFileIds,int operType, User user, String destFolderFileId){
+		try{
+		if(sFileIds!=null){
+			//获取要复制/剪切的文件信息
+			List<EdocFile> edocFiles = edocFileDao.findByIds(sFileIds);
+			if(edocFiles!=null){
+				Date currentDate = new Date();
+				for(EdocFile efile:edocFiles){
+					if(operType==CAT){
+						//设置文件的属性
+						efile.setCreateTime(currentDate);
+						efile.setUpdateTime(currentDate);
+						efile.setCreatorId(user.getId());
+						efile.setCreatorName(user.getTrueName());
+						efile.setParentId(destFolderFileId);
+						
+						//查看当前文件夹下是否存在同名的文件,如果存在则在名称前面加一个"复件"
+						int count = getSameFileCount(destFolderFileId,efile.getFileName());
+						if(count>0){
+							efile.setFileName("复件("+count+")_"+efile.getFileName());
+						}
+						edocFileDao.saveOrUpdate(efile);
+					}else if(operType==COPY){
+						EdocFile newEdocFile = new EdocFile();
+						BeanUtils.copyProperties(newEdocFile, efile);
+						//设置文件的属性
+						newEdocFile.setCreateTime(currentDate);
+						newEdocFile.setUpdateTime(currentDate);
+						newEdocFile.setCreatorId(user.getId());
+						newEdocFile.setCreatorName(user.getTrueName());
+						newEdocFile.setParentId(destFolderFileId);
+						
+						//查看当前文件夹下是否存在同名的文件,如果存在则在名称前面加一个"复件"
+						int count = getSameFileCount(destFolderFileId,newEdocFile.getFileName());
+						if(count>0){
+							newEdocFile.setFileName("复件("+count+")_"+newEdocFile.getFileName());
+						}
+						
+						newEdocFile.setId(new RandomGUID().toString());
+						if(newEdocFile.getIsFolder()==0){
+							String oldFileName = newEdocFile.getNewFileName();
+							newEdocFile.setNewFileName(new RandomGUID().toString()+"."+newEdocFile.getFileSuffix());
+							uploadFile(newEdocFile, new FileInputStream(new File(ConfigResource.getConfig(ConfigResource.EDOCUPLOADDIR)+"\\"+oldFileName)));
+						}else{
+							edocFileDao.save(newEdocFile);
+						}
+					}
+				}
+			}
+		}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	
 
 	/**
 	 * 或许我的所有文件ID,不包含以删除的文件
@@ -61,17 +142,17 @@ public class FileServiceImpl implements FileService{
 	public String[] getMyFileIds(String userId,int fileType){
 		String[] fileIds = null;
 		List<PropertyFilter> filters = new LinkedList<PropertyFilter>();
+		
+		//判断文件类型：2=普通文件+文件夹, 0=普通文件, 1=文件夹
 		if(fileType!=2){
-			if(fileType==0){
-				PropertyFilter filter01 = new PropertyFilter("isFolder",1,PropertyFilter.MatchType.EQ);
-				filters.add(filter01);
-			}else if(fileType==1){
-				PropertyFilter filter01 = new PropertyFilter("isFolder",0,PropertyFilter.MatchType.EQ);
-				filters.add(filter01);
-			}
+			PropertyFilter filter01 = new PropertyFilter("isFolder",fileType,PropertyFilter.MatchType.EQ);
+			filters.add(filter01);
 		}
+		
+		//文件创建人
 		PropertyFilter filter02 = new PropertyFilter("creatorId",userId,PropertyFilter.MatchType.EQ);
 		filters.add(filter02);
+		
 		List<EdocFile> rs = edocFileDao.find(filters);
 		if(rs!=null && !rs.isEmpty()){
 			fileIds = new String[rs.size()];
@@ -129,6 +210,24 @@ public class FileServiceImpl implements FileService{
 			return false;
 		}
 	}
+	
+	/**
+	 * 获取具有相同名称的文件数
+	 * @param parentFileId
+	 * @param fileName
+	 * @return
+	 */
+	private int getSameFileCount(String parentFileId,String fileName){
+		List<PropertyFilter> filters = new LinkedList<PropertyFilter>();
+		PropertyFilter filter01 = new PropertyFilter("parentId",parentFileId,PropertyFilter.MatchType.EQ);
+		filters.add(filter01);
+		
+		PropertyFilter filter02 = new PropertyFilter("fileName",fileName,PropertyFilter.MatchType.EQ);
+		filters.add(filter02);
+		
+		
+		return edocFileDao.getCount(filters);
+	}
 	/**
 	 * 获取目录结构信息(共享文件)
 	 * @param parentId	节点ID
@@ -161,7 +260,7 @@ public class FileServiceImpl implements FileService{
 	}
 	
 	/**
-	 * 创建文件加
+	 * 创建文件夹
 	 */
 	public boolean createFolder(EdocFile edocFile) {
 		edocFileDao.save(edocFile);
@@ -284,8 +383,7 @@ public class FileServiceImpl implements FileService{
 	 * @return
 	 * @author 				陈超 2010-8-17
 	 */
-	public PageValueObject<EdocFile> getRootFileFromShoreFolder(
-			int currentPage, int pageSize){
+	public PageValueObject<EdocFile> getRootFileFromShoreFolder(int currentPage, int pageSize){
 		PageValueObject<EdocFile> page = null;
 		page = new PageValueObject<EdocFile>(currentPage, pageSize);
 

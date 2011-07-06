@@ -4,8 +4,10 @@ import java.io.FileInputStream;
 import java.util.List;
 
 import com.edoc.dbsupport.PageValueObject;
+import com.edoc.entity.baseinfo.User;
 import com.edoc.entity.files.EdocFile;
 import com.edoc.entity.files.FileVersion;
+import com.edoc.service.files.impl.FileServiceImpl;
 
 /**
  * 文件服务类,包括:获取文件存放地址,文件上传、下载等等操作.实现类{@link FileServiceImpl}
@@ -13,9 +15,11 @@ import com.edoc.entity.files.FileVersion;
  *
  */
 public interface FileService {
-	public static int FILETYPE_FOLDER = 0;	//文件夹
-	public static int FILETYPE_FILE = 1;	//普通文件
-	public static int FILETYPE_ALL = 2;		//所有文件类型
+	public static final int FILETYPE_FILE = 0;		//普通文件
+	public static final int FILETYPE_FOLDER = 1;	//文件夹
+	public static final int FILETYPE_ALL = 2;		//所有文件类型
+	public static final int COPY = 0;
+	public static final int CAT = 1;
 	
 	/**
 	 * 创建文件夹操作
@@ -162,11 +166,24 @@ public interface FileService {
 	public FileVersion getFileVersion(String sourceFileId, String version);
 	
 	/**
-	 * 或许我的所有文件ID,不包含以删除的文件
+	 * 查询我的所有文件ID,不包含以删除的文件
 	 * @return
 	 */
 	public String[] getMyFileIds(String userId,int fileType);
 
+	/**
+	 * 文件拷贝操作
+	 * @param sFileIds				拷贝文件ID
+	 * @param operType 				操作类型:0=拷贝,1=剪切
+	 * @param destFolderFileId		目标文件夹ID
+	 */
+	public void copyOrCatFile(List<String> sFileIds,int operType, User user, String destFolderFileId);
 	
-	
+	/**
+	 * 根据文件ID集合查询对应的文件信息
+	 * @param fileIds
+	 * @return
+	 */
+	public List<EdocFile> findFiles(List<String> fileIds);
+
 }
