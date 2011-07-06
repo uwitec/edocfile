@@ -16,6 +16,7 @@
 		<link href="css/default.css" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="tree-table/javascripts/jquery.js"></script>
 		<script type="text/javascript" src="js/files/files.js"></script>
+		<script type="text/javascript" src="js/office_edit.js"></script>
 		<!-- BEGIN Plugin Code -->
 		<style type="text/css">
 			IMG {
@@ -189,6 +190,9 @@
 						<c:if test="${edocFile.isFolder==0}"><!-- 除文件夹以外的所有文档都有预览和下载的操作 -->
 							<c:if test="${edocFile.perView==1 || edocFile.shoreUserId==DOCUSER.id}">
 								<a href="javascript:void(0);" onclick="previewFile('${edocFile.sourceFileId }','${edocFile.currentVersion }')">预览</a>&nbsp;&nbsp;
+							</c:if>
+							<c:if test="${edocFile.perEdit==1 || edocFile.shoreUserId==DOCUSER.id}">
+								<a href="javascript:void(0);" onclick="before_edit_office_open_newwin('${edocFile.sourceFileId }','${DOCUSER.id }','${edocFile.fileSuffix }','${edocFile.currentVersion }')">编辑</a>&nbsp;&nbsp;
 							</c:if>
 							<c:if test="${edocFile.perDownLoad==1 || edocFile.shoreUserId==DOCUSER.id}">
 								<a href="fileAction!downLoadFile.action?sourceFileId=${edocFile.sourceFileId }">下载</a>&nbsp;&nbsp;

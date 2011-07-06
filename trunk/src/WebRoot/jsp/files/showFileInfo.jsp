@@ -218,6 +218,9 @@
 		window.open("fileAction!beforePreviewFile.action?sourceFileId="+id+"&version="+version+"&Rnd="+Math.random(),"","resizable=yes,status=no,toolbar=no,menubar=no,location=no");
 		//showModalDialog("fileAction!beforePreviewFile.action?sourceFileId="+id+"&version="+version+"&Rnd="+Math.random(), "", "dialogWidth:1000px; dialogHeight:600px;help:no;scroll:no;status:no");
 	}
+	function reloadPage(){
+    	//该方法不能删除
+    }
 	</script>
 	</head>
 
