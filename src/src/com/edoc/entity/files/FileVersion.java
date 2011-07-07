@@ -25,20 +25,8 @@ public class FileVersion extends AbstractBaseEntity{
 	@Column(name = "C_FILENAME", nullable = true)
 	private String fileName = "";
 	
-	@Column(name = "C_VERSION", nullable = true)
-	private String version = "";		//版本号
-	
-	@Column(name = "C_DESC", nullable = true)
-	private String desc = "";			//描述
-	
-	@Column(name = "C_EDOCFILEID", nullable = true)
-	private String edocFileId = "";		//edocFileID
-	
-	@Column(name = "D_CREATETIME", nullable = true)
-	private Date createTime = null;						//创建时间
-	
-	@Column(name = "D_UPDATETIME", nullable = true)
-	private Date updateTime = null;						//上一次修改时间
+	@Column(name = "C_NEWFILENAME", nullable = true)
+	private String newFileName = "";
 	
 	@Column(name = "C_FILETYPE", nullable = true)
 	private String fileType = "文件夹";					//文件类型,如:Word文档,Excel文档等
@@ -49,20 +37,33 @@ public class FileVersion extends AbstractBaseEntity{
 	@Column(name = "C_CREATORNAME", nullable = true)
 	private String creatorName = null;					//创建人姓名	
 	
+	@Column(name = "D_CREATETIME", nullable = true)
+	private Date createTime = null;						//创建时间
+	
+	@Column(name = "D_UPDATETIME", nullable = true)
+	private Date updateTime = null;						//上一次修改时间
+	
 	@Column(name = "F_FILESIZE", nullable = true)
 	private float fileSize = 0;							//文件大小
 	
 	@Column(name = "I_ISDELETE", nullable = true)
 	private int isDelete =0;							//是否删除,0未删除,1已删除
 	
+	@Column(name = "C_FILESUFFIX", nullable = true)
+	private String fileSuffix = null;					//文件后缀如doc、xls等
+	
 	@Column(name = "C_ICON", nullable = true)
 	private String icon = "icon/folder.png";			//对应的图标
 	
-	@Column(name = "C_NEWFILENAME", nullable = true)
-	private String newFileName = "";
+	@Column(name = "C_DESC", nullable = true)
+	private String desc = "";			//描述
 	
-	@Column(name = "C_FILESUFFIX", nullable = true)
-	private String fileSuffix = null;					//文件后缀如doc、xls等
+	
+	@Column(name = "C_VERSION", nullable = true)
+	private String version = "";		//版本号
+	
+	@Column(name = "C_EDOCFILEID", nullable = true)
+	private String edocFileId = "";		//edocFileID
 	
 	@Column(name = "C_UPDATEUSERID", nullable = true)
 	private String updateUserId = "";					//修改人的ID
@@ -74,6 +75,27 @@ public class FileVersion extends AbstractBaseEntity{
 		id = new RandomGUID().toString();
 		createTime = new Date();
 		updateTime = new Date();
+	}
+	
+	public FileVersion(EdocFile eFile,String version,String updateUserId,String updateUserName){
+		id = new RandomGUID().toString();
+		createTime = new Date();
+		updateTime = new Date();
+		if(eFile!=null){
+			this.creatorId = eFile.getCreatorId();
+			this.creatorName = eFile.getCreatorName();
+			this.fileName = eFile.getFileName();
+			this.fileSize = eFile.getFileSize();
+			this.fileSuffix = eFile.getFileSuffix();
+			this.fileType = eFile.getFileType();
+			this.icon = eFile.getIcon();
+			this.edocFileId = eFile.getId();
+			this.desc = eFile.getDesc();
+			this.newFileName = eFile.getNewFileName();
+		}
+		this.version = version;
+		this.updateUserId = updateUserId;
+		this.updateUserName = updateUserName;
 	}
 
 	public String getUpdateUserId() {
