@@ -52,7 +52,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			padding-left:10px;
 			padding-right:10px;
 		}
-	
+		.div_1{
+				position: relative;
+				width: 100%;
+				float: left;
+		}
+		.meun_1{
+				position: relative;
+				float: left;
+				width: 65%;
+				text-align:right;
+		}
+		.search{
+				position: relative;
+				
+				float: left;
+		}
+		td{
+			color:#1060A4;
+			font-size:12px;
+			font-weight: bold;
+			line-height:23px;
+		}
+		a:link{text-decoration:none;color:#1060A4;} 　　
+		a:hover{text-decoration:none;color:#1060A4;} 　　
+		a:visited{text-decoration:none;color:#1060A4;} 
 	</style>  
 	<script type="text/javascript">
 		function searchDocument(){
@@ -64,14 +88,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  </head>
   
 <body>
-	<table width="100%">
-		<tr height="25">
-			<td nowrap valign="middle" align="right">
-				<form id="searchDocumentForm" action="searchAction!documentSearch.action" method="post">
-				<input type="text" name="keyWord" size="50"/> <input type="button" class="button1" onclick="searchDocument()" value="全文检索"/>	
-				</form>					
-			</td>
-		</tr>
-	</table>
+	<div class="div_1">
+		<div class="meun_1">
+			<table >
+				<tr height="25">
+					<td width="54%" align="right" nowrap>
+		           	 	<a href="workSpace.jsp" target="perspective_content">我的工作台</a>
+		            </td>
+				</tr>
+			</table>
+		</div>
+		<div class="search">
+			<table width="100%">
+				<tr height="25">
+				    <td width="46%" align="right" valign="middle" nowrap>
+		            <form id="searchDocumentForm" action="searchAction!documentSearch.action" method="post">
+						
+		            <input type="text" name="keyWord" size="50"/>
+			        <input type="button" class="button1" onClick="searchDocument()" value="全文检索"/>
+		            </form>	
+		            </td>
+				</tr>
+			</table>
+		</div>
+	</div>
 </body>
 </html>
