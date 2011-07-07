@@ -34,7 +34,11 @@
 		
 		<action name="shoreFileAction" class="shoreFileAction">
 			<result name="showShorePage">jsp/files/shore_file_win.jsp</result>
-		
 		</action>
+		
+		<action name="fileUseRecordAction" class="fileUseRecordAction">
+			<result name="workSpaceCurrentFileUseRecord">jsp/fileUseRecord/workSpaceUseRecord.jsp</result>
+		</action>
+		
 	</package>
 </struts>
