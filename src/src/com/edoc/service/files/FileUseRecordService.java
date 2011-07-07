@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.edoc.dbsupport.PageValueObject;
+import com.edoc.entity.baseinfo.User;
+import com.edoc.entity.files.EdocFile;
 import com.edoc.entity.files.FileUseRecord;
 
 /**
@@ -13,16 +15,26 @@ import com.edoc.entity.files.FileUseRecord;
  */
 public interface FileUseRecordService {
 	public static int USETYPE_ALL = -1;
-	public static int USETYPE_VIEW = 0;
-	public static int USETYPE_EDIT = 1;
-	public static int USETYPE_DOWNLOAD = 2;
-	public static int USETYPE_BORROW = 3;
+	public static int USETYPE_VIEW = 0;			//预览
+	public static int USETYPE_EDIT = 1;			//编辑
+	public static int USETYPE_DOWNLOAD = 2;		//下载
+	public static int USETYPE_BORROW = 3;		//借阅
+	public static int USETYPE_COPE = 4;			//复制
+	public static int USETYPE_CAT = 5;			//剪切
 	
 	/**
 	 * 添加文件使用记录
 	 * @param fileUseRecord
 	 */
 	public void addFileUseRecord(FileUseRecord fileUseRecord);
+	
+	/**
+	 * 添加文件使用记录
+	 * @param user			使用用户信息
+	 * @param edocFile		文件信息
+	 * @param useType		使用类型
+	 */
+	public void addFileUseRecord(User user, EdocFile edocFile,int useType);
 	
 	
 	/**

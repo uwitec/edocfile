@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -39,6 +40,25 @@ public class FileVersionServiceImpl implements FileVersionService{
 	@Resource(name="defaultIndexService")
 	private IndexService indexService = null;
 	
+	
+	/**
+	 * 查找文件版本信息
+	 * @param sFileId		原始文件信息
+	 * @param version		文件版本号
+	 */
+	public FileVersion findFileVersion(String sFileId,String version){
+		List<PropertyFilter> filters = new LinkedList<PropertyFilter>();
+		PropertyFilter filter01 = new PropertyFilter("edocFileId",sFileId,PropertyFilter.MatchType.EQ);
+		filters.add(filter01);
+		
+		PropertyFilter filter02 = new PropertyFilter("version",version,PropertyFilter.MatchType.EQ);
+		filters.add(filter02);
+		List<FileVersion> rs = fileVersionDao.find(filters);
+		if(rs!=null && !rs.isEmpty()){
+			return rs.get(0);
+		}
+		return null;
+	}
 	/**
 	 * 获取文件版本信息
 	 */

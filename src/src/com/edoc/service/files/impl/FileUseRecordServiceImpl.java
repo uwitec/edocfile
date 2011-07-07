@@ -6,19 +6,36 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.edoc.dbsupport.PageValueObject;
 import com.edoc.dbsupport.PropertyFilter;
+import com.edoc.entity.baseinfo.User;
+import com.edoc.entity.files.EdocFile;
 import com.edoc.entity.files.FileUseRecord;
 import com.edoc.orm.hibernate.dao.GenericDAO;
 import com.edoc.service.files.FileUseRecordService;
 
+@Component("fileUseRecordService")
+@Transactional(readOnly=true)
 public class FileUseRecordServiceImpl implements FileUseRecordService{
 	
 	@Resource(name="fileUseRecordDao")
 	private GenericDAO<FileUseRecord,String> fileUseRecordDao=null;
 	
+	/**
+	 * 添加文件使用记录
+	 * @param user			使用用户信息
+	 * @param edocFile		文件信息
+	 * @param useType		使用类型
+	 */
+	@Transactional(readOnly = false)
+	public void addFileUseRecord(User user, EdocFile edocFile,int useType){
+		
+		FileUseRecord fileUseRecord = new FileUseRecord(user,edocFile,useType);
+		fileUseRecordDao.save(fileUseRecord);
+	}
 
 	/**
 	 * 添加文件使用记录

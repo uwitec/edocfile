@@ -29,5 +29,13 @@ public interface FileVersionService {
 	 */
 	public void addFileVersionFromOnline(FileVersion fileVersion,
 			FileInputStream fileInputStream);
+	
+	
+	/**
+	 * 查找文件版本信息
+	 * @param sFileId		原始文件信息
+	 * @param version		文件版本号
+	 */
+	public FileVersion findFileVersion(String sFileId,String version);
 
 }

@@ -27,7 +27,6 @@ import com.edoc.service.files.ShoreFileService;
 import com.edoc.service.files.UploadService;
 import com.edoc.service.files.VisitUserService;
 import com.edoc.utils.ConfigResource;
-import com.edoc.utils.FileUtils;
 import com.edoc.utils.RandomGUID;
 import com.edoc.utils.StringUtils;
 import com.edoc.utils.Timer;
@@ -136,14 +135,14 @@ public class FileServiceImpl implements FileService{
 	
 
 	/**
-	 * 或许我的所有文件ID,不包含以删除的文件
+	 * 查找用户创建的所有文件ID,不包含以删除的文件
 	 * @return
 	 */
 	public String[] getMyFileIds(String userId,int fileType){
 		String[] fileIds = null;
 		List<PropertyFilter> filters = new LinkedList<PropertyFilter>();
 		
-		//判断文件类型：2=普通文件+文件夹, 0=普通文件, 1=文件夹
+		//判断文件类型：2=所有文件(包括文件夹以及普通文件), 0=普通文件, 1=文件夹
 		if(fileType!=2){
 			PropertyFilter filter01 = new PropertyFilter("isFolder",fileType,PropertyFilter.MatchType.EQ);
 			filters.add(filter01);
@@ -164,25 +163,7 @@ public class FileServiceImpl implements FileService{
 		}
 		return fileIds;
 	}
-	/**
-	 * 查询文件版本
-	 * @param sourceFileId	源文件记录ID
-	 * @param version		文件版本号
-	 * @return
-	 */
-	public FileVersion getFileVersion(String sourceFileId, String version){
-		List<PropertyFilter> filters = new LinkedList<PropertyFilter>();
-		PropertyFilter filter01 = new PropertyFilter("edocFileId",sourceFileId,PropertyFilter.MatchType.EQ);
-		filters.add(filter01);
-		
-		PropertyFilter filter02 = new PropertyFilter("version",version,PropertyFilter.MatchType.EQ);
-		filters.add(filter02);
-		List<FileVersion> rs = fileVersionDao.find(filters);
-		if(rs!=null && !rs.isEmpty()){
-			return rs.get(0);
-		}
-		return null;
-	}
+
 	/**
 	 * 判断当前文件夹下面该文件是否存在
 	 * @param parentFileId
@@ -411,8 +392,45 @@ public class FileServiceImpl implements FileService{
 		return true;
 	}
 	
+//	/**
+//	 * 上传文件操作
+//	 * @param edocFile	文件信息类
+//	 * @param src		文件输入流
+//	 * @return   		上传成功返回true,否则返回false
+//	 * @author 			陈超 2010-8-7
+//	 */
+//	@Transactional(readOnly=false)
+//	public boolean uploadFile(EdocFile edocFile, FileInputStream src){
+//		
+//		FileVersion newFileVersion = new FileVersion();
+//		newFileVersion.setEdocFileId(edocFile.getId());
+//		newFileVersion.setFileName(edocFile.getFileName());										//设置文件原名称								
+//		newFileVersion.setFileSize(edocFile.getFileSize());										//设置文件大小(算出大小后四舍五入)
+//		
+//		newFileVersion.setFileSuffix(edocFile.getFileSuffix());									//设置文件的后缀
+//		newFileVersion.setFileType(edocFile.getFileType());										//设置文件类型
+//		newFileVersion.setNewFileName(edocFile.getNewFileName());								//设置文件的新的名称(新文件名称是使用GUID生成的32位字符串)
+//		newFileVersion.setIcon(edocFile.getIcon());
+//		
+//		newFileVersion.setCreatorId(edocFile.getCreatorId());									//设置创建人员ID
+//		newFileVersion.setCreatorName(edocFile.getCreatorName());								//设置创建人员名称
+//		
+//		newFileVersion.setUpdateUserId(edocFile.getCreatorId());								//设置当前版本的编辑人员Id
+//		newFileVersion.setUpdateUserName(edocFile.getCreatorName());							//设置当前版本的编辑人员姓名
+//		
+//		String currentVersion = getFileVersion(edocFile.getId());								//获取版本号
+//		newFileVersion.setVersion(currentVersion);
+//		edocFile.setCurrentVersion(currentVersion);
+//		upService.uploadFile(newFileVersion.getNewFileName(), src);
+//		
+//		indexService.addIndex(edocFile.getFileName(),new File(ConfigResource.getConfig(ConfigResource.EDOCUPLOADDIR)+"\\"+newFileVersion.getNewFileName()), newFileVersion);
+//		fileVersionDao.save(newFileVersion);
+//		edocFileDao.save(edocFile);
+//		return true;
+//	}
+	
 	/**
-	 * 上传文件操作
+	 * 上传文件操作,上传文件过程中首先为该文件建立版本信息同时还需要上传文件、建立索引等操作
 	 * @param edocFile	文件信息类
 	 * @param src		文件输入流
 	 * @return   		上传成功返回true,否则返回false
@@ -420,31 +438,20 @@ public class FileServiceImpl implements FileService{
 	 */
 	@Transactional(readOnly=false)
 	public boolean uploadFile(EdocFile edocFile, FileInputStream src){
-		//upService.uploadFile(edocFile.getNewFileName(), src);
-		//indexService.addIndex(new File(ConfigResource.getConfig(ConfigResource.EDOCUPLOADDIR)+"\\"+edocFile.getNewFileName()), edocFile);
-		
-		FileVersion newFileVersion = new FileVersion();
-		newFileVersion.setEdocFileId(edocFile.getId());
-		newFileVersion.setFileName(edocFile.getFileName());										//设置文件原名称								
-		newFileVersion.setFileSize(edocFile.getFileSize());										//设置文件大小(算出大小后四舍五入)
-		
-		newFileVersion.setFileSuffix(edocFile.getFileSuffix());									//设置文件的后缀
-		newFileVersion.setFileType(edocFile.getFileType());										//设置文件类型
-		newFileVersion.setNewFileName(edocFile.getNewFileName());								//设置文件的新的名称(新文件名称是使用GUID生成的32位字符串)
-		newFileVersion.setIcon(edocFile.getIcon());
-		
-		newFileVersion.setCreatorId(edocFile.getCreatorId());									//设置创建人员ID
-		newFileVersion.setCreatorName(edocFile.getCreatorName());								//设置创建人员名称
-		
-		newFileVersion.setUpdateUserId(edocFile.getCreatorId());								//设置当前版本的编辑人员Id
-		newFileVersion.setUpdateUserName(edocFile.getCreatorName());							//设置当前版本的编辑人员姓名
-		
 		String currentVersion = getFileVersion(edocFile.getId());								//获取版本号
-		newFileVersion.setVersion(currentVersion);
 		edocFile.setCurrentVersion(currentVersion);
+		
+		//根据EdocFile创建文件版本信息
+		FileVersion newFileVersion = new FileVersion(edocFile,currentVersion,edocFile.getCreatorId(),edocFile.getCreatorName());
+		
+		//上传文件操作
 		upService.uploadFile(newFileVersion.getNewFileName(), src);
 		
-		indexService.addIndex(edocFile.getFileName(),new File(ConfigResource.getConfig(ConfigResource.EDOCUPLOADDIR)+"\\"+newFileVersion.getNewFileName()), newFileVersion);
+		//建立索引操作
+		indexService.addIndex(edocFile.getFileName(),new File(ConfigResource.getConfig(ConfigResource.EDOCUPLOADDIR)
+				+"\\"+newFileVersion.getNewFileName()), newFileVersion);
+		
+		
 		fileVersionDao.save(newFileVersion);
 		edocFileDao.save(edocFile);
 		return true;
