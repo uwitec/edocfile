@@ -158,14 +158,6 @@ public interface FileService {
 	public List<EdocFile> getShoredMulus(String parentId, int showRoot,int showSelf);
 
 	/**
-	 * 查询文件版本
-	 * @param sourceFileId	源文件记录ID
-	 * @param version		文件版本号
-	 * @return
-	 */
-	public FileVersion getFileVersion(String sourceFileId, String version);
-	
-	/**
 	 * 查询我的所有文件ID,不包含以删除的文件
 	 * @return
 	 */
