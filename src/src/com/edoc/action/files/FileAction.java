@@ -30,6 +30,8 @@ import com.edoc.entity.files.ShoreFile;
 import com.edoc.mail.EmailInfo;
 import com.edoc.mail.MailSender;
 import com.edoc.service.files.FileService;
+import com.edoc.service.files.FileUseRecordService;
+import com.edoc.service.files.FileVersionService;
 import com.edoc.service.files.ShoreFileService;
 import com.edoc.utils.ConfigResource;
 import com.edoc.utils.FileUtils;
@@ -66,9 +68,15 @@ public class FileAction  extends AbstractAction{
 	@Resource(name="shoreFileService")
 	private ShoreFileService shoreFileService = null;
 	
+	@Resource(name="fileUseRecordService")
+	private FileUseRecordService fileUseRecordService = null;
+	
+	@Resource(name = "fileVersionServiceImpl")
+	private FileVersionService fversionService = null;
+	
 	
 	/**
-	 * 拷贝文件
+	 * 复制/剪切文件
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
@@ -139,7 +147,6 @@ public class FileAction  extends AbstractAction{
 			
 			
 			fileService.copyOrCatFile(copyFileIds,clipBoardType, user, parentFileId);
-			
 			
 			this.getSession().removeAttribute(SESSION_ATTR_CLIPBOARD);
 			this.getSession().removeAttribute(SESSION_ATTR_CLIPBOARDTYPE);
@@ -328,7 +335,7 @@ public class FileAction  extends AbstractAction{
 		String sourceFileId = this.getParameter("sourceFileId");
 		String version = this.getParameter("version");
 		
-		FileVersion fileVersion = fileService.getFileVersion(sourceFileId,version);
+		FileVersion fileVersion = fversionService.findFileVersion(sourceFileId,version);
 		if(fileVersion!=null){
 			String tempDir = this.getSession().getServletContext().getRealPath("\\temp");
 			String filePath = tempDir+"\\"+fileVersion.getNewFileName();
@@ -351,6 +358,11 @@ public class FileAction  extends AbstractAction{
 	                }   
 	                out.close();
 	                in.close();
+	                
+	                //添加文件操作记录
+	                EdocFile sourceFile = fileService.getFileById(sourceFileId);
+	        		User user = (User)this.getSession().getAttribute("DOCUSER");
+	                fileUseRecordService.addFileUseRecord(user, sourceFile, FileUseRecordService.USETYPE_VIEW);
 				}catch(Exception e){
 					e.printStackTrace();
 					this.showMessage(this.getResponse(), "预览失败：不能正常下载文档信息!", true);
@@ -378,8 +390,9 @@ public class FileAction  extends AbstractAction{
 	 */
 	public void downLoadFile(){
 		EdocFile sourceFile = fileService.getFileById(this.getParameter("sourceFileId"));
+		User user = (User)this.getSession().getAttribute("DOCUSER");
+		
 		String fileName =sourceFile.getNewFileName();
-//		String tempName = this.getRequest().getParameter("sourceFilename");
 		if(StringUtils.isValid(fileName)){
 			String tempDir = ConfigResource.getConfig(ConfigResource.EDOCUPLOADDIR);
 			BufferedOutputStream outstream = null;
@@ -416,6 +429,9 @@ public class FileAction  extends AbstractAction{
 					ee.printStackTrace();
 				}
 			}
+			
+			//添加文件操作记录
+			fileUseRecordService.addFileUseRecord(user, sourceFile, FileUseRecordService.USETYPE_DOWNLOAD);
 		}
 	}
 	/**
