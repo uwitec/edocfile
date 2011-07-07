@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import com.edoc.dbsupport.PropertyOrder;
 import com.edoc.dbsupport.PropertyOrder.OrderType;
 import com.edoc.entity.AbstractBaseEntity;
+import com.edoc.entity.baseinfo.User;
 import com.edoc.utils.RandomGUID;
 
 /**
@@ -27,11 +28,11 @@ public class FileUseRecord extends AbstractBaseEntity{
 	@Column(name = "ID")
 	private String id  = "";
 	
-	@Column(name = "C_SFILEID", nullable = true)
-	private String sFileId = "";
+	@Column(name = "C_SOURCEFILEID", nullable = true)
+	private String sourceFileId = "";
 	
-	@Column(name = "C_SFILENAME", nullable = true)
-	private String sFileName= "";
+	@Column(name = "C_SOURCEFILENAME", nullable = true)
+	private String sourceFileName= "";
 	
 	@Column(name = "C_USERID", nullable = true)
 	private String userId = "";
@@ -39,8 +40,8 @@ public class FileUseRecord extends AbstractBaseEntity{
 	@Column(name = "C_USERNAME", nullable = true)
 	private String userName = "";
 	
-	@Column(name = "I_USERTYPE", nullable = true)
-	private int userType = 0;
+	@Column(name = "I_USETYPE", nullable = true)
+	private int useType = 0;
 	
 	@Column(name = "D_CREATETIME", nullable = true)
  	private Date createTime = null;						//创建时间
@@ -52,6 +53,21 @@ public class FileUseRecord extends AbstractBaseEntity{
 		id = new RandomGUID().toString();
 		createTime = new Date();
 	}
+	
+	public FileUseRecord(User user, EdocFile edocFile,int useType){
+		id = new RandomGUID().toString();
+		createTime = new Date();
+		
+		this.useType = useType;
+		if(user!=null){
+			this.userId = user.getId();
+			this.userName = user.getTrueName();
+		}
+		if(edocFile!=null){
+			this.sourceFileId = edocFile.getId();
+			this.sourceFileName = edocFile.getFileName();
+		}
+	}
 
 	public String getId() {
 		return id;
@@ -61,20 +77,20 @@ public class FileUseRecord extends AbstractBaseEntity{
 		this.id = id;
 	}
 
-	public String getSFileId() {
-		return sFileId;
+	public String getSourceFileId() {
+		return sourceFileId;
 	}
 
-	public void setSFileId(String fileId) {
-		sFileId = fileId;
+	public void setSourceFileId(String sourceFileId) {
+		this.sourceFileId = sourceFileId;
 	}
 
-	public String getSFileName() {
-		return sFileName;
+	public String getSourceFileName() {
+		return sourceFileName;
 	}
 
-	public void setSFileName(String fileName) {
-		sFileName = fileName;
+	public void setSourceFileName(String sourceFileName) {
+		this.sourceFileName = sourceFileName;
 	}
 
 	public String getUserId() {
@@ -93,12 +109,12 @@ public class FileUseRecord extends AbstractBaseEntity{
 		this.userName = userName;
 	}
 
-	public int getUserType() {
-		return userType;
+	public int getUseType() {
+		return useType;
 	}
 
-	public void setUserType(int userType) {
-		this.userType = userType;
+	public void setUseType(int useType) {
+		this.useType = useType;
 	}
 
 	public Date getCreateTime() {
