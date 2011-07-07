@@ -14,6 +14,7 @@ import com.edoc.entity.baseinfo.User;
 import com.edoc.entity.files.EdocFile;
 import com.edoc.entity.files.FileVersion;
 import com.edoc.service.files.FileService;
+import com.edoc.service.files.FileUseRecordService;
 import com.edoc.service.files.FileVersionService;
 import com.edoc.utils.RandomGUID;
 
@@ -27,22 +28,15 @@ import com.edoc.utils.RandomGUID;
 @Scope("prototype")
 public class FileVersionAction extends AbstractAction {
 	private static final long serialVersionUID = 1L;
-	 @Resource(name="fileService")
-	 private FileService fileService = null;
-	//
-	// @Resource(name="mailSender")
-	// private MailSender mailSender = null;
-	//	
-	// @Resource(name="shoreFileService")
-	// private ShoreFileService shoreFileService = null;
-	//	
-	// @Resource(name="visitUserService")
-	// private VisitUserService visitUserService = null;
-	
+	@Resource(name="fileService")
+	private FileService fileService = null;
 	private File fileObj = null;				//上传的文件 
 
 	@Resource(name = "fileVersionServiceImpl")
 	private FileVersionService fversionService = null;
+	
+	@Resource(name="fileUseRecordService")
+	private FileUseRecordService fileUseRecordService = null;
 
 	/**
 	 * 获取文件版本信息
@@ -83,6 +77,9 @@ public class FileVersionAction extends AbstractAction {
 		try{
 			FileVersion fileVersion = this.createFileVersionObj(efile, sourceFileId, versionDesc, user);
 			fversionService.addFileVersionFromOnline(fileVersion,new FileInputStream(fileObj));
+			
+			//添加文件操作记录
+			fileUseRecordService.addFileUseRecord(user, efile, FileUseRecordService.USETYPE_EDIT);
 			this.print("true");
 		}catch(Exception e){
 			e.printStackTrace();
