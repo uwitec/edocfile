@@ -38,7 +38,7 @@
 				position:relative;
 				float:left;
 				width:100%;
-				height:540px;
+				height:510px;
 				color:#15428b;
 				overflow-y:scroll;
 				scrollbar-face-color: #CCCCCC;
@@ -98,6 +98,10 @@
 				form.action = "searchAction!documentSearch.action";
 				form.submit();
 			}
+			
+			//重新加载页面：该方法为空，不能删除
+			function reloadPage(){
+			}
 		</script>
 	</head>
 	<body class="body1">
@@ -121,11 +125,10 @@
 				<table cellspacing="0" class="from_table2">
 					<tr>
 						<td colspan="2" align="left">
-							<strong><font color="blue">文件名称：<img src="${r.icon }"/>&nbsp;${r.sourceFileName }&nbsp;&nbsp;<a href="javascript:void(0);" onclick="previewFile('${r.sourceFileId }','${r.versionNum }')">[预览]</a></font></strong>			
+							<strong><font color="blue"><img src="${r.icon }"/>&nbsp;${r.sourceFileName }&nbsp;&nbsp;<a href="javascript:void(0);" onclick="previewFile('${r.sourceFileId }','${r.versionNum }')">[预览]</a></font></strong>			
 						</td>
 				  </tr>
 					<tr>
-						<td width="5" align="right">&nbsp;</td>
 						<td width="98%" rowspan="2">
 						<span style="height:50px;overflow:hidden;text-overflow :ellipsis;word-wrap: break-word">
 						${r.contents }
@@ -137,10 +140,10 @@
 				  </tr>
 					<tr>
 						<td colspan="2" align="left">
-						创建人：<font color="blue">${r.creatorName }</font>
-						&nbsp;&nbsp;&nbsp;&nbsp;创建时间:<font color="blue">${r.createTime }</font>
-						&nbsp;&nbsp;&nbsp;&nbsp;大小:<font color="blue">${r.fileSize }</font>
-						&nbsp;&nbsp;&nbsp;&nbsp;当前版本号:<font color="blue">${r.versionNum }</font>
+						<strong>创建人：</strong>${r.creatorName }
+						&nbsp;&nbsp;&nbsp;&nbsp;<strong>创建时间:</strong>${r.createTime }
+						&nbsp;&nbsp;&nbsp;&nbsp;<strong>大小:</strong>${r.fileSize }
+						&nbsp;&nbsp;&nbsp;&nbsp;<strong>当前版本号:</strong>${r.versionNum }
 					</td>
 				  </tr>
 				</table>
