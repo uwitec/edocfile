@@ -109,6 +109,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								发送时间
 							</th>
 							<th>
+								状态
+							</th>
+							<th>
 								操作
 							</th>
 						</tr>
@@ -124,8 +127,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<td>
 									${msg.fromUserName }
 								</td>
-								<td>
+								<td align="center">
 									${msg.createDate }
+								</td>
+								<td align="center">
+									<c:if test="${msg.state==0}">
+										<strong><font color="red">未读</font></strong>
+									</c:if>
+									<c:if test="${msg.state==1}">
+										<strong><font color="green">已读</font></strong>
+									</c:if>
 								</td>
 								<td align="center">
 									&nbsp;&nbsp;<a href="javascript:void(0);" onclick="showRecMsg('${msg.id }');">查看</a>
