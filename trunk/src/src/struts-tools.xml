@@ -10,6 +10,7 @@
 			<result name="showRecMsgListPage">jsp/message/recMsg.jsp</result>
 			<result name="showRecMsg">jsp/message/showRecMsg.jsp</result>
 			<result name="showSendMsg">jsp/message/showSendMsg.jsp</result>
+			<result name="workSpaceMsg">jsp/message/workSpaceMsg.jsp</result>
 		</action>
 	</package>
 </struts>
