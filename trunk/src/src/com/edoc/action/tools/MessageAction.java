@@ -49,8 +49,16 @@ public class MessageAction extends AbstractAction{
 	 */
 	public String getReceiveMessages(){
 		User user = (User)this.getSession().getAttribute("DOCUSER");
-		PageValueObject<ReceiveMsg> messages = messageService.getMyRecMessages(user.getId(),this.getCurrentPage(),this.getPageSize());
+		int readSate = -1;
+		if(StringUtils.isValid(this.getParameter("readSate"))){
+			readSate = Integer.parseInt(this.getParameter("readSate"));
+		}
+		PageValueObject<ReceiveMsg> messages = messageService.getMyRecMessages(user.getId(),readSate, this.getCurrentPage(),this.getPageSize());
 		this.setAttribute("filePageVO", messages);
+		
+		if(StringUtils.isValid(this.getForward())){
+			return this.getForward();
+		}
 		return "showRecMsgListPage";
 	}
 	
@@ -59,6 +67,7 @@ public class MessageAction extends AbstractAction{
 	 * @return
 	 */
 	public String showRecMsg(){
+		messageService.setRecMessageReaded(this.getParameter("receiveMsgId"));
 		ReceiveMsg msg = messageService.getReceiveMsg(this.getParameter("receiveMsgId"));
 		this.setAttribute("receiveMsg", msg);
 		return "showRecMsg";
