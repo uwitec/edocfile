@@ -64,7 +64,9 @@
 				float: left;
 				overflow: auto; 
 			}
-			
+			a:link{text-decoration:none;color:#1060A4;} 　　
+		a:hover{text-decoration:none;color:#1060A4;} 　　
+		a:visited{text-decoration:none;color:#1060A4;} 
 		</style>
 		<script type="text/javascript">
 		</script>
@@ -87,7 +89,7 @@
 							最近打开
 							</div>
 							<div class="title_right">
-							更多>>&nbsp;&nbsp;
+							
 							</div>
 						</div>
 						<div class="panel_content">
@@ -101,11 +103,11 @@
 							短消息
 							</div>
 							<div class="title_right">
-							更多>>&nbsp;&nbsp;
+							<a href="messageAction!getReceiveMessages.action"  target="perspective_content">更多>></a>&nbsp;&nbsp;
 							</div>
 						</div>
 						<div class="panel_content">
-							<iframe id="newsFrame" src="./jsp/fileUseRecord/workSpaceUseRecord.jsp" scrolling="no" style="width: 98%; height: 98%;" frameborder="0"></iframe>
+							<iframe id="newsFrame" src="messageAction!getReceiveMessages.action?pageSize=10&forward=workSpaceMsg&readSate=0" scrolling="no" style="width: 98%; height: 98%;" frameborder="0"></iframe>
 						</div>
 					</div>
   			</div>
