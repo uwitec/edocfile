@@ -12,6 +12,11 @@ public interface MessageService {
 	
 	public static final int STATE_Y = 1;	//已发送
 	public static final int STATE_N	= 0;	//未发送
+	public static final int STATE_ALL = -1;	
+	
+	public static final int READ_STATE_Y = 1;		//已读
+	public static final int READ_STATE_N = 0;		//未读
+	public static final int READ_STATE_ALL = -1;	//收件箱中所有邮件
 	
 	/**
 	 * 获取用户发送的消息信息
@@ -34,12 +39,13 @@ public interface MessageService {
 
 	/**
 	 * 获取收件箱信息
-	 * @param id
+	 * @param userId		用户id
+	 * @param state			收件箱中的邮件状态
 	 * @param currentPage
 	 * @param pageSize
 	 * @return
 	 */
-	public PageValueObject<ReceiveMsg> getMyRecMessages(String userId,
+	public PageValueObject<ReceiveMsg> getMyRecMessages(String userId,int readState,
 			int currentPage, int pageSize);
 
 	/**
@@ -67,6 +73,12 @@ public interface MessageService {
 	 * @param sendMsgIds
 	 */
 	public void deleteRecMessages(String[] recMsgIds);
+	
+	/**
+	 * 设置收到的短消息为已读
+	 * @param recMsgId
+	 */
+	public void setRecMessageReaded(String recMsgId);
 	
 
 }
