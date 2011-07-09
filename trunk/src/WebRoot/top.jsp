@@ -74,7 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<table>
         	<tr>
             	<td><img src="./icon/docs-32.gif" alt="new messages" border="0" align="middle"/></td>
-                <td><span class="title">企业档案管理系统</span></td>
+                <td><span class="title">企业电子档案管理系统</span></td>
             </tr>
         </table>
     </div>
