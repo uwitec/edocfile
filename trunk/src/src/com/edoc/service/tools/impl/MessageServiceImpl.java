@@ -26,6 +26,17 @@ public class MessageServiceImpl implements MessageService{
 	@Resource(name="receiveMsgDao")
 	private GenericDAO<ReceiveMsg,String> receiveMsgDao=null;
 	
+	/**
+	 * 设置收到的短消息为已读
+	 * @param recMsgId
+	 */
+	@Transactional(readOnly=false)
+	public void setRecMessageReaded(String recMsgId){
+		ReceiveMsg receiveMsg = receiveMsgDao.get(recMsgId);
+		receiveMsg.setState(READ_STATE_Y);
+		
+		receiveMsgDao.update(receiveMsg);
+	}
 
 	/**
 	 * 删除发送的邮件
@@ -140,12 +151,13 @@ public class MessageServiceImpl implements MessageService{
 	
 	/**
 	 * 获取收件箱信息
-	 * @param id
+	 * @param userId		用户id
+	 * @param state			收件箱中的邮件状态
 	 * @param currentPage
 	 * @param pageSize
 	 * @return
 	 */
-	public PageValueObject<ReceiveMsg> getMyRecMessages(String userId,
+	public PageValueObject<ReceiveMsg> getMyRecMessages(String userId,int readState,
 			int currentPage, int pageSize){
 		PageValueObject<ReceiveMsg> page = null;
 		if(StringUtils.isValid(userId)){
@@ -154,6 +166,10 @@ public class MessageServiceImpl implements MessageService{
 			PropertyFilter filter01 = new PropertyFilter("toUserId",userId,PropertyFilter.MatchType.EQ);
 			filters.add(filter01);
 			
+			if(readState!=STATE_ALL){
+				PropertyFilter filter02 = new PropertyFilter("state",readState,PropertyFilter.MatchType.EQ);
+				filters.add(filter02);
+			}
 			page.setResult(receiveMsgDao.find(filters, page.getFirstResult(), page.getPageSize()));
 			page.setTotalRows(receiveMsgDao.getCount(filters));
 		}
