@@ -224,5 +224,11 @@ function pasteFiles(){
 	});
 }
 
+//收藏文件,不允许收藏文件夹
+function collectFile(){
+	
+
+}
+
 
 
