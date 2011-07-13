@@ -149,34 +149,10 @@
 						</tr>
 						
 						<tr>
-							<td width="10%" style="padding-left:4px;">
-								<strong><font color="blue">共享设置：</font></strong>
-							</td>
-							<c:if test="${edocFile.isShored==0}">
-							<td width="20%">
-								<input type="radio" value="true" name="shoreNowFlag">
-								立即共享
-							</td>
-							<td width="20%">
-								<input type="radio" value="false" name="shoreNowFlag" checked>
-								暂不共享
-							</td>
-							</c:if>
-							
-							<c:if test="${edocFile.isShored==1}">
-							<td width="20%">
-								<input type="radio" value="true" name="shoreNowFlag" checked>
-								立即共享
-							</td>
-							<td width="20%">
-								<input type="radio" value="false" name="shoreNowFlag">
-								暂不共享
-							</td>
-							</c:if>
-                            <td width="10%">
+                            <td width="10%" style="padding-left:4px;">
                             <strong><font color="blue">消息提醒：</font></strong>
 							</td>
-							<td width="126">
+							<td colspan="4">
 								<input id="sysMsgType" type="checkbox" onclick="setSendMsgType(1)" value="msg">系统消息
 							</td>
 						</tr>
@@ -288,12 +264,20 @@
 				</div>
 		</div>
 		<input id="sourceFileId" name="sourceFileId" type="hidden" value="${edocFile.id }"/>
+		<input id="sendMsgFlag" name="sendMsgFlag" type="hidden" value="false" />
+		<input id="shoreFileId" name="shoreFileId" type="hidden" value="${shoreFile.id }">
+		
+		<!-- 
+		<input id="shoreUserId" name="shoreFile.shoreUserId" type="hidden" value="${DOCUSER.id }"/>
+		<input id="shoreUserName" name="shoreFile.shoreUserName" type="hidden" value="${DOCUSER.trueName }"/>
+		 -->
+		<!-- 
 		<input id="parentId" name="parentId" type="hidden" value="${edocFile.parentId }" />
 		<input id="shoredFlag" name="shoredFlag" type="hidden" value="${edocFile.isShored }" />
 		<input id="shoreMulu" name="shoreMulu" type="hidden" />
 		<input id="shoreFileId" name="shoreFileId" type="hidden" value="${shoreFile.id }">
 		<input id="sendMsgFlag" name="sendMsgFlag" type="hidden" value="false" />
-	
+	 	-->
 		</form>
 	</body>
 </html>

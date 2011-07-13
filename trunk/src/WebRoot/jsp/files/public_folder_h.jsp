@@ -15,7 +15,7 @@
 		<link href="css/tbar.css" rel="stylesheet" type="text/css" />
 		<link href="css/default.css" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="tree-table/javascripts/jquery.js"></script>
-		<script type="text/javascript" src="js/files/files.js"></script>
+		<script type="text/javascript" src="js/files/public_file.js"></script>
 		<script type="text/javascript" src="js/office_edit.js"></script>
 		<!-- BEGIN Plugin Code -->
 		<style type="text/css">
@@ -60,49 +60,7 @@
 			}
 		</style>
 		<script type="text/javascript">
-		var temp_obj;
-			function cancelShore(id){		//撤销共享文件操作
-				var parentId = document.getElementById("parentId").value;		//获取档案目录的上一级目录Id
-				var form = document.getElementById("queryForm1");
-				form.action = "fileAction!cancelShore.action?fileId="+id+"&Rnd="+Math.random();
-				form.submit();
-			}
-			
-			//文档预览
-			function previewFile(id,version){
-				window.open("fileAction!beforePreviewFile.action?sourceFileId="+id+"&version="+version+"&Rnd="+Math.random(),"","resizable=yes,status=no,toolbar=no,menubar=no,location=no");
-				//showModalDialog("fileAction!beforePreviewFile.action?sourceFileId="+id+"&version="+version+"&Rnd="+Math.random(), "", "dialogWidth:1000px; dialogHeight:600px;help:no;scroll:no;status:no");
-			}
-			
-			//查看文件详细信息
-			function showFileInfo(id,fileName){
-				var params = [];
-				params[0] = fileName;
-				showModalDialog("fileAction!getFileInfo.action?sourceFileId="+id+"&Rnd="+Math.random(), params, "dialogWidth:1000px; dialogHeight:600px;help:no;scroll:no;status:no");
-			}
-			
-			function searchFile(){
-				//重新刷新页面
-				var form = document.getElementById("queryForm1");
-				form.action = "fileAction!getShoredFiles.action?Rnd="+Math.random();
-				form.submit();
-			}
-			
-			//展示方式的改变
-			function changeLayout(type){
-				document.getElementById('layoutStyle').value=type;	
-				
-				var form = document.getElementById("queryForm1");
-				form.action = "fileAction!getShoredFiles.action?Rnd="+Math.random();
-				form.submit();
-			}
-			
-			function openFolder(parentId){
-				document.getElementById('parentId').value=parentId;
-				var form = document.getElementById("queryForm1");
-				form.action = "fileAction!getShoredFiles.action?Rnd="+Math.random();
-				form.submit();
-			}
+			var temp_obj;
 			
 			function mouse_over(obj){
 				if(temp_obj){
@@ -118,6 +76,7 @@
 			function mouse_out(obj){
 				//obj.className="file0";
 			}
+			
 		</script>
 	</head>
 	<body class="body1">
@@ -163,15 +122,15 @@
 				  <table width="230px" height="70px" border="0" cellspacing="0">
 					<tr>
 					  <td>
-					  	<div style="width:230px;text-overflow:ellipsis; white-space:nowrap; overflow:hidden;" title="${edocFile.fileName }">
+					  	<div style="width:230px;text-overflow:ellipsis; white-space:nowrap; overflow:hidden;" title="${edocFile.sourceFileName }">
 					  	&nbsp;&nbsp;
 					  	<c:if test="${edocFile.isFolder==1}">
-							<a href="javascript:void(0);" onclick="openFolder('${edocFile.id }')"><img src="${edocFile.icon }"/>&nbsp;${edocFile.fileName }</a>
+							<a href="javascript:void(0);" onclick="openFolder('${edocFile.id }')"><img src="${edocFile.icon }"/>&nbsp;${edocFile.sourceFileName }</a>
 						</c:if>
 						<c:if test="${edocFile.isFolder==0}">
-							<a href="javascript:void(0);" onclick="showFileInfo('${edocFile.sourceFileId }','${edocFile.fileName }')"><img src="${edocFile.icon }"/>&nbsp;${edocFile.fileName }</a>
+							<a href="javascript:void(0);" onclick="showFileInfo('${edocFile.sourceFileId }','${edocFile.sourceFileName }')"><img src="${edocFile.icon }"/>&nbsp;${edocFile.sourceFileName }</a>
 						</c:if>
-					  	<input id="sourceFileName${edocFile.id }" type="hidden" value="${edocFile.fileName }" >
+					  	<input id="sourceFileName${edocFile.id }" type="hidden" value="${edocFile.sourceFileName }" >
 					  	</div>
 					  </td>
 				    </tr>
