@@ -20,14 +20,10 @@ if(script==null){
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		
 		<link type="text/css" rel="stylesheet" href="jsplugin/xtree2b/css/xtree2.css">
-		<link href="css/default.css" rel="stylesheet" type="text/css" />		
-		<script type="text/javascript"></script>
+		<link href="css/default.css" rel="stylesheet" type="text/css" />	
+		<link href="css/comm.css" rel="stylesheet" type="text/css" />
+		<link href="css/tbar.css" rel="stylesheet" type="text/css" />
 		<style type="text/css">
-			body,html {
-			margin:0;
-			width:100%;
-			height:100%
-			}
 			.menu_content{
 				left:0px;
 				top:0px;
@@ -39,7 +35,7 @@ if(script==null){
 			}
 			.nav{
 				width:100%;
-				top:5px;
+				padding-top:5px;
 				left:15px;
 				height:440px;
 				overflow:auto;
@@ -70,8 +66,8 @@ if(script==null){
 		</script>
 	</head>
 	
-	<body>
-		<div class="menu_content">
+	<body class="body1">
+		<div class="area">
 			<div class="pos_css">
 				<table width="100%">
 					<tr height="30">
