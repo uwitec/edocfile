@@ -151,9 +151,6 @@
 						<c:if test="${edocFile.isFolder==0}">
 							<a href="javascript:void(0);" onclick="showFileInfo('${edocFile.id }')"><img src="${edocFile.icon }"/>&nbsp;${edocFile.fileName }</a>						
 						</c:if>
-						<c:if test="${edocFile.isShored==1}" >
-							<font color="red">【已共享】</font>						
-						</c:if>
 					  	<input id="sourceFileName${edocFile.id }" type="hidden" value="${edocFile.fileName }" >
 					  	</div>
 					  </td>
@@ -161,7 +158,10 @@
 					<tr>
 					  <td>
 					  <c:if test="${edocFile.isFolder==0}">
-					  &nbsp;&nbsp;&nbsp;当前版本：${edocFile.currentVersion }
+					  &nbsp;&nbsp;当前版本：${edocFile.currentVersion }
+					  </c:if>
+					  <c:if test="${edocFile.isShored==1}" >
+						<font color="red">【已共享】</font>
 					  </c:if>
 					  </td>
 				    </tr>
@@ -172,7 +172,10 @@
 					  &nbsp;&nbsp;<a href="javascript:void(0);" onclick="before_edit_office_open_newwin('${edocFile.id }','${DOCUSER.id }','${edocFile.fileSuffix }','${edocFile.currentVersion }')">编辑</a>
 					  </c:if>
 					  &nbsp;&nbsp;<a href="javascript:void(0);" onclick="showShoreFileWin('${edocFile.id }',${edocFile.isShored})">共享</a> 
-					  &nbsp;&nbsp;<a href="javascript:void(0);" onclick="deleteOne('${edocFile.id }')">删除</a>					  
+					  <c:if test="${edocFile.isShored==1}" >
+					  &nbsp;&nbsp;<a href="javascript:void(0);" onclick="cancelShore('${edocFile.id }')">撤销共享</a>&nbsp;&nbsp;
+					  </c:if>
+					  &nbsp;&nbsp;<a href="javascript:void(0);" onclick="deleteOne('${edocFile.id }')">删除</a>		
 					  </td>
 				    </tr>
 				  </table>

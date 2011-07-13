@@ -65,11 +65,14 @@
 					<li>
 						<a href="javascript:void(0);" onclick="copyOrCatFiles(0)"><img src="icon/copy.png"/>&nbsp;复制</a>
 					</li>
-						<li>
+					<li>
 						<a href="javascript:void(0);" onclick="copyOrCatFiles(1)"><img src="icon/cut.gif"/>&nbsp;剪切</a>
 					</li>
-						<li>
+					<li>
 						<a href="javascript:void(0);" onclick="pasteFiles()"><img src="icon/paste.png"/>&nbsp;粘贴</a>
+					</li>
+					<li>
+						<a href="javascript:void(0);" onclick="collectFile()"><img src="icon/fav.gif"/>&nbsp;收藏</a>
 					</li>
 					<li>
 						<a href="javascript:void(0);" onclick="changeLayout(1)"><img src="icon/sjgl.gif"/>&nbsp;平铺</a>
@@ -147,6 +150,9 @@
 									&nbsp;&nbsp;<a href="javascript:void(0);" onclick="before_edit_office_open_newwin('${edocFile.id }','${DOCUSER.id }','${edocFile.fileSuffix }','${edocFile.currentVersion }')">编辑</a>
 									</c:if>
 									&nbsp;&nbsp;<a href="javascript:void(0);" onclick="showShoreFileWin('${edocFile.id }',${edocFile.isShored})">共享</a>
+									<c:if test="${edocFile.isShored==1}" >
+									&nbsp;&nbsp;<a href="javascript:void(0);" onclick="cancelShore('${edocFile.id }')">撤销共享</a>&nbsp;&nbsp;
+									</c:if>
 									&nbsp;&nbsp;<a href="javascript:void(0);" onclick="deleteOne('${edocFile.id }')">删除</a>
 								</td>
 							</tr>
