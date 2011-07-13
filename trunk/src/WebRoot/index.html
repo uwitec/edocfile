@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<title>企业电子文档管理系统</title>
 		<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
 		<style type="text/css">
 			.fra {
@@ -7,12 +8,13 @@
 			}
 		</style>
 	</head>
-	<frameset rows="40,30,*,22" >
+	<frameset rows="40,30,*,22" framespacing = "0">
 		<frame src="top.jsp" name="showframe" marginwidth=0 marginheight=0 scrolling="no" frameborder=0 noresize>
 		<frame src="toolbar.jsp" name="showframe" marginwidth=0 marginheight=0 scrolling="no" frameborder=0 noresize>
-		<frameset cols="260,*"  framespacing = "5" >
-			<frame src="menuAction!createMenuTree.action" id="perspective_menu" name="perspective_menu" scrolling="no"   bordercolor = "#7b9ebd">
-			<frame src="workSpace.jsp" id="perspective_content" name="perspective_content" frameborder=0>
+		<frameset cols="260,7,*" id="frameset_body" framespacing = "0">
+			<frame src="menuAction!createMenuTree.action" marginwidth=0 marginheight=0 id="perspective_menu" name="perspective_menu" scrolling="no" frameborder=0 noresize>
+			<frame src="control.jsp"  id="controlFrame" name="controlFrame" scrolling="no" frameborder=0>
+			<frame src="workSpace.jsp" marginwidth=0 marginheight=0 id="perspective_content" name="perspective_content" frameborder=0 noresize>
 		</frameset>
 		<frame src="foot.jsp" marginwidth=0 marginheight=0 scrolling="no" frameborder=0 noresize>
 	</frameset>

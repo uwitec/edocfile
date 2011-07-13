@@ -60,7 +60,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		.meun_1{
 				position: relative;
 				float: left;
-				width: 65%;
+				width: 100%;
 				text-align:right;
 		}
 		.search{
@@ -92,21 +92,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="meun_1">
 			<table >
 				<tr height="25">
-					<td width="54%" align="right" nowrap>
+					<td align="right" nowrap>
 		           	 	<a href="workSpace.jsp" target="perspective_content">我的工作台</a>
+		           	 	&nbsp;&nbsp;
 		            </td>
-				</tr>
-			</table>
-		</div>
-		<div class="search">
-			<table width="100%">
-				<tr height="25">
-				    <td width="46%" align="right" valign="middle" nowrap>
-		            <form id="searchDocumentForm" action="searchAction!documentSearch.action" method="post">
-						
-		            <input type="text" name="keyWord" size="50"/>
-			        <input type="button" class="button1" onClick="searchDocument()" value="全文检索"/>
-		            </form>	
+		            
+		            <td align="right" nowrap>
+		           	 	<form id="searchDocumentForm" action="searchAction!documentSearch.action" method="post">
+		           	 	<input type="text" style="vertical-align:middle;float:left;" name="keyWord" size="50"/>
+				        <input type="button" style="vertical-align:middle;float:left;" onClick="searchDocument()" value="全文检索"/>
+			            </form>	
+			            &nbsp;&nbsp;
+		            </td>
+		            
+		            <td align="right" nowrap>
+		           	 	<a href="jsp/search/advanceSearch.jsp" target="perspective_content">高级检索</a>&nbsp;&nbsp;
 		            </td>
 				</tr>
 			</table>

@@ -14,7 +14,6 @@
 		<link href="css/comm.css" rel="stylesheet" type="text/css" />
 		<link href="css/tbar.css" rel="stylesheet" type="text/css" />
 		<link href="css/default.css" rel="stylesheet" type="text/css" />
-		<!-- BEGIN Plugin Code -->
 		<style type="text/css">
 			IMG {
 				border-width: 0px;
@@ -65,8 +64,8 @@
 				overflow: auto; 
 			}
 			a:link{text-decoration:none;color:#1060A4;} 　　
-		a:hover{text-decoration:none;color:#1060A4;} 　　
-		a:visited{text-decoration:none;color:#1060A4;} 
+			a:hover{text-decoration:none;color:#1060A4;} 　　
+			a:visited{text-decoration:none;color:#1060A4;} 
 		</style>
 		<script type="text/javascript">
 		</script>
