@@ -81,6 +81,7 @@
 				<value>com.edoc.entity.tools.SendMsg</value>
 				<value>com.edoc.entity.tools.ReceiveMsg</value>
 				<value>com.edoc.entity.files.FileUseRecord</value>
+				<value>com.edoc.entity.files.FileTemplate</value>
 			</list>
 		</property>
 	</bean>
@@ -124,6 +125,12 @@
 	<bean id="menuDao" parent="genericDAO">
 		<property name="clazz">
 			<value>com.edoc.entity.permission.Menu</value>
+		</property>
+	</bean>
+	
+	<bean id="fileTemplateDao" parent="genericDAO">
+		<property name="clazz">
+			<value>com.edoc.entity.files.FileTemplate</value>
 		</property>
 	</bean>
 	
