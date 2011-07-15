@@ -20,25 +20,26 @@ function save_office(){
         	if(returnValue[0]){
         		versionDesc = returnValue[0];
         	}
-        }
-        edocfile.HttpInit();
-		edocfile.HttpAddPostCurrFile("fileObj","");//上传当前文件 
-		var sourceFileId = document.getElementById('sourceFileId').value;
-		edocfile.HttpAddPostString("sourceFileId",sourceFileId);
-		if(versionDesc!=null && versionDesc!=""){
-			edocfile.HttpAddPostString("versionDesc",versionDesc);
-		}
-		returnValue = edocfile.HttpPost("./fileVersionAction!addFileVersionFromOnline.action?Rnd="+Math.random());
-		
-		if(returnValue=="true"){
-			edocfile.Save();
-			if(confirm('保存成功!是否退出当前编辑窗口？')){
-				window.close();
-				opener.reloadPage();
+        	
+        	edocfile.HttpInit();
+			edocfile.HttpAddPostCurrFile("fileObj","");//上传当前文件 
+			var sourceFileId = document.getElementById('sourceFileId').value;
+			edocfile.HttpAddPostString("sourceFileId",sourceFileId);
+			if(versionDesc!=null && versionDesc!=""){
+				edocfile.HttpAddPostString("versionDesc",encodeURI(versionDesc));
 			}
-		}else{
-			alert('保存失败!');
-		}
+			returnValue = edocfile.HttpPost("./fileVersionAction!addFileVersionFromOnline.action?Rnd="+Math.random());
+			
+			if(returnValue=="true"){
+				edocfile.Save();
+				if(confirm('保存成功!是否退出当前编辑窗口？')){
+					window.close();
+					opener.reloadPage();
+				}
+			}else{
+				alert('保存失败!');
+			}
+        }
     }catch(e){
     	alert("异常\r\nError:"+e+"\r\nError Code:"+e.number+"\r\nError Des:"+e.description);
     }
