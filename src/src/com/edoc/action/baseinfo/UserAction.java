@@ -79,7 +79,7 @@ public class UserAction extends AbstractAction{
 	 * 修改密码
 	 */
 	public void updatePassword(){
-		User user = (User)this.getSession().getAttribute("DOCUSER");
+		User user = (User)this.getSession().getAttribute(SESSION_ATTR_USERINFO);
 		String newPassword = this.getParameter("newPassword");
 		
 		userService.updatePassword(user.getId(),newPassword);
@@ -106,7 +106,7 @@ public class UserAction extends AbstractAction{
 		}
 		User user = userService.doLogin(username,password);
 		if(user!=null){
-			this.getSession().setAttribute("DOCUSER", user);
+			this.getSession().setAttribute(SESSION_ATTR_USERINFO, user);
 			return "showIndex";
 		}else{
 			this.showMessage2(this.getResponse(), "用户名或密码不正确！请确认后重试！", true);
@@ -120,9 +120,9 @@ public class UserAction extends AbstractAction{
 	 */
 	public void doLogout(){
 		
-		User user = (User)this.getSession().getAttribute("DOCUSER");
+		User user = (User)this.getSession().getAttribute(SESSION_ATTR_USERINFO);
 		if(user!=null){
-			this.getSession().removeAttribute("DOCUSER");
+			this.getSession().removeAttribute(SESSION_ATTR_USERINFO);
 		}
 		String loginUrl = "login.jsp";
 		try {
