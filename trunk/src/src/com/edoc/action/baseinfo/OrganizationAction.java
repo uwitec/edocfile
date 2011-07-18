@@ -34,6 +34,7 @@ public class OrganizationAction  extends AbstractAction{
 	}
 	public String getOrgById(){
 		Department org = orgService.getOrgById(orgId);
+		this.setAttribute("org", org);
 		return "";
 	}
 	/**
