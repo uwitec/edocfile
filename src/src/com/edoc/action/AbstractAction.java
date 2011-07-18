@@ -36,6 +36,7 @@ public abstract class AbstractAction extends ActionSupport implements
 	public static final String PAGE_PARAMS_PAGESIZE = "pageSize";// 分页参数,每页显示的记录数
 	public static final String ATTR_PAGEBEAN = "pageBean";
 	public static final String ATTR_HQL = "hql";
+	public static final String SESSION_ATTR_USERINFO = "DOCUSER";
 
 	private String forward = null;
 	private HttpServletRequest request = null;
